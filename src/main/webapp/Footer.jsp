@@ -27,7 +27,7 @@
 			<div class="col-md-4 col-lg-4 col-xl-4 mx-auto">
 				<h5>THÔNG TIN FANPAGE</h5>
 				<hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-				<iframe src="https://www.facebook.com/" width="300" height="90"
+				<iframe src="https://www.youtube.com/watch?v=13gXCV5Q3Bw" width="300" height="90"
 					style="border: none; overflow: hidden" scrolling="no"
 					frameborder="0" allowfullscreen="true"
 					allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
