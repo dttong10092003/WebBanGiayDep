@@ -38,11 +38,12 @@
 		<form class="form-signin" action="login" method="post">
 			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
 				Sign in</h1>
-			<input name="user" value="${username }" type="text" id="inputEmail"
+			<label for="user">Username</label> <input name="user"
+				value="${username }" type="text" id="inputEmail"
 				class="form-control" placeholder="Username" required="" autofocus="">
-			<input name="pass" value="${password }" type="password"
-				id="inputPassword" class="form-control" placeholder="Password"
-				required="">
+			<label for="pass">Password</label> <input name="pass"
+				value="${password }" type="password" id="inputPassword"
+				class="form-control" placeholder="Password" required="">
 
 			<div class="form-group form-check">
 				<input name="remember" value="1" type="checkbox"
@@ -63,13 +64,20 @@
 		<form action="signup" method="post" class="form-signup">
 			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
 				Sign up</h1>
+			<label for="user">Username</label>
 			<input name="user" type="text" id="user-name" class="form-control"
-				placeholder="User name" required="" autofocus=""> <input
+				placeholder="User name" required="" autofocus=""> 
+			<label for="pass">Password</label>
+			<input
 				name="pass" type="password" id="user-pass" class="form-control"
-				placeholder="Password" required autofocus=""> <input
+				placeholder="Password" required autofocus="">
+			<label for="repass">Repeat Password</label>
+			<input
 				name="repass" type="password" id="user-repeatpass"
 				class="form-control" placeholder="Repeat Password" required
-				autofocus=""> <input name="email" type="email" id="email"
+				autofocus=""> 
+			<label for="email">Email</label>
+			<input name="email" type="email" id="email"
 				class="form-control" placeholder="Email" required="" autofocus="">
 			<button class="btn btn-primary btn-block" type="submit">
 				<i class="fas fa-user-plus"></i> Sign Up

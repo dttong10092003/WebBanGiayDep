@@ -25,4 +25,14 @@
 		<servlet-name>LoginControl</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ForgotPasswordControl</display-name>
+		<servlet-name>ForgotPasswordControl</servlet-name>
+		<servlet-class>control.ForgotPasswordControl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ForgotPasswordControl</servlet-name>
+		<url-pattern>/forgotPassword</url-pattern>
+	</servlet-mapping>
 </web-app>
