@@ -188,7 +188,7 @@
 								style="text-align: center; font-size: 18pt; color: #b57b00;">Về
 								chúng tôi</h4>
 							<h2 class="card-title show_txt"
-								style="text-align: center; font-size: 24pt;">Shoes Family</h2>
+								style="text-align: center; font-size: 24pt;">Torch Shoes</h2>
 							<p style="text-align: center;">Uy tín lâu năm chuyên cung cấp
 								giày dép thời trang cho nam, nữ, hàng Replica 1:1 - Like Auth với
 								chất lượng đảm bảo và giá tốt nhất TPHCM.</p>

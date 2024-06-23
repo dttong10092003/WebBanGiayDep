@@ -49,7 +49,7 @@
 				</p>
 			</div>
 			<div class="col text-center border-top">
-				<strong>Nhom &copy;2024. All rights reserved.</strong>
+				<strong>Copyright &copy;2024. All Rights Reserved.</strong>
 			</div>
 		</div>
 	</div>
