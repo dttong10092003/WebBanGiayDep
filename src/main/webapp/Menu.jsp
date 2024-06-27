@@ -21,7 +21,7 @@
 
 				<c:if test="${sessionScope.acc != null}">
 					<li class="nav-item"><a class="nav-link" href="#">Hello
-							${sessionScope.acc.user}</a></li>
+							${sessionScope.acc.username}</a></li>
 					<li class="nav-item"><a class="nav-link" href="logout">Logout</a>
 					</li>
 				</c:if>
