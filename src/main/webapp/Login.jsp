@@ -30,7 +30,7 @@
 	<jsp:include page="Menu.jsp"></jsp:include>
 	<div id="logreg-forms">
 		<c:if test="${error!=null }">
-			<div class="alert alert-danger" role="alert">${error}</div>
+			 <div id="errorAlert" class="alert alert-danger" role="alert">${error}</div>
 		</c:if>
 		<c:if test="${mess!=null }">
 			<div class="alert alert-success" role="alert">${mess}</div>
@@ -113,6 +113,13 @@
         $('#logreg-forms #btn-signup').click(toggleSignUp);
         $('#logreg-forms #cancel_signup').click(toggleSignUp);
     })
+    
+    setTimeout(function() {
+        var errorAlert = document.getElementById('errorAlert');
+        if (errorAlert) {
+            errorAlert.style.display = 'none';
+        }
+    }, 3000);
 	</script>
 </body>
 </html>
