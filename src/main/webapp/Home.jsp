@@ -18,6 +18,8 @@
 	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 	crossorigin="anonymous">
 
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -63,7 +65,7 @@
 
 .carousel-item:nth-child(2) {
 	background-image:
-		url('https://www.google.com/url?sa=i&url=https%3A%2F%2Ftiki.vn%2Fkhuyen-mai%2Fgiay-dep-thoi-trang&psig=AOvVaw3hPQ4aoYsGS2Xlh1ETAfUg&ust=1719160424381000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLDc3ObR74YDFQAAAAAdAAAAABAK');
+		url('https://file.hstatic.net/1000230642/file/web-top-banner_68b9a0c957374772bdf25d1d0f312b11_master.jpg');
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 	background-position: center center;
@@ -174,12 +176,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container">
-	
-	
-	
-	<div class="row" style="margin-top: 50px">
+
+
+
+		<div class="row" style="margin-top: 50px">
 			<div class="col-sm-12">
 				<div id="content" class="row">
 					<div class=" col-12 col-md-12 col-lg-6">
@@ -190,33 +192,53 @@
 							<h2 class="card-title show_txt"
 								style="text-align: center; font-size: 24pt;">Torch Shoes</h2>
 							<p style="text-align: center;">Uy tín lâu năm chuyên cung cấp
-								giày dép thời trang cho nam, nữ, hàng Replica 1:1 - Like Auth với
-								chất lượng đảm bảo và giá tốt nhất TPHCM.</p>
-							<p>Bạn đang cần tìm một đôi giày thể thao sneaker đẹp hoặc dép hợp
-								thời trang và đang hot Trends đến từ các thương hiệu lớn nhưng
-								lại không đủ hầu bao để sắm được hàng chính hãng? Hãy đến với
-								Torch Shoes – nơi bạn thỏa lòng mong ước mà chỉ phải chi ra 1
-								phần nhỏ so với dòng chính hãng ngoài store mà vẫn sắm cho mình
-								được một đôi chất lượng từ rep 1:1 đến siêu cấp like auth.</p>
+								giày dép thời trang cho nam, nữ, hàng Replica 1:1 - Like Auth
+								với chất lượng đảm bảo và giá tốt nhất TPHCM.</p>
+							<p>Bạn đang cần tìm một đôi giày thể thao sneaker đẹp hoặc
+								dép hợp thời trang và đang hot Trends đến từ các thương hiệu lớn
+								nhưng lại không đủ hầu bao để sắm được hàng chính hãng? Hãy đến
+								với Torch Shoes – nơi bạn thỏa lòng mong ước mà chỉ phải chi ra
+								1 phần nhỏ so với dòng chính hãng ngoài store mà vẫn sắm cho
+								mình được một đôi chất lượng từ rep 1:1 đến siêu cấp like auth.</p>
 						</div>
 					</div>
 					<div class=" col-12 col-md-12 col-lg-6">
-						<img class="card-img-top"
-							src="images/5.jpg"
-							alt="Card image cap">
+						<img class="card-img-top" src="images/5.jpg" alt="Card image cap">
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
+
+
 	</div>
-	
+
 	<jsp:include page="Footer.jsp"></jsp:include>
-	
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-	
 
 
+
+	<!-- MDB -->
+	<script type="text/javascript" src="js/mdb.min.js"></script>
+	<!-- Custom scripts -->
+	<script type="text/javascript" src="js/script.js"></script>
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script
+		src="https://mdbootstrap.com/previews/ecommerce-demo/js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript"
+		src="https://mdbootstrap.com/previews/ecommerce-demo/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript"
+		src="https://mdbootstrap.com/previews/ecommerce-demo/js/bootstrap.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript"
+		src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.min.js"></script>
+	<!-- MDB Ecommerce JavaScript -->
+	<script type="text/javascript"
+		src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
 </body>
 </html>

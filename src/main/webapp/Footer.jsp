@@ -1,5 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!-- Footer -->
+
+<style>
+.social-icons {
+	gap: 20px;
+}
+
+.social-icons a {
+	text-decoration: none;
+	color: inherit;
+	font-size: 3em; /* Kích thước biểu tượng */
+}
+</style>
+
 <footer class="text-light">
 	<div class="container">
 		<div class="row">
@@ -27,10 +40,15 @@
 			<div class="col-md-4 col-lg-4 col-xl-4 mx-auto">
 				<h5>THÔNG TIN FANPAGE</h5>
 				<hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
-				<iframe src="https://www.youtube.com/watch?v=13gXCV5Q3Bw" width="300" height="90"
-					style="border: none; overflow: hidden" scrolling="no"
-					frameborder="0" allowfullscreen="true"
-					allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+				<div class="social-icons">
+					<a href="https://www.facebook.com" target="_blank"
+						aria-label="Facebook"> <i class="fab fa-facebook"></i>
+					</a> <a href="https://www.twitter.com" target="_blank"
+						aria-label="Twitter"> <i class="fab fa-twitter"></i>
+					</a> <a href="https://www.instagram.com" target="_blank"
+						aria-label="Instagram"> <i class="fab fa-instagram"></i>
+					</a>
+				</div>
 			</div>
 
 			<div class="col-md-3 col-lg-3 col-xl-3">
