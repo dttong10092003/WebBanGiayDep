@@ -1,11 +1,15 @@
 package control;
 
+import java.io.IOException;
+import java.util.List;
+
+import dao.ProductDAO;
+import entity.Product;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @WebServlet(name = "HomeControl", urlPatterns = {"/home"})
 public class HomeControl extends HttpServlet {
@@ -14,6 +18,19 @@ public class HomeControl extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
+		
+		ProductDAO productDAO = new ProductDAO();
+		List<Product> top8Products = productDAO.top8Products();
+		request.setAttribute("top8Products", top8Products);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		request.getRequestDispatcher("Home.jsp").forward(request, response);
 	}
 	
