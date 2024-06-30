@@ -95,43 +95,122 @@ public class ProductDAO {
 		}
 		return top4NikeProductsNew;
 	}
-	
+
 	// Top 4 sản phẩm brand Adidas mới nhất
-		public List<Product> getTop4AdidasProductsNew() {
-			List<Product> top4AdidasProductsNew = new ArrayList<Product>();
-			String query = "SELECT TOP 4 p.* " + "FROM Product p " + "JOIN Brand b ON p.brandID = b.bID "
-					+ "WHERE b.bName = 'Adidas' " + "ORDER BY id desc";
+	public List<Product> getTop4AdidasProductsNew() {
+		List<Product> top4AdidasProductsNew = new ArrayList<Product>();
+		String query = "SELECT TOP 4 p.* " + "FROM Product p " + "JOIN Brand b ON p.brandID = b.bID "
+				+ "WHERE b.bName = 'Adidas' " + "ORDER BY id desc";
 
-			try {
-				conn = new DBConnect().getConnection();
-				ps = conn.prepareStatement(query);
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					Product product = new Product();
-					product.setId(rs.getString("id"));
-					product.setName(rs.getString("name"));
-					product.setImage(rs.getString("image"));
-					product.setPrice(rs.getDouble("price"));
-					product.setDescription(rs.getString("description"));
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDescription(rs.getString("description"));
 
-					Category category = new Category();
-					category.setId(rs.getInt("categoryID"));
-					product.setCategoryID(category);
-					Brand brand = new Brand();
-					brand.setId(rs.getInt("brandID"));
-					product.setBrandID(brand);
-					Supplier supplier = new Supplier();
-					supplier.setId(rs.getInt("supplierID"));
-					product.setSupplierID(supplier);
+				Category category = new Category();
+				category.setId(rs.getInt("categoryID"));
+				product.setCategoryID(category);
+				Brand brand = new Brand();
+				brand.setId(rs.getInt("brandID"));
+				product.setBrandID(brand);
+				Supplier supplier = new Supplier();
+				supplier.setId(rs.getInt("supplierID"));
+				product.setSupplierID(supplier);
 
-					product.setGender(rs.getInt("gender"));
-					top4AdidasProductsNew.add(product);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-
+				product.setGender(rs.getInt("gender"));
+				top4AdidasProductsNew.add(product);
 			}
-			return top4AdidasProductsNew;
-		}
+		} catch (Exception e) {
+			e.printStackTrace();
 
+		}
+		return top4AdidasProductsNew;
+	}
+
+	// Lấy 4 sản phẩm Nike tiếp theo
+	public List<Product> getNext4NikeProducts(int amount) {
+		List<Product> list = new ArrayList<Product>();
+		String query = "select * from Product p join Brand b on p.brandID = b.bID\r\n"
+				+ "        		where b.bName = 'Nike'\r\n" + "        		order by id desc\r\n"
+				+ "        		offset ? rows\r\n" + "        		fetch next 4 rows only";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, amount);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDescription(rs.getString("description"));
+
+				Category category = new Category();
+				category.setId(rs.getInt("categoryID"));
+				product.setCategoryID(category);
+				Brand brand = new Brand();
+				brand.setId(rs.getInt("brandID"));
+				product.setBrandID(brand);
+				Supplier supplier = new Supplier();
+				supplier.setId(rs.getInt("supplierID"));
+				product.setSupplierID(supplier);
+
+				product.setGender(rs.getInt("gender"));
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+
+	// Lấy 4 sản phẩm Adidas tiếp theo
+	public List<Product> getNext4AdidasProducts(int amount) {
+		List<Product> list = new ArrayList<Product>();
+		String query = "select * from Product p join Brand b on p.brandID = b.bID\r\n"
+				+ "        		where b.bName = 'Adidas'\r\n" + "        		order by id desc\r\n"
+				+ "        		offset ? rows\r\n" + "        		fetch next 4 rows only";
+		try {
+			conn = new DBConnect().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.setInt(1, amount);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDescription(rs.getString("description"));
+
+				Category category = new Category();
+				category.setId(rs.getInt("categoryID"));
+				product.setCategoryID(category);
+				Brand brand = new Brand();
+				brand.setId(rs.getInt("brandID"));
+				product.setBrandID(brand);
+				Supplier supplier = new Supplier();
+				supplier.setId(rs.getInt("supplierID"));
+				product.setSupplierID(supplier);
+
+				product.setGender(rs.getInt("gender"));
+				list.add(product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
 }

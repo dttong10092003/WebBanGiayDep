@@ -287,19 +287,6 @@
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 		<div class="row" style="margin-top: 50px">
 			<div class="col-sm-12">
 				<div id="content" class="row">
@@ -348,42 +335,46 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
-		function loadMoreNike() {
-			var amountNike = document.getElementsByClassName("productNike").length;
-			$
-					.ajax({
-						url : "/WebBanGiayDep/loadNike",
-						type : "get", //send it through get method
-						data : {
-							exitsNike : amountNike
-						},
-						success : function(dataNike) {
-							document.getElementById("contentNike").innerHTML += dataNike;
-
-						},
-						error : function(xhr) {
-							//Do Something to handle error
-						}
-					});
-		}
-		function loadMoreAdidas() {
-            var amountAdidas = document.getElementsByClassName("productAdidas").length;
-            $.ajax({
-                url: "/WebBanGiayDep/loadAdidas",
-                type: "get", //send it through get method
-                data: {
-                    exitsAdidas: amountAdidas
-                },
-                success: function (dataAdidas) {
-                    document.getElementById("contentAdidas").innerHTML += dataAdidas;
-                    
-                },
-                error: function (xhr) {
-                    //Do Something to handle error
-                }
-            });
-        }
-	</script>
+        
+        	 
+        	 function loadMoreNike() {
+                 var amountNike = document.getElementsByClassName("productNike").length;
+                 $.ajax({
+                     url: "/WebBanGiayDep/loadNike",
+                     type: "get", //send it through get method
+                     data: {
+                         exitsNike: amountNike
+                     },
+                     success: function (dataNike) {
+                         document.getElementById("contentNike").innerHTML += dataNike;
+                         
+                     },
+                     error: function (xhr) {
+                         //Do Something to handle error
+                     }
+                 });
+             }
+        	 function loadMoreAdidas() {
+                 var amountAdidas = document.getElementsByClassName("productAdidas").length;
+                 $.ajax({
+                     url: "/WebBanGiayDep/loadAdidas",
+                     type: "get", //send it through get method
+                     data: {
+                         exitsAdidas: amountAdidas
+                     },
+                     success: function (dataAdidas) {
+                         document.getElementById("contentAdidas").innerHTML += dataAdidas;
+                         
+                     },
+                     error: function (xhr) {
+                         //Do Something to handle error
+                     }
+                 });
+             }
+             
+           
+                   
+        </script>
 
 
 
