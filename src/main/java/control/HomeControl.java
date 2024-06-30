@@ -22,9 +22,11 @@ public class HomeControl extends HttpServlet {
 		ProductDAO productDAO = new ProductDAO();
 		List<Product> top8Products = productDAO.getTop8Products();
 		List<Product> top4NikeProductsNew = productDAO.getTop4NikeProductsNew();
+		List<Product> top4AdidasProductsNew = productDAO.getTop4AdidasProductsNew();
 
 		request.setAttribute("top8Products", top8Products);
 		request.setAttribute("top4NikeProductsNew", top4NikeProductsNew);
+		request.setAttribute("top4AdidasProductsNew", top4AdidasProductsNew);
 		
 
 		request.getRequestDispatcher("Home.jsp").forward(request, response);

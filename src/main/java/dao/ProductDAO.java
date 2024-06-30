@@ -95,5 +95,43 @@ public class ProductDAO {
 		}
 		return top4NikeProductsNew;
 	}
+	
+	// Top 4 sản phẩm brand Adidas mới nhất
+		public List<Product> getTop4AdidasProductsNew() {
+			List<Product> top4AdidasProductsNew = new ArrayList<Product>();
+			String query = "SELECT TOP 4 p.* " + "FROM Product p " + "JOIN Brand b ON p.brandID = b.bID "
+					+ "WHERE b.bName = 'Adidas' " + "ORDER BY id desc";
+
+			try {
+				conn = new DBConnect().getConnection();
+				ps = conn.prepareStatement(query);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					Product product = new Product();
+					product.setId(rs.getString("id"));
+					product.setName(rs.getString("name"));
+					product.setImage(rs.getString("image"));
+					product.setPrice(rs.getDouble("price"));
+					product.setDescription(rs.getString("description"));
+
+					Category category = new Category();
+					category.setId(rs.getInt("categoryID"));
+					product.setCategoryID(category);
+					Brand brand = new Brand();
+					brand.setId(rs.getInt("brandID"));
+					product.setBrandID(brand);
+					Supplier supplier = new Supplier();
+					supplier.setId(rs.getInt("supplierID"));
+					product.setSupplierID(supplier);
+
+					product.setGender(rs.getInt("gender"));
+					top4AdidasProductsNew.add(product);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
+			return top4AdidasProductsNew;
+		}
 
 }
