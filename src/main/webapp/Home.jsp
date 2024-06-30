@@ -208,8 +208,49 @@
 				</div>
 
 			</div>
+			
+			</div>
+            
+            
+             <div class="row" style="margin-top:25px">            
+				<h1 style="text-align:center; width:100%" id="nike">SẢN PHẨM NIKE MỚI NHẤT</h1>
+                    <div class="col-sm-12">
+                        <div id="contentNike" class="row">
+                        <c:forEach items="${top4NikeProductsNew}" var="o">
+                            <div class="productNike col-12 col-md-6 col-lg-3">
+                                <div class="card">
+                                 <div class="view zoom z-depth-2 rounded">
+                                    <img class="img-fluid w-100" src="${o.image}" alt="Card image cap">
+                                    </div>
+                                    <div class="card-body">
+                                        <h4 class="card-title show_txt"><a href="detail?pid=${o.id}" title="View Product">${o.name}</a></h4>
+                                        <p class="card-text show_txt">${o.description}</p>
+                                        <div class="row">
+                                            <div class="col">
+                                                <p class="btn btn-success btn-block">${o.price} $</p>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                   <button onclick="loadMoreNike()" class="btn btn-primary">Load more</button>
+                </div>
+            </div>
 
 		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		<div class="row" style="margin-top: 50px">
 			<div class="col-sm-12">
@@ -245,7 +286,26 @@
 	<jsp:include page="Footer.jsp"></jsp:include>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+	<script>
+	function loadMoreNike() {
+        var amountNike = document.getElementsByClassName("productNike").length;
+        $.ajax({
+            url: "/WebsiteBanGiay/loadNike",
+            type: "get", //send it through get method
+            data: {
+                exitsNike: amountNike
+            },
+            success: function (dataNike) {
+                document.getElementById("contentNike").innerHTML += dataNike;
+                
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+    }
+	
+	</script>
 
 
 

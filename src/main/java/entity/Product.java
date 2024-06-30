@@ -7,10 +7,26 @@ public class Product {
 	private double price;
 	private String description;
 	private Category categoryID;
+	private Brand brandID;
+	private Supplier supplierID;
 	private int gender;
 	
 	public Product() {
 		super();
+	}
+
+	public Product(String id, String name, String image, double price, String description, Category categoryID,
+			Brand brandID, Supplier supplierID, int gender) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.image = image;
+		this.price = price;
+		this.description = description;
+		this.categoryID = categoryID;
+		this.brandID = brandID;
+		this.supplierID = supplierID;
+		this.gender = gender;
 	}
 
 	public String getId() {
@@ -61,6 +77,22 @@ public class Product {
 		this.categoryID = categoryID;
 	}
 
+	public Brand getBrandID() {
+		return brandID;
+	}
+
+	public void setBrandID(Brand brandID) {
+		this.brandID = brandID;
+	}
+
+	public Supplier getSupplierID() {
+		return supplierID;
+	}
+
+	public void setSupplierID(Supplier supplierID) {
+		this.supplierID = supplierID;
+	}
+
 	public int getGender() {
 		return gender;
 	}
@@ -69,26 +101,12 @@ public class Product {
 		this.gender = gender;
 	}
 
-	
-
-	public Product(String id, String name, String image, double price, String description, Category categoryID,
-			int gender) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.image = image;
-		this.price = price;
-		this.description = description;
-		this.categoryID = categoryID;
-		this.gender = gender;
-	}
-
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", description="
-				+ description + ", categoryID=" + categoryID + ", gender=" + gender + "]";
+				+ description + ", categoryID=" + categoryID + ", brandID=" + brandID + ", supplierID=" + supplierID
+				+ ", gender=" + gender + "]";
 	}
-
 	
 	
 	

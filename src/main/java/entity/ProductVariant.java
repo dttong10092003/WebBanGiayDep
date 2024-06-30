@@ -10,6 +10,7 @@ public class ProductVariant {
 		private String image1;
 		private String image2;
 		private String image3;
+		private String image4;
 		
 		
 		public ProductVariant() {
@@ -18,7 +19,7 @@ public class ProductVariant {
 
 
 		public ProductVariant(int id, String productID, String color, int size, int quantity, int soldQuantity,
-				String image1, String image2, String image3) {
+				String image1, String image2, String image3, String image4) {
 			super();
 			this.id = id;
 			this.productID = productID;
@@ -29,6 +30,7 @@ public class ProductVariant {
 			this.image1 = image1;
 			this.image2 = image2;
 			this.image3 = image3;
+			this.image4 = image4;
 		}
 
 
@@ -122,12 +124,25 @@ public class ProductVariant {
 		}
 
 
+		public String getImage4() {
+			return image4;
+		}
+
+
+		public void setImage4(String image4) {
+			this.image4 = image4;
+		}
+
+
 		@Override
 		public String toString() {
 			return "ProductVariant [id=" + id + ", productID=" + productID + ", color=" + color + ", size=" + size
 					+ ", quantity=" + quantity + ", soldQuantity=" + soldQuantity + ", image1=" + image1 + ", image2="
-					+ image2 + ", image3=" + image3 + "]";
+					+ image2 + ", image3=" + image3 + ", image4=" + image4 + "]";
 		}
+
+
+		
 		
 		
 		
