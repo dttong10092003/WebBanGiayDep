@@ -196,18 +196,17 @@
 						<div class=" col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap">
-
+									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
+										alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
-									<h4 class="card-title show_txt">
+									<h5 class="card-title show_txt">
 										<a href="detail?pid=${o.id}" title="View Product">${o.name}</a>
-									</h4>
+									</h5>
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<p class="btn btn-success btn-block">${o.price}$</p>
+											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
 										</div>
 									</div>
 								</div>
@@ -230,19 +229,18 @@
 						<div class="productNike col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap">
+									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
+										alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
-									<h4 class="card-title show_txt">
+									<h5 class="card-title show_txt">
 										<a href="detail?pid=${o.id}" title="View Product">${o.name}</a>
-									</h4>
+									</h5>
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<p class="btn btn-success btn-block">${o.price}$</p>
+											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -263,19 +261,18 @@
 						<div class="productAdidas col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap">
+									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
+										alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
-									<h4 class="card-title show_txt">
+									<h5 class="card-title show_txt">
 										<a href="detail?pid=${o.id}" title="View Product">${o.name}</a>
-									</h4>
+									</h5>
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<p class="btn btn-success btn-block">${o.price}$</p>
+											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
 										</div>
-
 									</div>
 								</div>
 							</div>

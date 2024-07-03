@@ -1,0 +1,43 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import connect.DBConnect;
+import entity.Brand;
+
+public class BrandDAO {
+	public Brand getBrandByID(int id) {
+		String query = "SELECT * FROM Brand WHERE bID = ?";
+		Brand b = new Brand();
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				
+				b.setId(rs.getInt("bID"));
+				b.setName(rs.getString("bName"));
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public int getBrandIDByProductID(String id) {
+		String query = "SELECT brandID FROM Product WHERE id = ?";
+		int brandID = 0;
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				brandID = rs.getInt("brandID");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return brandID;
+	}
+}

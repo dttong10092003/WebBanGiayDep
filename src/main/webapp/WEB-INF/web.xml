@@ -42,4 +42,5 @@
     <servlet-name>ShopControl</servlet-name>
     <url-pattern>/ShopControl</url-pattern>
   </servlet-mapping>
+  
 </web-app>
