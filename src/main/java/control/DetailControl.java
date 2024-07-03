@@ -12,8 +12,8 @@ import java.util.List;
 import dao.BrandDAO;
 import dao.CategoryDAO;
 import dao.ProductDAO;
-import entity.Account;
 import entity.Product;
+import entity.ProductVariant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,6 +38,8 @@ public class DetailControl extends HttpServlet {
         int brandIDProductDetail = brandDAO.getBrandIDByProductID(id);
         
         List<Product> listRelatedProduct = productDAO.getRelatedProduct(cateIDProductDetail, brandIDProductDetail);
+        List<ProductVariant> productVariants = productDAO.getProductVariantByProductID(id); // Lấy tất cả khi ra chi tiết sẽ bị trùng màu
+//        List<ProductVariant> productVariants = productDAO.getProductVariantByProductIDGroupBy(id); // Group lại để không bị trùng màu
         
 //        List<Review> listAllReview = dao.getAllReviewByProductID(id);
 //        int countAllReview = listAllReview.size();
@@ -48,6 +50,7 @@ public class DetailControl extends HttpServlet {
 
         request.setAttribute("detail", p);
         request.setAttribute("listRelatedProduct", listRelatedProduct);
+        request.setAttribute("productVariants", productVariants);
 //        request.setAttribute("listAllReview", listAllReview);
 //        request.setAttribute("listAllAcount", listAllAcount);
 //        request.setAttribute("countAllReview", countAllReview);

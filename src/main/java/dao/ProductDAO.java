@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connect.DBConnect;
-import entity.Brand;
-import entity.Category;
 import entity.Product;
-import entity.Supplier;
+import entity.ProductVariant;
 
 public class ProductDAO {
 
@@ -248,4 +246,80 @@ public class ProductDAO {
 		return list;
 
 	}
+	
+	// Lấy ProductVariant theo productID
+	public List<ProductVariant> getProductVariantByProductID(String productID) {
+		List<ProductVariant> list = new ArrayList<ProductVariant>();
+		String query = "SELECT * FROM ProductVariant WHERE productID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, productID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductVariant productVariant = new ProductVariant();
+				productVariant.setId(rs.getInt("id"));
+				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setSize(rs.getInt("size"));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("quantity"));
+				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+				list.add(productVariant);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+	//Đang fix lỗi
+	// Lấy ProductVariant theo productID và gom nhóm không theo size
+	public List<ProductVariant> getProductVariantByProductIDGroupBy(String productID) {
+		List<ProductVariant> list = new ArrayList<ProductVariant>();
+		String query = "SELECT "
+		           + "    productID, "
+		           + "    color, "
+		           + "    image1, "
+		           + "    image2, "
+		           + "    image3, "
+		           + "    image4, "
+		           + "    SUM(quantity) AS totalQuantity, "
+		           + "    SUM(soldQuantity) AS totalSoldQuantity "
+		           + "FROM "
+		           + "    ProductVariant "
+		           + "WHERE "
+		           + "    productID = ? "  
+		           + "GROUP BY "
+		           + "    productID, "
+		           + "    color, "
+		           + "    image1, "
+		           + "    image2, "
+		           + "    image3, "
+		           + "    image4 ";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, productID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductVariant productVariant = new ProductVariant();
+				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("quantity"));
+				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+				list.add(productVariant);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+	
 }
