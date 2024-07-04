@@ -38,8 +38,9 @@ public class DetailControl extends HttpServlet {
         int brandIDProductDetail = brandDAO.getBrandIDByProductID(id);
         
         List<Product> listRelatedProduct = productDAO.getRelatedProduct(cateIDProductDetail, brandIDProductDetail);
-        List<ProductVariant> productVariants = productDAO.getProductVariantByProductID(id); // Lấy tất cả khi ra chi tiết sẽ bị trùng màu
-//        List<ProductVariant> productVariants = productDAO.getProductVariantByProductIDGroupBy(id); // Group lại để không bị trùng màu
+//        List<ProductVariant> productVariants = productDAO.getProductVariantByProductID(id); // Lấy tất cả khi ra chi tiết sẽ bị trùng màu
+        List<ProductVariant> productVariants = productDAO.getProductVariantByProductIDGroupBy(id); // Group lại để không bị trùng màu
+        List<ProductVariant> listSize = productDAO.getProductVariantByProductIDAndTop1Color(id); // Lây size của productvariant đầu tiên
         
 //        List<Review> listAllReview = dao.getAllReviewByProductID(id);
 //        int countAllReview = listAllReview.size();
@@ -49,6 +50,7 @@ public class DetailControl extends HttpServlet {
 //        Product last = dao.getLast();
 
         request.setAttribute("detail", p);
+        request.setAttribute("listSize", listSize);
         request.setAttribute("listRelatedProduct", listRelatedProduct);
         request.setAttribute("productVariants", productVariants);
 //        request.setAttribute("listAllReview", listAllReview);

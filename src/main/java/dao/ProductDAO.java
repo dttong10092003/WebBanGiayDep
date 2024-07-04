@@ -246,7 +246,7 @@ public class ProductDAO {
 		return list;
 
 	}
-	
+
 	// Lấy ProductVariant theo productID
 	public List<ProductVariant> getProductVariantByProductID(String productID) {
 		List<ProductVariant> list = new ArrayList<ProductVariant>();
@@ -275,36 +275,51 @@ public class ProductDAO {
 		return list;
 
 	}
-	//Đang fix lỗi
+
 	// Lấy ProductVariant theo productID và gom nhóm không theo size
 	public List<ProductVariant> getProductVariantByProductIDGroupBy(String productID) {
 		List<ProductVariant> list = new ArrayList<ProductVariant>();
-		String query = "SELECT "
-		           + "    productID, "
-		           + "    color, "
-		           + "    image1, "
-		           + "    image2, "
-		           + "    image3, "
-		           + "    image4, "
-		           + "    SUM(quantity) AS totalQuantity, "
-		           + "    SUM(soldQuantity) AS totalSoldQuantity "
-		           + "FROM "
-		           + "    ProductVariant "
-		           + "WHERE "
-		           + "    productID = ? "  
-		           + "GROUP BY "
-		           + "    productID, "
-		           + "    color, "
-		           + "    image1, "
-		           + "    image2, "
-		           + "    image3, "
-		           + "    image4 ";
+		String query = "SELECT " + "    productID, " + "    color, " + "    image1, " + "    image2, " + "    image3, "
+				+ "    image4, " + "    SUM(quantity) AS totalQuantity, "
+				+ "    SUM(soldQuantity) AS totalSoldQuantity " + "FROM " + "    ProductVariant " + "WHERE "
+				+ "    productID = ? " + "GROUP BY " + "    productID, " + "    color, " + "    image1, "
+				+ "    image2, " + "    image3, " + "    image4  order by min(id)";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 			ps.setString(1, productID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
 				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("totalQuantity"));
+				productVariant.setSoldQuantity(rs.getInt("totalSoldQuantity"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+				list.add(productVariant);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+
+	// Lấy ProductVariant theo productID và lấy size của màu đầu tiên (Do chưa biết màu)
+	public List<ProductVariant> getProductVariantByProductIDAndTop1Color(String productID) {
+		List<ProductVariant> list = new ArrayList<ProductVariant>();
+		String query = "SELECT * FROM ProductVariant WHERE productID = ? and color = (SELECT top 1 color FROM ProductVariant WHERE productID = ? order by id)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, productID);
+			ps.setString(2, productID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductVariant productVariant = new ProductVariant();
+				productVariant.setId(rs.getInt("id"));
+				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setSize(rs.getInt("size"));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("quantity"));
 				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
@@ -322,4 +337,34 @@ public class ProductDAO {
 
 	}
 	
+	// Lấy ProductVariant theo productID và color
+	public List<ProductVariant> getProductVariantByProductIDAndColor(String productID, String color) {
+		List<ProductVariant> list = new ArrayList<ProductVariant>();
+		String query = "SELECT * FROM ProductVariant WHERE productID = ? and color = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, productID);
+			ps.setString(2, color);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductVariant productVariant = new ProductVariant();
+				productVariant.setId(rs.getInt("id"));
+				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setSize(rs.getInt("size"));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("quantity"));
+				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+				list.add(productVariant);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+
 }

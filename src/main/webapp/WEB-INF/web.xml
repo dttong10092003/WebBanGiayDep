@@ -42,5 +42,14 @@
     <servlet-name>ShopControl</servlet-name>
     <url-pattern>/ShopControl</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>LoadSizesServlet</display-name>
+    <servlet-name>LoadSizesServlet</servlet-name>
+    <servlet-class>control.LoadSizesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadSizesServlet</servlet-name>
+    <url-pattern>/LoadSizesServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

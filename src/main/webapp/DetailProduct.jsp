@@ -146,7 +146,7 @@
 										style="max-height: 450px;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
-											data-size="710x823"> <img src="${detail.image}"
+											data-size="710x823"> <img src="${productVariants[0].image1}"
 											class="img-fluid z-depth-1" style="margin-top: -90px;">
 										</a>
 									</figure>
@@ -154,7 +154,7 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-											data-size="710x823"> <img src="${detail.image}"
+											data-size="710x823"> <img src="${productVariants[0].image2}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -162,7 +162,7 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-											data-size="710x823"> <img src="${detail.image}"
+											data-size="710x823"> <img src="${productVariants[0].image3}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -170,7 +170,7 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-											data-size="710x823"> <img src="${detail.image}"
+											data-size="710x823"> <img src="${productVariants[0].image4}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -180,28 +180,28 @@
 										<div class="col-3">
 											<div
 												class="view overlay rounded z-depth-1 gallery-item hoverable">
-												<img src="${detail.image}" class="img-fluid">
+												<img src="${productVariants[0].image1}" class="img-fluid">
 												<div class="mask rgba-white-slight"></div>
 											</div>
 										</div>
 										<div class="col-3">
 											<div
 												class="view overlay rounded z-depth-1 gallery-item hoverable">
-												<img src="${detail.image}" class="img-fluid">
+												<img src="${productVariants[0].image2}" class="img-fluid">
 												<div class="mask rgba-white-slight"></div>
 											</div>
 										</div>
 										<div class="col-3">
 											<div
 												class="view overlay rounded z-depth-1 gallery-item hoverable">
-												<img src="${detail.image}" class="img-fluid">
+												<img src="${productVariants[0].image3}" class="img-fluid">
 												<div class="mask rgba-white-slight"></div>
 											</div>
 										</div>
 										<div class="col-3">
 											<div
 												class="view overlay rounded z-depth-1 gallery-item hoverable">
-												<img src="${detail.image}" class="img-fluid">
+												<img src="${productVariants[0].image4}" class="img-fluid">
 												<div class="mask rgba-white-slight"></div>
 											</div>
 										</div>
@@ -238,8 +238,11 @@
 											<div class="colorway-images-wrapper">
 												<c:forEach var="productVariant" items="${productVariants}"
 													varStatus="status">
-													<a><img src="${productVariant.image1}"
-														class="img-fluid ${status.first ? 'selected' : ''}"></a>
+													<a 
+														onclick="loadSizesForProductVariant('${productVariant.productID}', '${productVariant.color}')">
+														<img src="${productVariant.image1}"
+														class="img-fluid ${status.first ? 'selected' : ''}">
+													</a>
 												</c:forEach>
 											</div>
 
@@ -248,8 +251,8 @@
 									<tr>
 										<th class="pl-0 w-25" scope="row"><strong>Size</strong></th>
 										<td>
-											<div class="size-selector">
-												<c:forEach var="productVariant" items="${productVariants}">
+											<div class="size-selector" id="sizeSelector">
+												<c:forEach var="productVariant" items="${listSize}">
 													<a href="#">${productVariant.size}</a>
 												</c:forEach>
 											</div>
@@ -265,8 +268,7 @@
 								<table class="table table-sm table-borderless">
 									<tbody>
 										<tr>
-											<td class="pl-0 pb-0 w-25">Quantity</td>
-											<td class="pb-0">Select size</td>
+											<td class="pl-0 pb-0 w-25"><strong>Quantity</strong></td>
 										</tr>
 										<tr>
 											<td class="pl-0">
@@ -284,28 +286,7 @@
 													</div>
 												</div>
 											</td>
-											<td>
-												<div class="mt-1">
-													<div class="form-check form-check-inline pl-0">
-														<input type="radio" class="form-check-input" id="small"
-															value="small" name="size" checked> <label
-															class="form-check-label small text-uppercase card-link-secondary"
-															for="small">Small</label>
-													</div>
-													<div class="form-check form-check-inline pl-0">
-														<input type="radio" class="form-check-input" id="medium"
-															value="medium" name="size"> <label
-															class="form-check-label small text-uppercase card-link-secondary"
-															for="medium">Medium</label>
-													</div>
-													<div class="form-check form-check-inline pl-0">
-														<input type="radio" class="form-check-input" id="large"
-															value="large" name="size"> <label
-															class="form-check-label small text-uppercase card-link-secondary"
-															for="large">Large</label>
-													</div>
-												</div>
-											</td>
+											
 										</tr>
 									</tbody>
 								</table>
@@ -511,6 +492,35 @@
                                  }
                              });
                         },false); 
+        
+        
+        $('#sizeSelector').on('click', 'a', function(e) {
+            e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ <a>
+            $('#sizeSelector a').removeClass('selected'); // Xóa lớp selected từ tất cả các thẻ <a> trong sizeSelector
+            $(this).addClass('selected'); // Thêm lớp selected cho thẻ <a> được nhấp vào
+            // Các xử lý khác nếu cần
+        });
+      
+        function loadSizesForProductVariant(productID, color) {
+            $.ajax({
+                url: "/WebBanGiayDep/loadImg", 
+                type: "get",
+                data: {
+                    productID: productID,
+                    color: color
+                },
+                success: function(data) {
+                    // Cập nhật nội dung của size-selector
+                    $('#sizeSelector').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Lỗi khi tải kích cỡ:", error);
+                }
+            });
+        }
+        
+       
+    
         document.querySelectorAll('.colorway-images-wrapper img').forEach(item => {
             item.addEventListener('click', () => {
                 document.querySelectorAll('.colorway-images-wrapper img').forEach(el => el.classList.remove('selected'));
