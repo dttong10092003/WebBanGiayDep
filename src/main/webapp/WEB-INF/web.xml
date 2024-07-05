@@ -52,4 +52,24 @@
     <servlet-name>LoadSizesServlet</servlet-name>
     <url-pattern>/LoadSizesServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoadImageControl</display-name>
+    <servlet-name>LoadImageControl</servlet-name>
+    <servlet-class>control.LoadImageControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadImageControl</servlet-name>
+    <url-pattern>/LoadImageControl</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoadImagesControl</display-name>
+    <servlet-name>LoadImagesControl</servlet-name>
+    <servlet-class>control.LoadImagesControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadImagesControl</servlet-name>
+    <url-pattern>/LoadImagesControl</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -36,40 +36,6 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 
-<style>
-.gallery-wrap .img-big-wrap img {
-	height: 450px;
-	width: auto;
-	display: inline-block;
-	cursor: zoom-in;
-}
-
-.gallery-wrap .img-small-wrap .item-gallery {
-	width: 60px;
-	height: 60px;
-	border: 1px solid #ddd;
-	margin: 7px 2px;
-	display: inline-block;
-	overflow: hidden;
-}
-
-.gallery-wrap .img-small-wrap {
-	text-align: center;
-}
-
-.gallery-wrap .img-small-wrap img {
-	max-width: 100%;
-	max-height: 100%;
-	object-fit: cover;
-	border-radius: 4px;
-	cursor: zoom-in;
-}
-
-.img-big-wrap img {
-	width: 100% !important;
-	height: auto !important;
-}
-</style>
 
 <style>
 .colorway-images-wrapper {
@@ -139,7 +105,7 @@
 
 						<div class="mdb-lightbox">
 
-							<div class="row product-gallery mx-1">
+							<div class="row product-gallery mx-1" id="imageDisplay">
 
 								<div class="col-12 mb-0">
 									<figure class="view overlay rounded z-depth-1 main-img"
@@ -235,7 +201,7 @@
 									<tr>
 										<th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
 										<td>
-											<div class="colorway-images-wrapper">
+											<div class="colorway-images-wrapper" >
 												<c:forEach var="productVariant" items="${productVariants}"
 													varStatus="status">
 													<a 
@@ -500,18 +466,29 @@
             $(this).addClass('selected'); // Thêm lớp selected cho thẻ <a> được nhấp vào
             // Các xử lý khác nếu cần
         });
+        
       
         function loadSizesForProductVariant(productID, color) {
             $.ajax({
-                url: "/WebBanGiayDep/loadImg", 
+                url: "/WebBanGiayDep/loadSizes", 
                 type: "get",
                 data: {
                     productID: productID,
                     color: color
                 },
                 success: function(data) {
-                    // Cập nhật nội dung của size-selector
-                    $('#sizeSelector').html(data);
+                	// Parse the HTML response
+                	var parser = new DOMParser();
+                	var doc = parser.parseFromString(data, 'text/html');
+                	
+                	// Extract and update the size section
+                	var sizeSection = doc.getElementById('sizeSection').innerHTML;
+                	$('#sizeSelector').html(sizeSection);
+                	
+                	// Extract and update the image section
+                	var imageSection = doc.getElementById('imageSection').innerHTML;
+                    $('#imageDisplay').html(imageSection);
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error("Lỗi khi tải kích cỡ:", error);
