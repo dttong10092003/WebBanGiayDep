@@ -41,6 +41,14 @@
 	crossorigin="anonymous">
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 
+<style>
+.equal-image {
+	height: 220px; /* Đặt chiều cao cố định */
+	object-fit: cover; /* Cắt ảnh để vừa khít khung chứa */
+	width: 100%; /* Đảm bảo chiều rộng ảnh chiếm hết khung chứa */
+}
+</style>
+
 </head>
 
 <body class="skin-light" onload="loadAmountCart()">
@@ -67,15 +75,58 @@
 					<!-- Section: Sidebar -->
 					<section>
 
+						<!-- Section: Gender -->
+						<section>
+							<h5>Gender</h5>
+
+							<div class="form-check pl-0 mb-3">
+								<input type="checkbox" class="form-check-input" id="genderMen"
+									onchange="filterByGender('men')"> <label
+									class="form-check-label small text-uppercase card-link-secondary"
+									for="genderMen">Men</label>
+							</div>
+							<div class="form-check pl-0 mb-3">
+								<input type="checkbox" class="form-check-input" id="genderWomen"
+									onchange="filterByGender('women')"> <label
+									class="form-check-label small text-uppercase card-link-secondary"
+									for="genderWomen">Women</label>
+							</div>
+							<div class="form-check pl-0 mb-3">
+								<input type="checkbox" class="form-check-input"
+									id="genderUnisex" onchange="filterByGender('unisex')">
+								<label
+									class="form-check-label small text-uppercase card-link-secondary"
+									for="genderUnisex">Unisex</label>
+							</div>
+
+						</section>
+						<!-- Section: Gender -->
+
+						<!-- Section: Brand -->
+						<section>
+							<h5>Brand</h5>
+
+							<div class="text-muted small text-uppercase mb-5">
+								<c:forEach items="${listBrand }" var="o">
+									<p class="mb-3">
+										<a onclick="load(${o.id})" class="card-link-secondary">${o.name }</a>
+									</p>
+
+								</c:forEach>
+
+							</div>
+						</section>
+						<!-- Section: Brand -->
+
 						<!-- Section: Categories -->
 						<section>
 
 							<h5>Categories</h5>
 
 							<div class="text-muted small text-uppercase mb-5">
-								<c:forEach items="${listCC}" var="o">
+								<c:forEach items="${listCategory}" var="o">
 									<p class="mb-3">
-										<a onclick="load(${o.cid})" class="card-link-secondary">${o.cname}</a>
+										<a onclick="load(${o.id})" class="card-link-secondary">${o.name}</a>
 									</p>
 								</c:forEach>
 							</div>
@@ -229,16 +280,16 @@
 								<nav aria-label="Page navigation example">
 									<ul
 										class="pagination pagination-circle justify-content-center float-md-right mb-0">
-										<c:if test="${tag != 1}">
-											<li class="page-item"><a href="shop?index=${tag-1 }"
+										<c:if test="${index != 1}">
+											<li class="page-item"><a href="shop?index=${index-1 }"
 												class="page-link"><i class="fas fa-chevron-left"></i></a></li>
 										</c:if>
-										<c:forEach begin="1" end="${endPage }" var="i">
-											<li class="${tag==i?"page-itemactive":"page-item" }"><a
+										<c:forEach begin="1" end="${lastPage }" var="i">
+											<li class="${index==i?"page-itemactive":"page-item" }"><a
 												href="shop?index=${i }" class="page-link">${i }</a></li>
 										</c:forEach>
-										<c:if test="${tag != endPage}">
-											<li class="page-item"><a href="shop?index=${tag+1 }"
+										<c:if test="${index != lastPage}">
+											<li class="page-item"><a href="shop?index=${index+1 }"
 												class="page-link"><i class="fas fa-chevron-right"></i></a></li>
 										</c:if>
 									</ul>
@@ -256,7 +307,7 @@
 						<div class="row" id="content">
 
 
-							<c:forEach items="${listP}" var="o">
+							<c:forEach items="${listProduct}" var="o">
 								<!-- Grid column -->
 								<div class="col-md-4 mb-5">
 
@@ -264,10 +315,10 @@
 									<div class="">
 
 										<div class="view zoom overlay rounded z-depth-2">
-											<img class="img-fluid w-100" src="${o.image }" alt="Sample">
+											<img class="img-fluid w-100 equal-image" src="${o.image }" alt="Sample">
 											<a href="detail?pid=${o.id}">
 												<div class="mask">
-													<img class="img-fluid w-100" src="${o.image }">
+													<img class="img-fluid w-100 equal-image" src="${o.image }">
 													<div class="mask rgba-black-slight"></div>
 												</div>
 											</a>

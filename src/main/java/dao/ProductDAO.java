@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -307,7 +308,8 @@ public class ProductDAO {
 
 	}
 
-	// Lấy ProductVariant theo productID và lấy size của màu đầu tiên (Do chưa biết màu)
+	// Lấy ProductVariant theo productID và lấy size của màu đầu tiên (Do chưa biết
+	// màu)
 	public List<ProductVariant> getProductVariantByProductIDAndTop1Color(String productID) {
 		List<ProductVariant> list = new ArrayList<ProductVariant>();
 		String query = "SELECT * FROM ProductVariant WHERE productID = ? and color = (SELECT top 1 color FROM ProductVariant WHERE productID = ? order by id)";
@@ -336,7 +338,7 @@ public class ProductDAO {
 		return list;
 
 	}
-	
+
 	// Lấy ProductVariant theo productID và color
 	public List<ProductVariant> getProductVariantByProductIDAndColor(String productID, String color) {
 		List<ProductVariant> list = new ArrayList<ProductVariant>();
@@ -365,6 +367,54 @@ public class ProductDAO {
 		}
 		return list;
 
+	}
+
+	public List<Product> getProductByIndex(int index) {
+		List<Product> list = new ArrayList<Product>();
+		String query = "select * from Product \r\n" + "order by [id] desc\r\n" + "offset ? rows\r\n"
+				+ "fetch next 9 rows only";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, (index - 1) * 9);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDescription(rs.getString("description"));
+
+				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
+
+				product.setBrandID(brandDAO.getBrandByID(rs.getInt("brandID")));
+
+				product.setSupplierID(supplierDAO.getSupplierByID(rs.getInt("supplierID")));
+
+				product.setGender(rs.getInt("gender"));
+				list.add(product);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public int getCountAllProduct() {
+		String query = "select count(*) as total from Product";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				return rs.getInt("total");
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 }

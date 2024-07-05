@@ -86,9 +86,6 @@
 	}
 }
 
-.navbar .nav-link {
-	color: #fff !important;
-}
 </style>
 
 <style>

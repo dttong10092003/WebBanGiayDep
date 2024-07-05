@@ -1,6 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!--begin of menu-->
+<style>
+.navbar .nav-link {
+	color: #fff !important;
+}
+</style>
+
 <nav class="navbar navbar-expand-md navbar-dark bg-dark"
 	style="position: fixed; top: 0; width: 100%; z-index: 100000">
 	<div class="container">

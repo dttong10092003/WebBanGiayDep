@@ -76,6 +76,10 @@
 .size-selector a.selected {
 	border: 2px solid #000;
 }
+
+.navbar .nav-link {
+	color: #fff !important;
+}
 </style>
 </head>
 <body class="skin-light">
