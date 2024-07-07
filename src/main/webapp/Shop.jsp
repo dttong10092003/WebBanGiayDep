@@ -109,7 +109,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listBrand }" var="o">
 									<p class="mb-3">
-										<a onclick="load(${o.id})" class="card-link-secondary">${o.name }</a>
+										<a onclick="loadBrand(${o.id})" class="card-link-secondary">${o.name }</a>
 									</p>
 
 								</c:forEach>
@@ -126,7 +126,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listCategory}" var="o">
 									<p class="mb-3">
-										<a onclick="load(${o.id})" class="card-link-secondary">${o.name}</a>
+										<a onclick="loadCategory(${o.id})" class="card-link-secondary">${o.name}</a>
 									</p>
 								</c:forEach>
 							</div>
@@ -208,32 +208,13 @@
 								<div
 									class="btn-group btn-group-toggle btn-color-group d-block mt-n2 ml-n2"
 									data-toggle="buttons">
-									<label
-										class="btn rounded-circle white border-inset-grey p-3 m-2">
-										<input onchange="searchByColorWhite()" type="checkbox"
-										autocomplete="off">
-									</label> <label class="btn rounded-circle grey p-3 m-2"> <input
-										onchange="searchByColorGray()" type="checkbox"
-										autocomplete="off">
-									</label> <label class="btn rounded-circle black p-3 m-2"> <input
-										onchange="searchByColorBlack()" type="checkbox"
-										autocomplete="off">
-									</label> <label class="btn rounded-circle green p-3 m-2"> <input
-										type="checkbox" autocomplete="off">
-									</label> <label class="btn rounded-circle blue p-3 m-2"> <input
-										type="checkbox" autocomplete="off">
-									</label> <label class="btn rounded-circle purple p-3 m-2"> <input
-										type="checkbox" autocomplete="off">
-									</label> <label class="btn rounded-circle yellow p-3 m-2"> <input
-										onchange="searchByColorYellow()" type="checkbox"
-										autocomplete="off">
-									</label> <label class="btn rounded-circle indigo p-3 m-2"> <input
-										type="checkbox" checked autocomplete="off">
-									</label> <label class="btn rounded-circle red p-3 m-2"> <input
-										type="checkbox" autocomplete="off">
-									</label> <label class="btn rounded-circle orange p-3 m-2"> <input
-										type="checkbox" autocomplete="off">
-									</label>
+									<c:forEach var="color" items="${colors}">
+										<label
+											class="btn rounded-circle ${color} border-inset-grey p-3 m-2">
+											<input onchange="searchByColor('${color}')" type="checkbox"
+											autocomplete="off">
+										</label>
+									</c:forEach>
 								</div>
 
 							</section>
@@ -315,8 +296,8 @@
 									<div class="">
 
 										<div class="view zoom overlay rounded z-depth-2">
-											<img class="img-fluid w-100 equal-image" src="${o.image }" alt="Sample">
-											<a href="detail?pid=${o.id}">
+											<img class="img-fluid w-100 equal-image" src="${o.image }"
+												alt="Sample"> <a href="detail?pid=${o.id}">
 												<div class="mask">
 													<img class="img-fluid w-100 equal-image" src="${o.image }">
 													<div class="mask rgba-black-slight"></div>
@@ -376,7 +357,50 @@
 	<script type="text/javascript"
 		src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
 
-
+	<script>
+	$('#multi').mdbRange({
+	      single: {
+	        active: true,
+	        multi: {
+	          active: true,
+	          rangeLength: 1
+	        },
+	      }
+	    });
+	
+	$(document).ready(function () {
+	      $('.mdb-select').materialSelect();
+	      $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
+	        $(this).closest('.select-outline').find('label').toggleClass('active');
+	        $(this).closest('.select-outline').find('.caret').toggleClass('active');
+	      });
+	    });
+	
+	function loadCategory(categoryID){
+   	 $.ajax({
+            url: "/WebBanGiayDep/categoryShop",
+            type: "get", //send it through get method
+            data: {
+                cid: categoryID
+            },
+            success: function (responseData) {
+                document.getElementById("content").innerHTML = responseData;
+            }
+        });
+   }  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
 
 
 

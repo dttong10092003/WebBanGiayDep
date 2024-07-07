@@ -39,11 +39,16 @@ public class ShopControl extends HttpServlet {
 		if (count % 9 != 0) {
 			lastPage++;
 		}
+		
+		List<String> colors = productDAO.getAllColor();
+		
+		
 		request.setAttribute("listProduct", listProduct);
 		request.setAttribute("listCategory", listCategory);
 		request.setAttribute("listBrand", listBrand);
 		request.setAttribute("index", indexPage);
 		request.setAttribute("lastPage", lastPage);
+		request.setAttribute("colors", colors);
 		request.getRequestDispatcher("Shop.jsp").forward(request, response);
 
 	}

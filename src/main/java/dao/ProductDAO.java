@@ -3,7 +3,6 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -415,6 +414,54 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	public List<String> getAllColor() {
+		List<String> list = new ArrayList<String>();
+		String query = "select color from ProductVariant group by color";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(rs.getString("color"));
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<Product> getProductByCategoryID(int categoryID) {
+		List<Product> list = new ArrayList<Product>();
+		String query = "select * from Product where categoryID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, categoryID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setDescription(rs.getString("description"));
+
+				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
+
+				product.setBrandID(brandDAO.getBrandByID(rs.getInt("brandID")));
+
+				product.setSupplierID(supplierDAO.getSupplierByID(rs.getInt("supplierID")));
+
+				product.setGender(rs.getInt("gender"));
+				list.add(product);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 }

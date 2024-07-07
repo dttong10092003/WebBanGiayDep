@@ -80,6 +80,45 @@
 .navbar .nav-link {
 	color: #fff !important;
 }
+
+
+
+
+
+
+
+.gallery-wrap .img-big-wrap img {
+	height: 450px;
+	width: auto;
+	display: inline-block;
+	cursor: zoom-in;
+}
+
+.gallery-wrap .img-small-wrap .item-gallery {
+	width: 60px;
+	height: 60px;
+	border: 1px solid #ddd;
+	margin: 7px 2px;
+	display: inline-block;
+	overflow: hidden;
+}
+
+.gallery-wrap .img-small-wrap {
+	text-align: center;
+}
+
+.gallery-wrap .img-small-wrap img {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: cover;
+	border-radius: 4px;
+	cursor: zoom-in;
+}
+
+.img-big-wrap img {
+	width: 100% !important;
+	height: auto !important;
+}
 </style>
 </head>
 <body class="skin-light">
@@ -116,7 +155,8 @@
 										style="max-height: 450px;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/15a.jpg"
-											data-size="710x823"> <img src="${productVariants[0].image1}"
+											data-size="710x823"> <img
+											src="${productVariants[0].image1}"
 											class="img-fluid z-depth-1" style="margin-top: -90px;">
 										</a>
 									</figure>
@@ -124,7 +164,8 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg"
-											data-size="710x823"> <img src="${productVariants[0].image2}"
+											data-size="710x823"> <img
+											src="${productVariants[0].image2}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -132,7 +173,8 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/13a.jpg"
-											data-size="710x823"> <img src="${productVariants[0].image3}"
+											data-size="710x823"> <img
+											src="${productVariants[0].image3}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -140,7 +182,8 @@
 										style="visibility: hidden;">
 										<a
 											href="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/14a.jpg"
-											data-size="710x823"> <img src="${productVariants[0].image4}"
+											data-size="710x823"> <img
+											src="${productVariants[0].image4}"
 											class="img-fluid z-depth-1">
 										</a>
 									</figure>
@@ -205,10 +248,10 @@
 									<tr>
 										<th class="pl-0 w-25" scope="row"><strong>Color</strong></th>
 										<td>
-											<div class="colorway-images-wrapper" >
+											<div class="colorway-images-wrapper">
 												<c:forEach var="productVariant" items="${productVariants}"
 													varStatus="status">
-													<a 
+													<a
 														onclick="loadSizesForProductVariant('${productVariant.productID}', '${productVariant.color}')">
 														<img src="${productVariant.image1}"
 														class="img-fluid ${status.first ? 'selected' : ''}">
@@ -256,7 +299,7 @@
 													</div>
 												</div>
 											</td>
-											
+
 										</tr>
 									</tbody>
 								</table>
