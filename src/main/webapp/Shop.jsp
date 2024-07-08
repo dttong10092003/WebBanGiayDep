@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Arrays"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,20 +81,20 @@
 							<h5>Gender</h5>
 
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" class="form-check-input" id="genderMen"
-									onchange="filterByGender('men')"> <label
+								<input type="checkbox" name="gender" value="1" class="form-check-input" id="genderMen"
+									onchange="filterByGender()" <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("1")) { %> checked <% } %>> <label
 									class="form-check-label small text-uppercase card-link-secondary"
 									for="genderMen">Men</label>
 							</div>
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" class="form-check-input" id="genderWomen"
-									onchange="filterByGender('women')"> <label
+								<input type="checkbox" name="gender" value="0" class="form-check-input" id="genderWomen"
+									onchange="filterByGender()" <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("0")) { %> checked <% } %>> <label
 									class="form-check-label small text-uppercase card-link-secondary"
 									for="genderWomen">Women</label>
 							</div>
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" class="form-check-input"
-									id="genderUnisex" onchange="filterByGender('unisex')">
+								<input type="checkbox" name="gender" value="-1" class="form-check-input"
+									id="genderUnisex" onchange="filterByGender()"  <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("-1")) { %> checked <% } %>>
 								<label
 									class="form-check-label small text-uppercase card-link-secondary"
 									for="genderUnisex">Unisex</label>
@@ -109,7 +110,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listBrand }" var="o">
 									<p class="mb-3">
-										<a onclick="loadBrand(${o.id})" class="card-link-secondary">${o.name }</a>
+										<a onclick="loadBrand(${o.id})" class="card-link-secondary ${sessionScope.brand eq o.id ? 'active' : ''}">${o.name }</a>
 									</p>
 
 								</c:forEach>
@@ -126,7 +127,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listCategory}" var="o">
 									<p class="mb-3">
-										<a onclick="loadCategory(${o.id})" class="card-link-secondary">${o.name}</a>
+										<a onclick="loadCategory(${o.id})" class="card-link-secondary ${sessionScope.category eq o.id ? 'active' : ''}">${o.name}</a>
 									</p>
 								</c:forEach>
 							</div>
@@ -143,9 +144,9 @@
 
 								<div
 									class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
-									<input oninput="searchByName(this)" value="${txtS}" name="txt"
+									<input oninput="searchByName(this)" value="${sessionScope.txtS}" name="txt"
 										type="text" class="form-control mb-0" placeholder="Search...">
-									<a href="#!" class="btn btn-flat btn-md px-3 waves-effect"><i
+									<a href="#!" onlick="searchByName()" class="btn btn-flat btn-md px-3 waves-effect"><i
 										class="fas fa-search fa-lg"></i></a>
 								</div>
 
@@ -160,21 +161,21 @@
 								<div class="form-check pl-0 mb-3">
 									<input onchange="searchByPriceUnder100()" type="radio"
 										class="form-check-input" id="under100"
-										name="materialExampleRadios"> <label
+										name="materialExampleRadios" ${sessionScope.price eq 'under100' ? 'checked' : ''}> <label
 										class="form-check-label small text-uppercase card-link-secondary"
 										for="under100">Under $100</label>
 								</div>
 								<div class="form-check pl-0 mb-3">
 									<input onchange="searchByPrice100To200()" type="radio"
 										class="form-check-input" id="100200"
-										name="materialExampleRadios"> <label
+										name="materialExampleRadios" ${sessionScope.price eq '100200' ? 'checked' : ''}> <label
 										class="form-check-label small text-uppercase card-link-secondary"
 										for="100200">$100 to $200</label>
 								</div>
 								<div class="form-check pl-0 mb-3">
 									<input onchange="searchByPriceAbove200()" type="radio"
 										class="form-check-input" id="200above"
-										name="materialExampleRadios"> <label
+										name="materialExampleRadios" ${sessionScope.price eq '200above' ? 'checked' : ''}> <label
 										class="form-check-label small text-uppercase card-link-secondary"
 										for="200above">$200 & Above</label>
 								</div>
@@ -182,13 +183,13 @@
 									<div class="d-flex align-items-center mt-4 pb-1">
 										<div class="md-form md-outline my-0">
 											<input oninput="searchByPriceMinToMax()" id="priceMin"
-												type="text" class="form-control mb-0"> <label
+												type="text" class="form-control mb-0" value="${sessionScope.priceMin}"> <label
 												for="priceMin">$ Min</label>
 										</div>
 										<p class="px-2 mb-0 text-muted">-</p>
 										<div class="md-form md-outline my-0">
 											<input oninput="searchByPriceMinToMax()" id="priceMax"
-												type="text" class="form-control mb-0"> <label
+												type="text" class="form-control mb-0" value="${sessionScope.priceMax}"> <label
 												for="priceMax">$ Max</label>
 										</div>
 									</div>
@@ -210,8 +211,8 @@
 									data-toggle="buttons">
 									<c:forEach var="color" items="${colors}">
 										<label
-											class="btn rounded-circle ${color} border-inset-grey p-3 m-2">
-											<input onchange="searchByColor('${color}')" type="checkbox"
+											class="btn rounded-circle ${color} border-inset-grey p-3 m-2 ${sessionScope.color eq color ? 'active' : ''}">
+											<input onchange="filterByColor(${color})" type="checkbox"
 											autocomplete="off">
 										</label>
 									</c:forEach>
@@ -265,8 +266,9 @@
 											<li class="page-item"><a href="shop?index=${index-1 }"
 												class="page-link"><i class="fas fa-chevron-left"></i></a></li>
 										</c:if>
+										
 										<c:forEach begin="1" end="${lastPage }" var="i">
-											<li class="${index==i?"page-itemactive":"page-item" }"><a
+											<li class="${index==i?"page-item active":"page-item" }"><a
 												href="shop?index=${i }" class="page-link">${i }</a></li>
 										</c:forEach>
 										<c:if test="${index != lastPage}">
@@ -358,36 +360,54 @@
 		src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
 
 	<script>
-	$('#multi').mdbRange({
-	      single: {
-	        active: true,
-	        multi: {
-	          active: true,
-	          rangeLength: 1
-	        },
-	      }
-	    });
 	
-	$(document).ready(function () {
-	      $('.mdb-select').materialSelect();
-	      $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
-	        $(this).closest('.select-outline').find('label').toggleClass('active');
-	        $(this).closest('.select-outline').find('.caret').toggleClass('active');
-	      });
-	    });
-	
-	function loadCategory(categoryID){
-   	 $.ajax({
-            url: "/WebBanGiayDep/categoryShop",
-            type: "get", //send it through get method
-            data: {
-                cid: categoryID
-            },
-            success: function (responseData) {
-                document.getElementById("content").innerHTML = responseData;
-            }
-        });
-   }  
+	function searchByName(input) {
+		const searchTerm = input.value;
+		const url = `shop?txt=${searchTerm}`;
+		window.location.href = url;
+	}
+
+	function searchByPriceUnder100() {
+		const url = "shop?price=under100";
+		window.location.href = url;
+	}
+
+	function searchByPrice100To200() {
+		const url = "shop?price=100200";
+		window.location.href = url;
+	}
+
+	function searchByPriceAbove200() {
+		const url = "shop?price=200above";
+		window.location.href = url;
+	}
+
+	function searchByPriceMinToMax() {
+		const priceMin = document.getElementById("priceMin").value;
+		const priceMax = document.getElementById("priceMax").value;
+		const url = `shop?priceMin=${priceMin}&priceMax=${priceMax}`;
+		window.location.href = url;
+	}
+
+	function filterByGender(gender) {
+		const url = `shop?gender=${gender}`;
+		window.location.href = url;
+	}
+
+	function loadBrand(brandId) {
+		const url = `shop?brand=${brandId}`;
+		window.location.href = url;
+	}
+
+	function loadCategory(categoryId) {
+		const url = `shop?category=${categoryId}`;
+		window.location.href = url;
+	}
+
+	function filterByColor(color) {
+		const url = `shop?color=${color}`;
+		window.location.href = url;
+	}
 	
 	
 	
@@ -401,26 +421,6 @@
 	
 	
 	</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	<!-- MDB -->

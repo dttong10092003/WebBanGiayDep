@@ -50,14 +50,5 @@
     <servlet-name>LoadSizesServlet</servlet-name>
     <url-pattern>/LoadSizesServlet</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>CategoryShopControl</display-name>
-    <servlet-name>CategoryShopControl</servlet-name>
-    <servlet-class>control.CategoryShopControl</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CategoryShopControl</servlet-name>
-    <url-pattern>/CategoryShopControl</url-pattern>
-  </servlet-mapping>
+  
 </web-app>

@@ -35,7 +35,7 @@ public class CategoryShopControl extends HttpServlet {
         			+ "                <div class=\"\">\r\n"
         			+ "\r\n"
         			+ "                  <div class=\"view zoom overlay rounded z-depth-2\">\r\n"
-        			+ "                    <img class=\"img-fluid w-100\"\r\n"
+        			+ "                    <img class=\"img-fluid w-100 equal-image\"\r\n"
         			+ "                      src=\""+o.getImage()+"\" alt=\"Sample\">\r\n"
         			+ "                    <a href=\"detail?pid="+o.getId()+"\">\r\n"
         			+ "                      <div class=\"mask\">\r\n"
