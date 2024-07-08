@@ -25,6 +25,9 @@ public class ShopControl extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		HttpSession session = request.getSession();
+		
+		
+		System.out.println(session.toString());
 
 		if (request.getParameterMap().isEmpty()) {
 			session.removeAttribute("gender");

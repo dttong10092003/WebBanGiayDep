@@ -17,14 +17,12 @@ public class ProductDAO {
 	private BrandDAO brandDAO = new BrandDAO();
 	private CategoryDAO categoryDAO = new CategoryDAO();
 	private SupplierDAO supplierDAO = new SupplierDAO();
-	private static final String SELECT_PRODUCTS_SQL = "SELECT * FROM Product p "
-			+ "JOIN ProductVariant pv ON p.id = pv.productID WHERE 1=1 ";
+	private static final String SELECT_PRODUCTS_SQL = "SELECT * FROM Product p WHERE 1=1 ";
 
 	private static final String SELECT_PRODUCTS_SQL_HAVECOLOR = "SELECT * FROM Product p "
 			+ "JOIN (SELECT productID, color from ProductVariant where color = ? group by productID, color) pv ON p.id = pv.productID WHERE 1=1 ";
 
-	private static final String COUNT_PRODUCTS_SQL = "SELECT COUNT(*) FROM Product p "
-			+ "JOIN ProductVariant pv ON p.id = pv.productID WHERE 1=1 ";
+	private static final String COUNT_PRODUCTS_SQL = "SELECT COUNT(*) FROM Product p WHERE 1=1 ";
 	private static final String COUNT_PRODUCTS_SQL_HAVECOLOR = "SELECT COUNT(*) FROM Product p "
 			+ "JOIN (SELECT productID, color from ProductVariant where color = ? group by productID, color) pv ON p.id = pv.productID WHERE 1=1 ";
 
@@ -136,6 +134,7 @@ public class ProductDAO {
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 
 			ps.setInt(1, amount);
+			System.out.println(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
@@ -621,11 +620,6 @@ public class ProductDAO {
 			String priceMin, String priceMax, String color, String txtS) {
 		String sql = SELECT_PRODUCTS_SQL;
 		List<Object> params = new ArrayList<Object>();
-		
-		if (color != null && !color.isEmpty()) {
-			sql = COUNT_PRODUCTS_SQL_HAVECOLOR;
-			params.add(color);
-		}
 
 		// Xử lý điều kiện lọc cho genders
 		if (genders != null && genders.length > 0) {

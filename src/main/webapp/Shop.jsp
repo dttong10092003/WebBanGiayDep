@@ -81,19 +81,19 @@
 							<h5>Gender</h5>
 
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" name="gender" value="1" class="form-check-input" id="genderMen"
+								<input type="radio" name="gender" value="1" class="form-check-input" id="genderMen"
 									onchange="filterByGender()" <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("1")) { %> checked <% } %>> <label
 									class="form-check-label small text-uppercase card-link-secondary"
 									for="genderMen">Men</label>
 							</div>
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" name="gender" value="0" class="form-check-input" id="genderWomen"
+								<input type="radio" name="gender" value="0" class="form-check-input" id="genderWomen"
 									onchange="filterByGender()" <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("0")) { %> checked <% } %>> <label
 									class="form-check-label small text-uppercase card-link-secondary"
 									for="genderWomen">Women</label>
 							</div>
 							<div class="form-check pl-0 mb-3">
-								<input type="checkbox" name="gender" value="-1" class="form-check-input"
+								<input type="radio" name="gender" value="-1" class="form-check-input"
 									id="genderUnisex" onchange="filterByGender()"  <% if(session.getAttribute("gender") != null && Arrays.asList((String[]) session.getAttribute("gender")).contains("-1")) { %> checked <% } %>>
 								<label
 									class="form-check-label small text-uppercase card-link-secondary"
@@ -110,7 +110,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listBrand }" var="o">
 									<p class="mb-3">
-										<a onclick="loadBrand(${o.id})" class="card-link-secondary ${sessionScope.brand eq o.id ? 'active' : ''}">${o.name }</a>
+										<a onclick="loadBrand(${o.id})" class="card-link-secondary ${sessionScope.brand == o.id ? 'active' : ''}">${o.name }</a>
 									</p>
 
 								</c:forEach>
@@ -127,7 +127,7 @@
 							<div class="text-muted small text-uppercase mb-5">
 								<c:forEach items="${listCategory}" var="o">
 									<p class="mb-3">
-										<a onclick="loadCategory(${o.id})" class="card-link-secondary ${sessionScope.category eq o.id ? 'active' : ''}">${o.name}</a>
+										<a onclick="loadCategory(${o.id})" class="card-link-secondary ${sessionScope.category == o.id ? 'active' : ''}">${o.name}</a>
 									</p>
 								</c:forEach>
 							</div>
@@ -144,9 +144,10 @@
 
 								<div
 									class="md-form md-outline mt-0 d-flex justify-content-between align-items-center">
-									<input oninput="searchByName(this)" value="${sessionScope.txtS}" name="txt"
-										type="text" class="form-control mb-0" placeholder="Search...">
-									<a href="#!" onlick="searchByName()" class="btn btn-flat btn-md px-3 waves-effect"><i
+									<input id="searchInput" value="${sessionScope.txtS}" name="txt"
+										type="text" class="form-control mb-0" placeholder="Search..."
+										onkeypress="handleKeyPress(event)">
+									<a href="#!" class="btn btn-flat btn-md px-3 waves-effect" onclick="searchByName()"><i
 										class="fas fa-search fa-lg"></i></a>
 								</div>
 
@@ -361,10 +362,17 @@
 
 	<script>
 	
-	function searchByName(input) {
+	function searchByName() {
+		const input = document.getElementById("searchInput");
 		const searchTerm = input.value;
-		const url = `shop?txt=${searchTerm}`;
+		const url = "shop?txt=" + searchTerm;
 		window.location.href = url;
+	}
+	
+	function handleKeyPress(event) {
+	    if (event.key === 'Enter') {
+	        searchByName();
+	    }
 	}
 
 	function searchByPriceUnder100() {
@@ -385,27 +393,43 @@
 	function searchByPriceMinToMax() {
 		const priceMin = document.getElementById("priceMin").value;
 		const priceMax = document.getElementById("priceMax").value;
-		const url = `shop?priceMin=${priceMin}&priceMax=${priceMax}`;
+		const url = "shop?priceMin="+priceMin+"&priceMax="+priceMax;
+		
 		window.location.href = url;
 	}
 
-	function filterByGender(gender) {
-		const url = `shop?gender=${gender}`;
+	function filterByGender() {
+		const genderMen = document.getElementById("genderMen").checked;
+		const genderWomen = document.getElementById("genderWomen").checked
+		const genderUnisex = document.getElementById("genderUnisex").checked;
+		const genders = []; // Lúc đầu sài checkbox, Tính lấy tất cả giới tính luôn nhưng không được
+		if(genderMen) {
+			genders.push("1");
+		}
+		
+		if(genderWomen){
+			genders.push("0");
+		}
+		if(genderUnisex){
+			genders.push("-1");
+		}
+		
+		const url = "shop?gender=" + genders;
 		window.location.href = url;
 	}
 
 	function loadBrand(brandId) {
-		const url = `shop?brand=${brandId}`;
+		const url = "shop?brand=" + brandId;
 		window.location.href = url;
 	}
 
 	function loadCategory(categoryId) {
-		const url = `shop?category=${categoryId}`;
+		const url = "shop?category=" + categoryId;
 		window.location.href = url;
 	}
 
 	function filterByColor(color) {
-		const url = `shop?color=${color}`;
+		const url = "shop?color=" + color;
 		window.location.href = url;
 	}
 	
