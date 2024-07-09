@@ -556,43 +556,38 @@ public class ProductDAO {
 
 		// Xử lý điều kiện lọc cho genders
 		if (genders != null && genders.length > 0) {
-			sql +=(" AND gender IN (");
+			sql += (" AND gender IN (");
 			for (int i = 0; i < genders.length; i++) {
-				sql +=("?");
+				sql += ("?");
 				if (i < genders.length - 1) {
-					sql +=(",");
+					sql += (",");
 				}
 				params.add(genders[i]);
 			}
-			sql +=(")");
+			sql += (")");
 		}
 
 		if (brand != null && !brand.isEmpty()) {
-			sql +=("AND p.brandID = ? ");
+			sql += ("AND p.brandID = ? ");
 			params.add(brand);
 		}
 
 		if (category != null && !category.isEmpty()) {
-			sql +=("AND p.categoryID = ? ");
+			sql += ("AND p.categoryID = ? ");
 			params.add(category);
 		}
 
 		if (price != null && !price.isEmpty()) {
-			sql +=("AND p.price = ? ");
+			sql += ("AND p.price = ? ");
 			params.add(price);
 		} else if (priceMin != null && !priceMin.isEmpty() && priceMax != null && !priceMax.isEmpty()) {
-			sql +=("AND p.price BETWEEN ? AND ? ");
+			sql += ("AND p.price BETWEEN ? AND ? ");
 			params.add(priceMin);
 			params.add(priceMax);
 		}
 
-		if (color != null && !color.isEmpty()) {
-			sql +=("AND pv.color = ? ");
-			params.add(color);
-		}
-
 		if (txtS != null && !txtS.isEmpty()) {
-			sql +=("AND (p.name LIKE ? OR p.description LIKE ?) ");
+			sql += ("AND (p.name LIKE ? OR p.description LIKE ?) ");
 			params.add("%" + txtS + "%");
 			params.add("%" + txtS + "%");
 		}
@@ -621,42 +616,51 @@ public class ProductDAO {
 		String sql = SELECT_PRODUCTS_SQL;
 		List<Object> params = new ArrayList<Object>();
 
+		if (color != null && !color.isEmpty()) {
+			sql = SELECT_PRODUCTS_SQL_HAVECOLOR;
+			params.add(color);
+		}
+
 		// Xử lý điều kiện lọc cho genders
 		if (genders != null && genders.length > 0) {
-			sql +=(" AND gender IN (");
+			sql += (" AND gender IN (");
 			for (int i = 0; i < genders.length; i++) {
-				sql +=("?");
+				sql += ("?");
 				if (i < genders.length - 1) {
-					sql +=(",");
+					sql += (",");
 				}
 				params.add(genders[i]);
 				System.out.println(genders[i]);
 			}
-			sql +=(")");
+			sql += (")");
 		}
 
 		if (brand != null && !brand.isEmpty()) {
-			sql +=("AND p.brandID = ? ");
+			sql += ("AND p.brandID = ? ");
 			params.add(brand);
 		}
 
 		if (category != null && !category.isEmpty()) {
-			sql +=("AND p.categoryID = ? ");
+			sql += ("AND p.categoryID = ? ");
 			params.add(category);
 		}
 
-		if (price != null && !price.isEmpty()) {
-			sql +=("AND p.price = ? ");
-			params.add(price);
-		} else if (priceMin != null && !priceMin.isEmpty() && priceMax != null && !priceMax.isEmpty()) {
-			sql +=("AND p.price BETWEEN ? AND ? ");
+		if (priceMin != null && !priceMin.isEmpty() && priceMax != null && !priceMax.isEmpty()) {
+			sql += ("AND p.price BETWEEN ? AND ? ");
 			params.add(priceMin);
 			params.add(priceMax);
+		} else if (price != null && !price.isEmpty()) {
+			if (price.equalsIgnoreCase("under100")) {
+				sql += ("AND p.price < 100 ");
+			} else if (price.equalsIgnoreCase("100to200")) {
+				sql += ("AND p.price BETWEEN 100 AND 200 ");
+			} else if (price.equalsIgnoreCase("200above")) {
+				sql += ("AND p.price > 200 ");
+			}
 		}
 
 		if (txtS != null && !txtS.isEmpty()) {
-			sql +=("AND (p.name LIKE ? OR p.description LIKE ?) ");
-			params.add("%" + txtS + "%");
+			sql += ("AND p.name LIKE ? ");
 			params.add("%" + txtS + "%");
 		}
 
@@ -664,7 +668,7 @@ public class ProductDAO {
 //        sql +=(" LIMIT ?, ?");
 //        params.add((page - 1) * pageSize);
 //        params.add(pageSize);
-		sql +=(" ORDER BY p.id DESC OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY");
+		sql += (" ORDER BY p.id DESC OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY");
 		params.add((index - 1) * 9);
 		System.out.println("query: " + sql);
 

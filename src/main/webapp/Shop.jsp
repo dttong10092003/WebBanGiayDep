@@ -48,6 +48,64 @@
 	object-fit: cover; /* Cắt ảnh để vừa khít khung chứa */
 	width: 100%; /* Đảm bảo chiều rộng ảnh chiếm hết khung chứa */
 }
+
+/* Mục mặc định */
+.card-link-secondary {
+    color: #6c757d;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Mục đang được chọn (active) */
+.card-link-secondary.active {
+    color: #007bff;
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+/* Thêm một chút khoảng cách và phong cách cho mục được chọn */
+.text-muted .mb-3 {
+    margin-bottom: 1rem;
+}
+
+/* Màu sắc của các nút */
+.btn.color-option {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.btn.color-option input[type="radio"] {
+    display: none; /* Ẩn nút radio */
+}
+
+/* Dấu tích */
+.btn.color-option .color-check {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #B385F2;
+}
+
+/* Hiển thị dấu tích khi được chọn */
+.btn.color-option.active .color-check {
+    display: block;
+}
+
+/* Định dạng cho các nút active */
+.btn.color-option.active {
+    border: 2px solid #007bff;
+}
+
+
+
 </style>
 
 </head>
@@ -168,10 +226,10 @@
 								</div>
 								<div class="form-check pl-0 mb-3">
 									<input onchange="searchByPrice100To200()" type="radio"
-										class="form-check-input" id="100200"
-										name="materialExampleRadios" ${sessionScope.price eq '100200' ? 'checked' : ''}> <label
+										class="form-check-input" id="100to200"
+										name="materialExampleRadios" ${sessionScope.price eq '100to200' ? 'checked' : ''}> <label
 										class="form-check-label small text-uppercase card-link-secondary"
-										for="100200">$100 to $200</label>
+										for="100to200">$100 to $200</label>
 								</div>
 								<div class="form-check pl-0 mb-3">
 									<input onchange="searchByPriceAbove200()" type="radio"
@@ -183,14 +241,14 @@
 								<form>
 									<div class="d-flex align-items-center mt-4 pb-1">
 										<div class="md-form md-outline my-0">
-											<input oninput="searchByPriceMinToMax()" id="priceMin"
+											<input id="priceMin"
 												type="text" class="form-control mb-0" value="${sessionScope.priceMin}"> <label
 												for="priceMin">$ Min</label>
 										</div>
 										<p class="px-2 mb-0 text-muted">-</p>
 										<div class="md-form md-outline my-0">
-											<input oninput="searchByPriceMinToMax()" id="priceMax"
-												type="text" class="form-control mb-0" value="${sessionScope.priceMax}"> <label
+											<input id="priceMax"
+												type="text" class="form-control mb-0" value="${sessionScope.priceMax}" onkeypress="handleMinToMax(event)"> <label
 												for="priceMax">$ Max</label>
 										</div>
 									</div>
@@ -212,9 +270,10 @@
 									data-toggle="buttons">
 									<c:forEach var="color" items="${colors}">
 										<label
-											class="btn rounded-circle ${color} border-inset-grey p-3 m-2 ${sessionScope.color eq color ? 'active' : ''}">
-											<input onchange="filterByColor(${color})" type="checkbox"
-											autocomplete="off">
+											class="btn color-option rounded-circle ${color} border-inset-grey p-3 m-2 ${sessionScope.color eq color ? 'active' : ''}">
+											<input onchange="filterByColor('${color}')" type="radio"
+											autocomplete="off" ${sessionScope.color eq color ? 'checked' : ''}>
+											<span class="color-check">&#10003;</span>
 										</label>
 									</c:forEach>
 								</div>
@@ -374,6 +433,12 @@
 	        searchByName();
 	    }
 	}
+	
+	function handleMinToMax(event) {
+        if (event.key === 'Enter') {
+            searchByPriceMinToMax();
+        }
+    }
 
 	function searchByPriceUnder100() {
 		const url = "shop?price=under100";
@@ -381,7 +446,7 @@
 	}
 
 	function searchByPrice100To200() {
-		const url = "shop?price=100200";
+		const url = "shop?price=100to200";
 		window.location.href = url;
 	}
 
