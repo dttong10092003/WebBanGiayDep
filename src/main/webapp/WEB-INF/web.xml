@@ -50,5 +50,24 @@
     <servlet-name>LoadSizesServlet</servlet-name>
     <url-pattern>/LoadSizesServlet</url-pattern>
   </servlet-mapping>
-  
+  <servlet>
+    <description></description>
+    <display-name>AddCartControl</display-name>
+    <servlet-name>AddCartControl</servlet-name>
+    <servlet-class>control.AddCartControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddCartControl</servlet-name>
+    <url-pattern>/addCart</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ManagerCartControl</display-name>
+    <servlet-name>ManagerCartControl</servlet-name>
+    <servlet-class>control.ManagerCartControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ManagerCartControl</servlet-name>
+    <url-pattern>/ManagerCartControl</url-pattern>
+  </servlet-mapping>
 </web-app>

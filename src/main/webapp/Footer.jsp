@@ -17,13 +17,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
-				<h5>Giày</h5>
+				<h5>SẢN PHẨM</h5>
 				<hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
 				<ul class="list-unstyled">
 					<li><a href="#nike">Nike</a></li>
 					<li><a href="#adidas">Adidas</a></li>
-					<li><a href="#moiNhat">Mới nhất</a></li>
-					<li><a href="#tatCa">Tất cả</a></li>
+					<li><a href="#bestseller">Best Seller</a></li>
+					<li><a href="/WebBanGiayDep/shop">Tất cả</a></li>
 				</ul>
 			</div>
 

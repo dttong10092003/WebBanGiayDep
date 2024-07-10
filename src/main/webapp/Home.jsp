@@ -185,7 +185,7 @@
 	<div class="container">
 
 		<div class="row" style="margin-top: 25px">
-			<h1 style="text-align: center; width: 100%" id="moiNhat">BEST
+			<h1 style="text-align: center; width: 100%" id="bestseller">BEST
 				SELLER</h1>
 			<div class="col-sm-12">
 				<div id="contentMoiNhat" class="row">
@@ -365,6 +365,19 @@
                      }
                  });
              }
+        	 
+        	 function loadAmountCart(){
+             	 $.ajax({
+                      url: "/WebBanGiayDep/loadAllAmountCart",
+                      type: "get", //send it through get method
+                      data: {
+                          
+                      },
+                      success: function (responseData) {
+                          document.getElementById("amountCart").innerHTML = responseData;
+                      }
+                  });
+             } 
              
            
                    

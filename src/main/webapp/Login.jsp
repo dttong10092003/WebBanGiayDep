@@ -115,6 +115,19 @@
         $('#logreg-forms #cancel_signup').click(toggleSignUp);
     })
     
+    window.addEventListener("load",function loadAmountCart(){
+                        	 $.ajax({
+                                 url: "/WebBanGiayDep/loadAllAmountCart",
+                                 type: "get", //send it through get method
+                                 data: {
+                                     
+                                 },
+                                 success: function (responseData) {
+                                     document.getElementById("amountCart").innerHTML = responseData;
+                                 }
+                             });
+                        },false);  
+    
     setTimeout(function() {
         var errorAlert = document.getElementById('errorAlert');
         if (errorAlert) {

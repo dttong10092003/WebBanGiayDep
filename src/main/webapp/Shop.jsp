@@ -497,7 +497,18 @@
 		const url = "shop?color=" + color;
 		window.location.href = url;
 	}
-	
+	function loadAmountCart(){
+   	 $.ajax({
+            url: "/WebBanGiayDep/loadAllAmountCart",
+            type: "get", //send it through get method
+            data: {
+                
+            },
+            success: function (responseData) {
+                document.getElementById("amountCart").innerHTML = responseData;
+            }
+        });
+   } 
 	
 	
 	

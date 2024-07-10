@@ -81,12 +81,6 @@
 	color: #fff !important;
 }
 
-
-
-
-
-
-
 .gallery-wrap .img-big-wrap img {
 	height: 450px;
 	width: auto;
@@ -265,8 +259,9 @@
 										<th class="pl-0 w-25" scope="row"><strong>Size</strong></th>
 										<td>
 											<div class="size-selector" id="sizeSelector">
-												<c:forEach var="productVariant" items="${listSize}">
-													<a href="#">${productVariant.size}</a>
+												<c:forEach var="productVariant" items="${listSize}"
+												varStatus="status">
+													<a class="${status.first ? 'selected' : '' }" href="#">${productVariant.size}</a>
 												</c:forEach>
 											</div>
 										</td>
@@ -277,6 +272,8 @@
 						<hr>
 
 						<form action="addCart?pid=${detail.id }" method="post">
+							<input type="hidden" name="selectedSize" id="selectedSize">
+							<input type="hidden" name="selectedImage" id="selectedImage">
 							<div class="table-responsive mb-2">
 								<table class="table table-sm table-borderless">
 									<tbody>
@@ -495,7 +492,7 @@
 	<script>
         window.addEventListener("load",function loadAmountCart(){
                         	 $.ajax({
-                                 url: "/WebsiteBanGiay/loadAllAmountCart",
+                                 url: "/WebBanGiayDep/loadAllAmountCart",
                                  type: "get", //send it through get method
                                  data: {
                                      
@@ -513,6 +510,53 @@
             $(this).addClass('selected'); // Thêm lớp selected cho thẻ <a> được nhấp vào
             // Các xử lý khác nếu cần
         });
+        
+        
+        
+        
+        
+        
+        
+        
+        $(document).ready(function () {
+            // Khi người dùng chọn size
+            $('#sizeSelector').on('click', 'a', function (e) {
+                e.preventDefault();
+                $('#sizeSelector a').removeClass('selected');
+                $(this).addClass('selected');
+                // Cập nhật giá trị của trường ẩn
+                $('#selectedSize').val($(this).text());
+            });
+
+         // Khi người dùng chọn ảnh
+            $('.colorway-images-wrapper img').on('click', function () {
+                $('.colorway-images-wrapper img').removeClass('selected');
+                $(this).addClass('selected');
+                // Cập nhật giá trị của trường ẩn
+                $('#selectedImage').val($(this).attr('src'));
+            });
+        });
+
+        // Xử lý khi form được gửi
+        $('form').on('submit', function () {
+            // Lấy giá trị size và ảnh đã chọn
+            const selectedSize = $('#sizeSelector a.selected').text();
+            const selectedImage = $('.colorway-images-wrapper img.selected').attr('src');
+            
+            // Cập nhật giá trị cho các trường ẩn
+            $('#selectedSize').val(selectedSize);
+            $('#selectedImage').val(selectedImage);
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
       
         function loadSizesForProductVariant(productID, color) {
@@ -545,20 +589,7 @@
         
        
     
-        document.querySelectorAll('.colorway-images-wrapper img').forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelectorAll('.colorway-images-wrapper img').forEach(el => el.classList.remove('selected'));
-                item.classList.add('selected');
-            });
-        });
-
-        document.querySelectorAll('.size-selector a').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.querySelectorAll('.size-selector a').forEach(el => el.classList.remove('selected'));
-                item.classList.add('selected');
-            });
-        });
+       
         
         </script>
 	<!-- SCRIPTS -->
