@@ -3,9 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import connect.DBConnect;
@@ -161,6 +159,34 @@ public class ProductDAO {
 
 	}
 
+	public ProductVariant getProductVariantByProductIDSizeAndImg(String productID, int size, String image) {
+		ProductVariant productVariant = new ProductVariant();
+		String query = "SELECT * FROM ProductVariant WHERE productID = ? AND size = ? AND image1 = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, productID);
+			ps.setInt(2, size);
+			ps.setString(3, image);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				productVariant.setId(rs.getInt("id"));
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
+				productVariant.setSize(rs.getInt("size"));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("quantity"));
+				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return productVariant;
+
+	}
+
 	// Lấy 4 sản phẩm Adidas tiếp theo
 	public List<Product> getNext4AdidasProducts(int amount) {
 		List<Product> list = new ArrayList<Product>();
@@ -268,7 +294,7 @@ public class ProductDAO {
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
 				productVariant.setId(rs.getInt("id"));
-				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setSize(rs.getInt("size"));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("quantity"));
@@ -287,6 +313,31 @@ public class ProductDAO {
 
 	}
 
+	public ProductVariant getProductVariantById(int id) {
+		String sql = "Select * from ProductVariant where id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				ProductVariant productVariant = new ProductVariant();
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
+				productVariant.setColor(rs.getString("color"));
+				productVariant.setQuantity(rs.getInt("quantity"));
+				productVariant.setSoldQuantity(rs.getInt("soldQuantity"));
+				productVariant.setSize(rs.getInt("size"));
+				productVariant.setImage1(rs.getString("image1"));
+				productVariant.setImage2(rs.getString("image2"));
+				productVariant.setImage3(rs.getString("image3"));
+				productVariant.setImage4(rs.getString("image4"));
+				return productVariant;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return null;
+	}
+
 	// Lấy ProductVariant theo productID và gom nhóm không theo size
 	public List<ProductVariant> getProductVariantByProductIDGroupBy(String productID) {
 		List<ProductVariant> list = new ArrayList<ProductVariant>();
@@ -300,7 +351,7 @@ public class ProductDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
-				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("totalQuantity"));
 				productVariant.setSoldQuantity(rs.getInt("totalSoldQuantity"));
@@ -330,7 +381,7 @@ public class ProductDAO {
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
 				productVariant.setId(rs.getInt("id"));
-				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setSize(rs.getInt("size"));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("quantity"));
@@ -360,7 +411,7 @@ public class ProductDAO {
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
 				productVariant.setId(rs.getInt("id"));
-				productVariant.setProductID(rs.getString("productID"));
+				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setSize(rs.getInt("size"));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("quantity"));

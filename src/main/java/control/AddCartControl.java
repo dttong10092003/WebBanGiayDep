@@ -1,9 +1,13 @@
 package control;
 
-
 import java.io.IOException;
+import java.util.List;
 
+import dao.CartDAO;
+import dao.ProductDAO;
 import entity.Account;
+import entity.Cart;
+import entity.ProductVariant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,83 +15,80 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-
-@WebServlet(name = "AddCartControl", urlPatterns = {"/addCart"})
+@WebServlet(name = "AddCartControl", urlPatterns = { "/addCart" })
 public class AddCartControl extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-	
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8"); 
-        String productID = request.getParameter("pid");
-        int amount = Integer.parseInt(request.getParameter("quantity"));
-        String selectedSize = request.getParameter("selectedSize");
-        String selectedImage = request.getParameter("selectedImage");
-        System.out.println("productID: " + productID);
-        System.out.println("amount: " + amount);
-        System.out.println("selectedSize: " + selectedSize);
-        System.out.println("selectedImage: " + selectedImage);
-        
-        
-        
-        
-        
- 
-        
-        
-        
-        
-        request.getRequestDispatcher("DetailProduct.jsp").forward(request, response);
-      
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	private ProductDAO productDAO = new ProductDAO();
+	private CartDAO cartDAO = new CartDAO();
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		String productID = request.getParameter("pid");
+		int amount = Integer.parseInt(request.getParameter("quantity"));
+		int size = Integer.parseInt(request.getParameter("selectedSize"));
+		String img = request.getParameter("selectedImage");
+		System.out.println("productID: " + productID);
+		System.out.println("amount: " + amount);
+		System.out.println("selectedSize: " + size);
+		System.out.println("selectedImage: " + img);
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+		ProductVariant productVariant = productDAO.getProductVariantByProductIDSizeAndImg(productID, size, img);
+		System.out.println("productVariant: " + productVariant);
+
+		HttpSession session = request.getSession();
+		Account acc = (Account) session.getAttribute("acc");
+		if (acc == null) {
+			response.sendRedirect("/WebBanGiayDep/login?pid=" + productID);
+			return;
+		}
+
+		int accountID = acc.getId();
+		int productVariantID = productVariant.getId();
+
+		Cart cartExisted = cartDAO.checkCartExisted(accountID, productVariantID);
+		if (cartExisted != null) {
+			int amountExisted = cartExisted.getAmount();
+			int newAmount = amount + amountExisted;
+			int cartID = cartExisted.getId();
+			cartDAO.updateAmountCart(cartID, newAmount);
+
+			// chỗ này có thể if(cartDAO.updateAmountCart(cartID, newAmount)){}
+//			request.setAttribute("mess", "Đã tăng số lượng sản phẩm!"); // Dành cho chỉnh sửa số lượng ở giỏ
+//			request.getRequestDispatcher("/managerCart").forward(request, response); // Mở trang cart
+
+		} else {
+			cartDAO.insertCart(accountID, productVariantID, amount);
+//			request.setAttribute("mess", "Đã thêm sản phẩm vào giỏ hàng!"); // Dành cho thêm mới sản phẩm vào giỏ
+//			request.getRequestDispatcher("managerCart").forward(request, response);
+		}
+		
+		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
+		double totalPrice = cartDAO.getTotalPriceCartByAccountID(accountID);
+		
+		
+		request.setAttribute("showCart", true);
+		request.setAttribute("cart", listCart);
+		request.setAttribute("totalPrice", totalPrice);
+
+		request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
+
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
 
 }

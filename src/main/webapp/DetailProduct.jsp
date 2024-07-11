@@ -1,5 +1,3 @@
-
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -35,7 +33,7 @@
 <script
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-
+<link href="css/modal.css" rel="stylesheet" type="text/css" />
 
 <style>
 .colorway-images-wrapper {
@@ -114,6 +112,9 @@
 	height: auto !important;
 }
 </style>
+
+
+
 </head>
 <body class="skin-light">
 	<jsp:include page="Menu.jsp"></jsp:include>
@@ -130,7 +131,7 @@
 
 	<!--Main layout-->
 	<main>
-		<div class="container">
+		<div class="container" id="main-content">
 
 			<!--Section: Block Content-->
 			<section class="mb-5">
@@ -246,7 +247,7 @@
 												<c:forEach var="productVariant" items="${productVariants}"
 													varStatus="status">
 													<a
-														onclick="loadSizesForProductVariant('${productVariant.productID}', '${productVariant.color}')">
+														onclick="loadSizesForProductVariant('${productVariant.productID.id}', '${productVariant.color}')">
 														<img src="${productVariant.image1}"
 														class="img-fluid ${status.first ? 'selected' : ''}">
 													</a>
@@ -260,7 +261,7 @@
 										<td>
 											<div class="size-selector" id="sizeSelector">
 												<c:forEach var="productVariant" items="${listSize}"
-												varStatus="status">
+													varStatus="status">
 													<a class="${status.first ? 'selected' : '' }" href="#">${productVariant.size}</a>
 												</c:forEach>
 											</div>
@@ -311,12 +312,6 @@
 						</form>
 
 					</div>
-
-
-
-
-
-
 				</div>
 
 			</section>
@@ -387,8 +382,6 @@
 							</div>
 						</div>
 
-
-
 						<c:forEach items="${listAllReview}" var="r">
 
 							<div class="media mt-3 mb-4">
@@ -415,8 +408,6 @@
 
 
 					</div>
-
-
 
 				</div>
 
@@ -482,14 +473,71 @@
 			<!--Section: Block Content-->
 
 		</div>
+
+		<!-- Modal giỏ hàng -->
+		<div id="cartModal" class="modal">
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<h3>Giỏ hàng</h3>
+				<c:forEach var="item" items="${cart}">
+					<p>
+						${item.productVariant.productID.name} - ${item.productVariant.size} - ${item.productVariant.color} -
+						${item.amount} - ${item.productVariant.productID.price * item.amount}đ <span
+							class="remove-item" data-pid="${item.productVariant.productID.id}"
+							data-size="${item.productVariant.size}" data-color="${item.productVariant.color}">&times;</span>
+					</p>
+				</c:forEach>
+				<p>Tổng: ${totalPrice}$</p>
+				<a href="checkout.jsp" class="btn btn-primary">Thanh toán</a>
+			</div>
+		</div>
 	</main>
 	<!--Main layout-->
 
-
-
-
 	<jsp:include page="Footer.jsp"></jsp:include>
+
 	<script>
+	function showCartModal() {
+        $('#main-content').addClass('blur-background');
+        $('#cartModal').css('display', 'block');
+    }
+
+    $('.close').click(function() {
+        $('#main-content').removeClass('blur-background');
+        $('#cartModal').css('display', 'none');
+    });
+
+    $(window).click(function(event) {
+        if ($(event.target).is('#cartModal')) {
+            $('#main-content').removeClass('blur-background');
+            $('#cartModal').css('display', 'none');
+        }
+    });
+
+    $(document).ready(function() {
+        <% if (request.getAttribute("showCart") != null) { %>
+            showCartModal();
+        <% } %>
+    });
+
+    $('.remove-item').click(function() {
+        const pid = $(this).data('pid');
+        const size = $(this).data('size');
+        const color = $(this).data('color');
+        $.post('removeFromCart', { pid: pid, size: size, color: color }, function(response) {
+            location.reload();
+        });
+    });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
         window.addEventListener("load",function loadAmountCart(){
                         	 $.ajax({
                                  url: "/WebBanGiayDep/loadAllAmountCart",
@@ -510,14 +558,7 @@
             $(this).addClass('selected'); // Thêm lớp selected cho thẻ <a> được nhấp vào
             // Các xử lý khác nếu cần
         });
-        
-        
-        
-        
-        
-        
-        
-        
+       
         $(document).ready(function () {
             // Khi người dùng chọn size
             $('#sizeSelector').on('click', 'a', function (e) {
@@ -548,17 +589,6 @@
             $('#selectedImage').val(selectedImage);
         });
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      
         function loadSizesForProductVariant(productID, color) {
             $.ajax({
                 url: "/WebBanGiayDep/loadSizes", 
@@ -586,11 +616,7 @@
                 }
             });
         }
-        
-       
-    
-       
-        
+     
         </script>
 	<!-- SCRIPTS -->
 	<!-- JQuery -->
