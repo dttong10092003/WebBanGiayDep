@@ -477,18 +477,37 @@
 		<!-- Modal giỏ hàng -->
 		<div id="cartModal" class="modal">
 			<div class="modal-content">
-				<span class="close">&times;</span>
-				<h3>Giỏ hàng</h3>
-				<c:forEach var="item" items="${cart}">
-					<p>
-						${item.productVariant.productID.name} - ${item.productVariant.size} - ${item.productVariant.color} -
-						${item.amount} - ${item.productVariant.productID.price * item.amount}đ <span
-							class="remove-item" data-pid="${item.productVariant.productID.id}"
-							data-size="${item.productVariant.size}" data-color="${item.productVariant.color}">&times;</span>
-					</p>
-				</c:forEach>
-				<p>Tổng: ${totalPrice}$</p>
-				<a href="checkout.jsp" class="btn btn-primary">Thanh toán</a>
+				<div class="modal-header">
+					<h3>Giỏ hàng</h3>
+					<span class="close"><button>&times;</button></span>
+				</div>
+				<hr>
+				<div class="cart-items">
+
+					<c:forEach var="item" items="${cart}">
+						<div class="cart-item">
+							<div class="item-image">
+								<img src="${item.productVariant.image1}"
+									alt="${item.productVariant.productID.name}">
+							</div>
+
+							<div class="item-details">
+								<p>${item.productVariant.productID.name}</p>
+								<span>Size: ${item.productVariant.size}</span> <span>Color:
+									${item.productVariant.color}<span>
+								<span>${item.amount} x ${item.productVariant.productID.price}$<span>
+							</div>
+							<span class="remove-item"
+								data-pid="${item.productVariant.productID.id}"
+								data-size="${item.productVariant.size}"
+								data-color="${item.productVariant.color}">&times;</span>
+
+						</div>
+					</c:forEach>
+				</div>
+				<hr>
+				<p>Total: ${totalPrice}$</p>
+				<a href="checkout.jsp" class="btn btn-primary">Checkout</a>
 			</div>
 		</div>
 	</main>
@@ -515,9 +534,9 @@
     });
 
     $(document).ready(function() {
-        <% if (request.getAttribute("showCart") != null) { %>
+        <%if (request.getAttribute("showCart") != null) {%>
             showCartModal();
-        <% } %>
+        <%}%>
     });
 
     $('.remove-item').click(function() {
