@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -754,6 +755,23 @@ public class ProductDAO {
 			ex.printStackTrace();
 		}
 		return products;
+	}
+	
+	public int getQuantity(int productVatiantID) {
+		int quantity = 0;
+		String sql = "Select quantity from ProductVariant where id = ?";
+		try(Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);){
+			ps.setInt(1, productVatiantID);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				quantity = rs.getInt("quantity");
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return quantity;
 	}
 
 }

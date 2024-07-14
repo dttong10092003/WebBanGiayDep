@@ -32,7 +32,7 @@ public class CartDAO {
 		}
 		return null;
 	}
-	
+
 	public List<Cart> getCartByAccountID(int accountID) {
 		ProductDAO productDAO = new ProductDAO();
 		AccountDAO accountDAO = new AccountDAO();
@@ -54,7 +54,7 @@ public class CartDAO {
 		}
 		return list;
 	}
-	
+
 	public boolean updateAmountCart(int id, int amount) {
 		String query = "UPDATE Cart SET amount = ? WHERE id = ?";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
@@ -66,7 +66,7 @@ public class CartDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean insertCart(int accountID, int productVariantID, int amount) {
 		String query = "INSERT INTO Cart(accountID, productVariantID, amount) VALUES(?, ?, ?)";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
@@ -79,18 +79,31 @@ public class CartDAO {
 		}
 		return false;
 	}
-	
+
 	public double getTotalPriceCartByAccountID(int accountID) {
-        String query = "  SELECT SUM(p.price * c.amount) AS totalPrice FROM Cart c JOIN ProductVariant pv ON c.productVariantID = pv.id JOIN Product p ON pv.productID = p.id WHERE c.accountID = ?";
-        try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
-            ps.setInt(1, accountID);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return rs.getDouble("totalPrice");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
+		String query = "  SELECT SUM(p.price * c.amount) AS totalPrice FROM Cart c JOIN ProductVariant pv ON c.productVariantID = pv.id JOIN Product p ON pv.productID = p.id WHERE c.accountID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, accountID);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getDouble("totalPrice");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public boolean deleteItemFromCart(int id, int accountID) {
+		String query = "DELETE FROM Cart WHERE productVariantID = ? and accountID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, id);
+			ps.setInt(2, accountID);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 }

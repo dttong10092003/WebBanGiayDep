@@ -494,13 +494,13 @@
 							<div class="item-details">
 								<p>${item.productVariant.productID.name}</p>
 								<span>Size: ${item.productVariant.size}</span> <span>Color:
-									${item.productVariant.color}<span>
-								<span>${item.amount} x ${item.productVariant.productID.price}$<span>
+									${item.productVariant.color}<span> <span>${item.amount}
+											x ${item.productVariant.productID.price}$<span>
 							</div>
 							<span class="remove-item"
 								data-pid="${item.productVariant.productID.id}"
 								data-size="${item.productVariant.size}"
-								data-color="${item.productVariant.color}">&times;</span>
+								data-image="${item.productVariant.image1}">&times;</span>
 
 						</div>
 					</c:forEach>
@@ -536,15 +536,23 @@
     $(document).ready(function() {
         <%if (request.getAttribute("showCart") != null) {%>
             showCartModal();
-        <%}%>
+        <%} else if (request.getAttribute("checkQuantity") != null) {%>
+        	alert('Không đủ số lượng');
+        	<% } %>
     });
 
-    $('.remove-item').click(function() {
-        const pid = $(this).data('pid');
-        const size = $(this).data('size');
-        const color = $(this).data('color');
-        $.post('removeFromCart', { pid: pid, size: size, color: color }, function(response) {
-            location.reload();
+    
+        
+    $(document).ready(function() {	
+    	$('.remove-item').click(function() {
+            const pid = $(this).data('pid');
+            const size = $(this).data('size');
+            const image = $(this).data('image');
+            $.post('removeFromCart', { pid: pid, size: size, image: image }, function(response) {
+                location.reload();
+            }).fail(function() {
+                alert("Lỗi khi xóa sản phẩm khỏi giỏ hàng.");
+            });
         });
     });
 	

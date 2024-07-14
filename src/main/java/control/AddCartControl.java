@@ -51,20 +51,33 @@ public class AddCartControl extends HttpServlet {
 
 		int accountID = acc.getId();
 		int productVariantID = productVariant.getId();
+		int quantity = productDAO.getQuantity(productVariantID);
 
 		Cart cartExisted = cartDAO.checkCartExisted(accountID, productVariantID);
 		if (cartExisted != null) {
 			int amountExisted = cartExisted.getAmount();
 			int newAmount = amount + amountExisted;
 			int cartID = cartExisted.getId();
-			cartDAO.updateAmountCart(cartID, newAmount);
+			if (quantity >= newAmount) {
+				cartDAO.updateAmountCart(cartID, newAmount);
+			} else {
+				request.setAttribute("checkQuantity", false);
+				request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
+				return;
+			}
 
 			// chỗ này có thể if(cartDAO.updateAmountCart(cartID, newAmount)){}
 //			request.setAttribute("mess", "Đã tăng số lượng sản phẩm!"); // Dành cho chỉnh sửa số lượng ở giỏ
 //			request.getRequestDispatcher("/managerCart").forward(request, response); // Mở trang cart
 
 		} else {
-			cartDAO.insertCart(accountID, productVariantID, amount);
+			if (quantity > amount) {
+				cartDAO.insertCart(accountID, productVariantID, amount);
+			}else {
+				request.setAttribute("checkQuantity", false);
+				request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
+				return;
+			}
 //			request.setAttribute("mess", "Đã thêm sản phẩm vào giỏ hàng!"); // Dành cho thêm mới sản phẩm vào giỏ
 //			request.getRequestDispatcher("managerCart").forward(request, response);
 		}
@@ -72,6 +85,7 @@ public class AddCartControl extends HttpServlet {
 		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
 		double totalPrice = cartDAO.getTotalPriceCartByAccountID(accountID);
 		
+		// Vẫn còn thiếu check số lượng trong kho cần phải > số lượng mua của Acccount
 		
 		request.setAttribute("showCart", true);
 		request.setAttribute("cart", listCart);
