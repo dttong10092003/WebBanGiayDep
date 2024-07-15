@@ -52,6 +52,8 @@ public class AddCartControl extends HttpServlet {
 		int accountID = acc.getId();
 		int productVariantID = productVariant.getId();
 		int quantity = productDAO.getQuantity(productVariantID);
+		System.out.println("Quantity " + quantity);
+		System.out.println("Chạy hàm");
 
 		Cart cartExisted = cartDAO.checkCartExisted(accountID, productVariantID);
 		if (cartExisted != null) {
@@ -64,7 +66,7 @@ public class AddCartControl extends HttpServlet {
 				request.setAttribute("checkQuantity", false);
 				request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
 				return;
-			}
+			} // Cần phải fix cái xóa không nên reload trang
 
 			// chỗ này có thể if(cartDAO.updateAmountCart(cartID, newAmount)){}
 //			request.setAttribute("mess", "Đã tăng số lượng sản phẩm!"); // Dành cho chỉnh sửa số lượng ở giỏ
@@ -84,6 +86,7 @@ public class AddCartControl extends HttpServlet {
 		
 		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
 		double totalPrice = cartDAO.getTotalPriceCartByAccountID(accountID);
+		
 		
 		// Vẫn còn thiếu check số lượng trong kho cần phải > số lượng mua của Acccount
 		

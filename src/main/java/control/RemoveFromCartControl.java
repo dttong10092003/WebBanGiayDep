@@ -1,10 +1,12 @@
 package control;
 
 import java.io.IOException;
+import java.util.List;
 
 import dao.CartDAO;
 import dao.ProductDAO;
 import entity.Account;
+import entity.Cart;
 import entity.ProductVariant;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 public class RemoveFromCartControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ProductDAO productDAO = new ProductDAO();
 		CartDAO cartDAO = new CartDAO();
@@ -41,7 +43,26 @@ public class RemoveFromCartControl extends HttpServlet {
 
 		boolean result = cartDAO.deleteItemFromCart(productVariantID, accountID);
 		System.out.println("result: " + result);
-		response.setStatus(result ? HttpServletResponse.SC_OK : HttpServletResponse.SC_BAD_REQUEST);
+		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
+		double totalPrice = cartDAO.getTotalPriceCartByAccountID(accountID);
+
+		request.setAttribute("cart", listCart);
+		request.setAttribute("totalPrice", totalPrice);
+		request.setAttribute("showCart", true);
+
+		request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
+
+//		response.setStatus(result ? HttpServletResponse.SC_OK : HttpServletResponse.SC_BAD_REQUEST);
+
 	}
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
+	}
 }
