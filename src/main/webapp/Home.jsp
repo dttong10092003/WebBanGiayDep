@@ -18,8 +18,6 @@
 	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 	crossorigin="anonymous">
 
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-
 <!-- Font Awesome -->
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
@@ -49,6 +47,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<link href="css/style.css" rel="stylesheet" type="text/css" />
 <style>
 /* Carousel styling */
 #introCarousel, .carousel-inner, .carousel-item, .carousel-item.active {
@@ -85,7 +84,6 @@
 		margin-top: -58.59px;
 	}
 }
-
 </style>
 
 <style>
@@ -193,8 +191,8 @@
 						<div class=" col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap"></a>
+									<a href="detail?pid=${o.id}" title="View Product"><img
+										class="img-fluid w-100" src="${o.image}" alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
 									<h5 class="card-title show_txt">
@@ -203,7 +201,8 @@
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
+											<a href="detail?pid=${o.id}"
+												class="btn btn-success btn-block">${o.price}$</a>
 										</div>
 									</div>
 								</div>
@@ -226,8 +225,8 @@
 						<div class="productNike col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap"></a>
+									<a href="detail?pid=${o.id}" title="View Product"><img
+										class="img-fluid w-100" src="${o.image}" alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
 									<h5 class="card-title show_txt">
@@ -236,7 +235,8 @@
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
+											<a href="detail?pid=${o.id}"
+												class="btn btn-success btn-block">${o.price}$</a>
 										</div>
 									</div>
 								</div>
@@ -258,8 +258,8 @@
 						<div class="productAdidas col-12 col-md-6 col-lg-3">
 							<div class="card">
 								<div class="view zoom z-depth-2 rounded">
-									<a href="detail?pid=${o.id}" title="View Product"><img class="img-fluid w-100" src="${o.image}"
-										alt="Card image cap"></a>
+									<a href="detail?pid=${o.id}" title="View Product"><img
+										class="img-fluid w-100" src="${o.image}" alt="Card image cap"></a>
 								</div>
 								<div class="card-body">
 									<h5 class="card-title show_txt">
@@ -268,7 +268,8 @@
 									<p class="card-text show_txt">${o.description}</p>
 									<div class="row">
 										<div class="col">
-											<a href="detail?pid=${o.id}" class="btn btn-success btn-block">${o.price}$</a>
+											<a href="detail?pid=${o.id}"
+												class="btn btn-success btn-block">${o.price}$</a>
 										</div>
 									</div>
 								</div>
@@ -329,59 +330,57 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script>
-        
-        	 
-        	 function loadMoreNike() {
-                 var amountNike = document.getElementsByClassName("productNike").length;
-                 $.ajax({
-                     url: "/WebBanGiayDep/loadNike",
-                     type: "get", //send it through get method
-                     data: {
-                         exitsNike: amountNike
-                     },
-                     success: function (dataNike) {
-                         document.getElementById("contentNike").innerHTML += dataNike;
-                         
-                     },
-                     error: function (xhr) {
-                         //Do Something to handle error
-                     }
-                 });
-             }
-        	 function loadMoreAdidas() {
-                 var amountAdidas = document.getElementsByClassName("productAdidas").length;
-                 $.ajax({
-                     url: "/WebBanGiayDep/loadAdidas",
-                     type: "get", //send it through get method
-                     data: {
-                         exitsAdidas: amountAdidas
-                     },
-                     success: function (dataAdidas) {
-                         document.getElementById("contentAdidas").innerHTML += dataAdidas;
-                         
-                     },
-                     error: function (xhr) {
-                         //Do Something to handle error
-                     }
-                 });
-             }
-        	 
-        	 function loadAmountCart(){
-             	 $.ajax({
-                      url: "/WebBanGiayDep/loadAllAmountCart",
-                      type: "get", //send it through get method
-                      data: {
-                          
-                      },
-                      success: function (responseData) {
-                          document.getElementById("amountCart").innerHTML = responseData;
-                      }
-                  });
-             } 
-             
-           
-                   
-        </script>
+		function loadMoreNike() {
+			var amountNike = document.getElementsByClassName("productNike").length;
+			$
+					.ajax({
+						url : "/WebBanGiayDep/loadNike",
+						type : "get", //send it through get method
+						data : {
+							exitsNike : amountNike
+						},
+						success : function(dataNike) {
+							document.getElementById("contentNike").innerHTML += dataNike;
+
+						},
+						error : function(xhr) {
+							//Do Something to handle error
+						}
+					});
+		}
+		function loadMoreAdidas() {
+			var amountAdidas = document.getElementsByClassName("productAdidas").length;
+			$
+					.ajax({
+						url : "/WebBanGiayDep/loadAdidas",
+						type : "get", //send it through get method
+						data : {
+							exitsAdidas : amountAdidas
+						},
+						success : function(dataAdidas) {
+							document.getElementById("contentAdidas").innerHTML += dataAdidas;
+
+						},
+						error : function(xhr) {
+							//Do Something to handle error
+						}
+					});
+		}
+
+		function loadAmountCart() {
+			$
+					.ajax({
+						url : "/WebBanGiayDep/loadAllAmountCart",
+						type : "get", //send it through get method
+						data : {
+
+						},
+						success : function(responseData) {
+							document.getElementById("amountCart").innerHTML = responseData;
+						}
+					});
+		}
+	</script>
 
 
 

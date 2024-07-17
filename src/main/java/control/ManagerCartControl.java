@@ -1,11 +1,11 @@
 package control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
+import dao.CartDAO;
 import entity.Account;
-import entity.Product;
+import entity.Cart;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,10 +27,11 @@ public class ManagerCartControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	CartDAO cartDAO = new CartDAO();
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         
-        request.getRequestDispatcher("Cart.jsp").forward(request, response);
+      
         HttpSession session = request.getSession();
         Account a = (Account) session.getAttribute("acc");
         if(a == null) {
@@ -38,6 +39,9 @@ public class ManagerCartControl extends HttpServlet {
         	return;
         }
         int accountID = a.getId();
+        List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
+        request.setAttribute("listCart", listCart);
+        request.getRequestDispatcher("Cart.jsp").forward(request, response);
 //        DAO dao = new DAO();
 //        List<Cart> list = dao.getCartByAccountID(accountID);
 //        List<Product> list2 = dao.getAllProduct();
