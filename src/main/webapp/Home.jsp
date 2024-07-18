@@ -202,7 +202,7 @@
 									<div class="row">
 										<div class="col">
 											<a href="detail?pid=${o.id}"
-												class="btn btn-success btn-block">${o.price}$</a>
+												class="btn btn-success btn-block">${o.retailPrice}$</a>
 										</div>
 									</div>
 								</div>
@@ -236,7 +236,7 @@
 									<div class="row">
 										<div class="col">
 											<a href="detail?pid=${o.id}"
-												class="btn btn-success btn-block">${o.price}$</a>
+												class="btn btn-success btn-block">${o.retailPrice}$</a>
 										</div>
 									</div>
 								</div>
@@ -269,7 +269,7 @@
 									<div class="row">
 										<div class="col">
 											<a href="detail?pid=${o.id}"
-												class="btn btn-success btn-block">${o.price}$</a>
+												class="btn btn-success btn-block">${o.retailPrice}$</a>
 										</div>
 									</div>
 								</div>

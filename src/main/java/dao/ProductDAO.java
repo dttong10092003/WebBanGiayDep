@@ -42,6 +42,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -74,6 +75,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -106,6 +108,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -141,6 +144,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -203,6 +207,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -234,6 +239,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -266,6 +272,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -321,6 +328,7 @@ public class ProductDAO {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ProductVariant productVariant = new ProductVariant();
+				productVariant.setId(rs.getInt("id"));
 				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("quantity"));
@@ -351,7 +359,7 @@ public class ProductDAO {
 			ps.setString(1, productID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ProductVariant productVariant = new ProductVariant();
+				ProductVariant productVariant = new ProductVariant();		
 				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("totalQuantity"));
@@ -444,6 +452,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -507,6 +516,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
@@ -698,16 +708,16 @@ public class ProductDAO {
 		}
 
 		if (priceMin != null && !priceMin.isEmpty() && priceMax != null && !priceMax.isEmpty()) {
-			sql += ("AND p.price BETWEEN ? AND ? ");
+			sql += ("AND p.retailPrice BETWEEN ? AND ? ");
 			params.add(priceMin);
 			params.add(priceMax);
 		} else if (price != null && !price.isEmpty()) {
 			if (price.equalsIgnoreCase("under100")) {
-				sql += ("AND p.price < 100 ");
+				sql += ("AND p.retailPrice < 100 ");
 			} else if (price.equalsIgnoreCase("100to200")) {
-				sql += ("AND p.price BETWEEN 100 AND 200 ");
+				sql += ("AND p.retailPrice BETWEEN 100 AND 200 ");
 			} else if (price.equalsIgnoreCase("200above")) {
-				sql += ("AND p.price > 200 ");
+				sql += ("AND p.retailPrice > 200 ");
 			}
 		}
 
@@ -740,6 +750,7 @@ public class ProductDAO {
 				product.setName(rs.getString("name"));
 				product.setImage(rs.getString("image"));
 				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
 				product.setDescription(rs.getString("description"));
 
 				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));

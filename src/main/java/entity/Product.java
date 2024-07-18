@@ -5,6 +5,7 @@ public class Product {
 	private String name;
 	private String image;
 	private double price;
+	private double retailPrice;
 	private String description;
 	private Category categoryID;
 	private Brand brandID;
@@ -12,16 +13,16 @@ public class Product {
 	private int gender;
 	
 	public Product() {
-		super();
 	}
 
-	public Product(String id, String name, String image, double price, String description, Category categoryID,
-			Brand brandID, Supplier supplierID, int gender) {
+	public Product(String id, String name, String image, double price, double retailPrice, String description,
+			Category categoryID, Brand brandID, Supplier supplierID, int gender) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.image = image;
 		this.price = price;
+		setRetailPrice(retailPrice);
 		this.description = description;
 		this.categoryID = categoryID;
 		this.brandID = brandID;
@@ -59,6 +60,19 @@ public class Product {
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+
+	public double getRetailPrice() {
+		return retailPrice;
+	}
+
+	public void setRetailPrice(double retailPrice) {
+		if (retailPrice < this.price) {
+			this.retailPrice = this.price;
+		} else {
+			this.retailPrice = retailPrice;
+			
+		}
 	}
 
 	public String getDescription() {
@@ -103,10 +117,14 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", description="
-				+ description + ", categoryID=" + categoryID + ", brandID=" + brandID + ", supplierID=" + supplierID
-				+ ", gender=" + gender + "]";
+		return "Product [id=" + id + ", name=" + name + ", image=" + image + ", price=" + price + ", retailPrice="
+				+ retailPrice + ", description=" + description + ", categoryID=" + categoryID + ", brandID=" + brandID
+				+ ", supplierID=" + supplierID + ", gender=" + gender + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

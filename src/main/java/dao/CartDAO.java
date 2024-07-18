@@ -81,7 +81,7 @@ public class CartDAO {
 	}
 
 	public double getTotalPriceCartByAccountID(int accountID) {
-		String query = "  SELECT SUM(p.price * c.amount) AS totalPrice FROM Cart c JOIN ProductVariant pv ON c.productVariantID = pv.id JOIN Product p ON pv.productID = p.id WHERE c.accountID = ?";
+		String query = "  SELECT SUM(p.retailPrice * c.amount) AS totalPrice FROM Cart c JOIN ProductVariant pv ON c.productVariantID = pv.id JOIN Product p ON pv.productID = p.id WHERE c.accountID = ?";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 			ps.setInt(1, accountID);
 			ResultSet rs = ps.executeQuery();
@@ -106,4 +106,5 @@ public class CartDAO {
 
 		return false;
 	}
+	
 }

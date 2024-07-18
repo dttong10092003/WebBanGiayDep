@@ -41,7 +41,7 @@ public class LoadMoreAdidasControl extends HttpServlet {
         	        + "            <p class=\"card-text show_txt\">" + o.getDescription() + "</p>\r\n"
         	        + "            <div class=\"row\">\r\n"
         	        + "                <div class=\"col\">\r\n"
-        	        + "                    <a href=\"detail?pid=" + o.getId() + "\" class=\"btn btn-success btn-block\">" + o.getPrice() + " $</a>\r\n"
+        	        + "                    <a href=\"detail?pid=" + o.getId() + "\" class=\"btn btn-success btn-block\">" + o.getRetailPrice() + " $</a>\r\n"
         	        + "                </div>\r\n"
         	        + "            </div>\r\n"
         	        + "        </div>\r\n"

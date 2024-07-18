@@ -56,13 +56,13 @@
 .right {
 	display: flex;
 	align-items: flex-end;
-	padding-left: 270px;
+	padding-left: 250px;
 }
 
 .center {
 	display: flex;
 	align-items: center;
-	padding-left: 280px;
+	padding-left: 250px;
 }
 </style>
 
@@ -81,14 +81,14 @@
 			id="navbarsExampleDefault">
 			<ul class="navbar-nav m-auto">
 				<div class="center">
+					<c:if test="${(sessionScope.acc != null) && sessionScope.acc.isAdmin == true}">
+						<li class="nav-item"><a class="nav-link" href="manager">Manager</a></li>
+					</c:if>
 					<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="shop">Shop</a></li>
 					<li class="nav-item"><a class="nav-link" href="shop?brand=1">Nike</a></li>
 					<li class="nav-item"><a class="nav-link" href="shop?brand=2">Adidas</a></li>
-					<c:if test="${sessionScope.acc == null}">
-						<li class="nav-item"><a class="nav-link"
-							href="forgotPassword">Forgot Password</a></li>
-					</c:if>
+					
 				</div>
 
 				<div class="right">
@@ -97,7 +97,7 @@
 						<a class="btn btn-success btn-sm ml-3" href="managerCart"> <i
 							class="fa fa-shopping-cart"></i> <span style="font-size: 14px;">Cart</span>
 							<b><span id="amountCart" class="badge badge-light"
-								style="color: black; font-size: 12px;"> </span></b>
+								style="color: black; font-size: 12px;"></span></b>
 						</a>
 					</form>
 

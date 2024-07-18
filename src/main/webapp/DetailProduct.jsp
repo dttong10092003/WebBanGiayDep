@@ -8,6 +8,29 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Detail Product</title>
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+	crossorigin="anonymous">
+
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+<!-- Google Fonts Roboto -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+<!-- MDB -->
+<link rel="stylesheet" href="css/mdb.min.css" />
+<!-- Custom styles -->
+<link rel="stylesheet" href="css/style.css" />
 <!-- Roboto Font -->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
@@ -24,14 +47,6 @@
 <link rel="stylesheet"
 	href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
 <!-- Your custom styles (optional) -->
-
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <link href="css/modal.css" rel="stylesheet" type="text/css" />
 
@@ -226,8 +241,8 @@
 						<h5>${detail.name}</h5>
 
 						<p>
-							<span class="mr-1"><strong>$${String.format("%.02f",detail.price*0.9)
-									}</strong></span><span class="text-grey"><strong><s>$${detail.price
+							<span class="mr-1"><strong>$${String.format("%.02f",detail.retailPrice*0.9)
+									}</strong></span><span class="text-grey"><strong><s>$${detail.retailPrice
 										}</s></strong></span>
 						</p>
 
@@ -339,7 +354,7 @@
 						role="tabpanel" aria-labelledby="description-tab">
 						<h5>Product Description</h5>
 
-						<h6>$${String.format("%.02f",detail.price*0.9) }</h6>
+						<h6>$${String.format("%.02f",detail.retailPrice*0.9) }</h6>
 						<p class="pt-1">${detail.description}</p>
 					</div>
 					<div class="tab-pane fade" id="info" role="tabpanel"
@@ -449,10 +464,10 @@
 
 								<div class="pt-4">
 
-									<h5>${o.price }</h5>
+									<h5>${o.retailPrice }</h5>
 									<p>
-										<span class="text-danger mr-1"><strong>${String.format("%.02f",o.price*0.9) }$</strong></span><span
-											class="text-grey"><strong><s>${o.price }$</s></strong></span>
+										<span class="text-danger mr-1"><strong>${String.format("%.02f",o.retailPrice*0.9) }$</strong></span><span
+											class="text-grey"><strong><s>${o.retailPrice }$</s></strong></span>
 									</p>
 
 
@@ -481,7 +496,6 @@
 					<h3>Giỏ hàng</h3>
 					<span class="close"><button>&times;</button></span>
 				</div>
-				<hr>
 				<div class="cart-items">
 
 					<c:forEach var="item" items="${cart}">
@@ -495,7 +509,7 @@
 								<p>${item.productVariant.productID.name}</p>
 								<span>Size: ${item.productVariant.size}</span> <span>Color:
 									${item.productVariant.color}<span> <span>${item.amount}
-											x ${item.productVariant.productID.price}$<span>
+											x ${item.productVariant.productID.retailPrice}$<span>
 							</div>
 							<span class="remove-item"> <a
 								href="/WebBanGiayDep/removeFromCart?pid=${item.productVariant.productID.id}&size=${item.productVariant.size}&image=${item.productVariant.image1}">
@@ -507,7 +521,7 @@
 				</div>
 				<hr>
 				<p>Total: ${totalPrice}$</p>
-				<a href="checkout.jsp" class="btn btn-primary">Checkout</a>
+				<a href="managerCart" class="btn btn-primary">Checkout</a>
 			</div>
 		</div>
 	</main>

@@ -19,7 +19,7 @@ public class AccountDAO {
 			ps.setString(2, password);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
+				account = new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,7 +33,7 @@ public class AccountDAO {
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				return new Account(rs.getInt("uID"), rs.getString("username"), rs.getString("password"), rs.getString("email"));
+				return new Account(rs.getInt("uID"), rs.getString("username"), rs.getString("password"), rs.getString("email"), rs.getBoolean("isAdmin"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

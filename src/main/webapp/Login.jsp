@@ -14,21 +14,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+<link
+	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet" id="bootstrap-css">
+<script
+	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
 	crossorigin="anonymous">
+
+<!-- Font Awesome -->
 <link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-	crossorigin="anonymous">
+	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+<!-- Google Fonts Roboto -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+<!-- MDB -->
+<link rel="stylesheet" href="css/mdb.min.css" />
+<!-- Custom styles -->
+<link rel="stylesheet" href="css/style.css" />
+<!-- Roboto Font -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap">
+<!-- Font Awesome -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet"
+	href="https://mdbootstrap.com/previews/ecommerce-demo/css/bootstrap.min.css">
+<!-- Material Design Bootstrap -->
+<link rel="stylesheet"
+	href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb-pro.min.css">
+<!-- Material Design Bootstrap Ecommerce -->
+<link rel="stylesheet"
+	href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
+<!-- Your custom styles (optional) -->
+
 <link href="css/login.css" rel="stylesheet" type="text/css" />
 <link href="css/style.css" rel="stylesheet" type="text/css" />
+<style>
+.forgotPass {
+	float: right;
+}
+</style>
+
 <title>Login Form</title>
 
 </head>
 
-<body>
+<body class="skin-light">
 	<jsp:include page="Menu.jsp"></jsp:include>
 	<div id="logreg-forms">
 		<c:if test="${error!=null }">
@@ -51,6 +89,10 @@
 				<input name="remember" value="1" type="checkbox"
 					class="form-check-input" id="exampleCheck1"> <label
 					class="form-check-label" for="exampleCheck1">Remember me</label>
+				<a class="forgotPass" href="forgotPassword">Forgot Password</a>	
+			</div>
+			<div>
+								
 			</div>
 
 			<button class="btn btn-success btn-block" type="submit">

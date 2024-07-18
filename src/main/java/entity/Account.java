@@ -5,15 +5,18 @@ public class Account {
 	private String username;
 	private String password;
 	private String email;
+	private Boolean isAdmin;
 	
 	public Account() {
+		
 	}
 	
-	public Account(int id, String username, String password, String email) {
+	public Account(int id, String username, String password, String email, Boolean isAdmin) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.isAdmin = isAdmin;
 	}
 
 	public int getId() {
@@ -48,10 +51,23 @@ public class Account {
 		this.email = email;
 	}
 
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + "]";
+		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", isAdmin=" + isAdmin + "]";
 	}
+	
+	
+	
+	
 	
 	
 }
