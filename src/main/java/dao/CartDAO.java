@@ -107,4 +107,31 @@ public class CartDAO {
 		return false;
 	}
 	
+	public boolean checkQuantity(int productVariantID, int amount) {
+		String query = "SELECT quantity FROM ProductVariant WHERE id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, productVariantID);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				if (rs.getInt("quantity") >= amount) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean deleteCartByAccountID(int accountID) {
+		String query = "DELETE FROM Cart WHERE accountID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, accountID);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

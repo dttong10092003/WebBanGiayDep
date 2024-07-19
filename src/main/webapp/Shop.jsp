@@ -315,19 +315,8 @@
 									class="text-reset"><i class="fas fa-th-large fa-lg"></i></a href="#!">
 							</div>
 							<div class="col-12 col-md-5">
-								<div class="d-flex flex-wrap">
-									<div class="select-outline position-relative w-100">
-										<select class="mdb-select md-outline md-form"
-											searchable="Search here..">
-											<option value="" disabled selected>Choose category</option>
-											<option value="1">Category 1</option>
-											<option value="2">Category 2</option>
-											<option value="3">Category 3</option>
-											<option value="4">Category 4</option>
-											<option value="5">Category 5</option>
-										</select> <label>Tất cả sản phẩm</label>
-										<button class="btn-save btn btn-primary btn-sm mt-2">Save</button>
-									</div>
+								<div class="d-flex flex-wrap">	
+									<h5>All products</h5>
 								</div>
 							</div>
 							<div class="col-12 col-md-4 text-center">

@@ -29,10 +29,10 @@ public class ProductDAO {
 	public List<Product> getTop8Products() {
 
 		List<Product> topp8Products = new ArrayList<Product>();
-		String query = "SELECT TOP 8 p.id, p.name, p.image, p.price, p.description, p.categoryID, p.brandID, p.supplierID, p.gender, "
+		String query = "SELECT TOP 8 p.id, p.name, p.image, p.price, p.retailPrice, p.description, p.categoryID, p.brandID, p.supplierID, p.gender, "
 				+ "       SUM(pv.soldQuantity) AS totalSoldQuantity " + "FROM ProductVariant pv "
 				+ "JOIN Product p ON pv.productId = p.id "
-				+ "GROUP BY p.id, p.name, p.image, p.price, p.description, p.categoryID, p.brandID, p.supplierID, p.gender "
+				+ "GROUP BY p.id, p.name, p.image, p.price, p.retailPrice, p.description, p.categoryID, p.brandID, p.supplierID, p.gender "
 				+ "ORDER BY totalSoldQuantity DESC;";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 			ResultSet rs = ps.executeQuery();
@@ -537,74 +537,6 @@ public class ProductDAO {
 		return list;
 	}
 
-//	public int countProducts(String[] genders, String brandID, String categoryID, String price, String priceMin,
-//			String priceMax, String color, String txtS) {
-//		StringBuilder queryBuilder = new StringBuilder();
-//		sql +=("SELECT COUNT(*) FROM Product p ");
-//		sql +=("JOIN ProductVariant pv ON p.id = pv.productID WHERE 1=1 ");
-//
-//		List<Object> params = new ArrayList<>();
-//
-//		if (genders != null && genders.length > 0) {
-//			sql +=("AND (");
-//			for (int i = 0; i < genders.length; i++) {
-//				if (i > 0) {
-//					sql +=("OR ");
-//				}
-//				sql +=("p.gender = ? ");
-//				params.add(Integer.parseInt(genders[i]));
-//			}
-//			sql +=(") ");
-//		}
-//
-//		if (brandID != null && !brandID.isEmpty()) {
-//			sql +=("AND p.brandID = ? ");
-//			params.add(Integer.parseInt(brandID));
-//		}
-//
-//		if (categoryID != null && !categoryID.isEmpty()) {
-//			sql +=("AND p.categoryID = ? ");
-//			params.add(Integer.parseInt(categoryID));
-//		}
-//
-//		if (price != null && !price.isEmpty()) {
-//			sql +=("AND p.price = ? ");
-//			params.add(Double.parseDouble(price));
-//		} else if (priceMin != null && !priceMin.isEmpty() && priceMax != null && !priceMax.isEmpty()) {
-//			sql +=("AND p.price BETWEEN ? AND ? ");
-//			params.add(Double.parseDouble(priceMin));
-//			params.add(Double.parseDouble(priceMax));
-//		}
-//
-//		if (color != null && !color.isEmpty()) {
-//			sql +=("AND pv.color = ? ");
-//			params.add(color);
-//		}
-//
-//		if (txtS != null && !txtS.isEmpty()) {
-//			sql +=("AND (p.name LIKE ? OR p.description LIKE ?) ");
-//			params.add("%" + txtS + "%");
-//			params.add("%" + txtS + "%");
-//		}
-//
-//		String query = queryBuilder.toString();
-//
-//		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
-//			for (int i = 0; i < params.size(); i++) {
-//				ps.setObject(i + 1, params.get(i));
-//			}
-//			ResultSet rs = ps.executeQuery();
-//			if (rs.next()) {
-//				return rs.getInt(1);
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return 0;
-//
-//	}
-
 	// Method to count products based on filters
 	public int countProducts(String[] genders, String brand, String category, String price, String priceMin,
 			String priceMax, String color, String txtS) {
@@ -726,10 +658,7 @@ public class ProductDAO {
 			params.add("%" + txtS + "%");
 		}
 
-		// Append pagination
-//        sql +=(" LIMIT ?, ?");
-//        params.add((page - 1) * pageSize);
-//        params.add(pageSize);
+		
 		sql += (" ORDER BY p.id DESC OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY");
 		params.add((index - 1) * 9);
 		System.out.println("query: " + sql);
@@ -783,6 +712,19 @@ public class ProductDAO {
 		}
 		
 		return quantity;
+	}
+	
+	public boolean updateQuantityAndSoldQuantity(int productVariantID, int quantity) {
+		String sql = "UPDATE ProductVariant SET quantity = quantity - ?, soldQuantity = soldQuantity + ? WHERE id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, quantity);
+			ps.setInt(2, quantity);
+			ps.setInt(3, productVariantID);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

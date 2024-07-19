@@ -92,36 +92,20 @@
 	font-size: 15px;
 }
 
-h5 {
-	font-weight: bold;
-	color: red;
-}
-
 form#shippingForm .form-group {
-    margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 
 form#shippingForm .form-group label {
-    font-weight: bold;
-    display: block;
+	font-weight: bold;
+	display: block;
 }
 
 form#shippingForm .form-control {
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	padding: 0.5rem;
 }
-
-form#shippingForm .form-control::placeholder {
-    color: #6c757d;
-}
-
-form#shippingForm .form-control:focus {
-    border-color: #80bdff;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
 </style>
 
 </head>
@@ -231,38 +215,41 @@ form#shippingForm .form-control:focus {
 								class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thông
 								tin vận chuyển</div>
 							<div class="p-4">
-								<form id="shippingForm">
+								<form id="shippingForm" method="POST" action="order">
 									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="fullName">Họ tên</label> <input type="text"
-												class="form-control" id="fullName" placeholder="Nhập họ tên">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="fullName">Name</label> <input type="text"
+												class="form-control" id="fullName" required>
 										</div>
-										<div class="form-group col-md-6">
-											<label for="phoneNumber">Số điện thoại</label> <input
-												type="text" class="form-control" id="phoneNumber"
-												placeholder="Nhập số điện thoại">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="phoneNumber">Phone Number</label> <input
+												type="text" class="form-control" id="phoneNumber" required>
 										</div>
 									</div>
 									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="address">Địa chỉ nhận hàng</label> <input
-												type="text" class="form-control" id="address"
-												placeholder="Nhập địa chỉ">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="street">Street</label> <input type="text"
+												class="form-control" id="street" required>
 										</div>
-										<div class="form-group col-md-6">
-											<label for="ward">Xã/Phường</label> <input type="text"
-												class="form-control" id="ward" placeholder="Nhập xã/phường">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="ward">Ward</label> <input type="text"
+												class="form-control" id="ward" required>
 										</div>
 									</div>
 									<div class="form-row">
-										<div class="form-group col-md-6">
-											<label for="district">Quận/Huyện</label> <input type="text"
-												class="form-control" id="district"
-												placeholder="Nhập quận/huyện">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="district">District</label> <input type="text"
+												class="form-control" id="district" required>
 										</div>
-										<div class="form-group col-md-6">
-											<label for="province">Tỉnh</label> <input type="text"
-												class="form-control" id="province" placeholder="Nhập tỉnh">
+										<div
+											class="md-form md-outline my-0 md-form md-outline my-2 col-md-6">
+											<label for="province">Province</label> <input type="text"
+												class="form-control" id="province" required>
 										</div>
 									</div>
 								</form>
@@ -295,11 +282,11 @@ form#shippingForm .form-control:focus {
 											ship</strong></li>
 									<li class="d-flex justify-content-between py-3 border-bottom"><strong
 										class="text-muted">Tổng thanh toán</strong>
-										<h5 class="font-weight-bold">0 $</h5></li>
+										<h5 style="color: red;" class="font-weight-bold">0 $</h5></li>
 								</ul>
-								<a href="order"
-									class="btn btn-dark rounded-pill py-2 btn-block text-white">Thanh
-									Toán</a>
+								<a href="#"
+									class="btn btn-dark rounded-pill py-2 btn-block text-white"
+									onclick="submitOrder()">Thanh Toán</a>
 							</div>
 						</div>
 					</div>
@@ -334,6 +321,19 @@ form#shippingForm .form-control:focus {
 		src="https://mdbootstrap.com/previews/ecommerce-demo/js/mdb.ecommerce.min.js"></script>
 
 	<script>
+		function submitOrder() {
+			
+			const fullName = document.getElementById("fullName").value;
+		    const phoneNumber = document.getElementById("phoneNumber").value;
+		    const street = document.getElementById("street").value;
+		    const ward = document.getElementById("ward").value;
+		    const district = document.getElementById("district").value;
+		    const province = document.getElementById("province").value;
+		    const url = "order?fullName=" + fullName + "&phoneNumber=" + phoneNumber + "&street=" + street + "&ward=" + ward + "&district=" + district + "&province=" + province;
+		    
+		    window.location.href = url;
+		}
+
 		function initialize() {
 			loadAmountCart();
 			loadTotalMoney();
