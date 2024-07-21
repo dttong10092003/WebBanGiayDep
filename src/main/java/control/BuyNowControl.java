@@ -1,5 +1,12 @@
 package control;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -8,21 +15,10 @@ import dao.ProductDAO;
 import entity.Account;
 import entity.Cart;
 import entity.ProductVariant;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "AddCartControl", urlPatterns = { "/addCart" })
-public class AddCartControl extends HttpServlet {
-
-	/**
-	 * 
-	 */
+@WebServlet(name = "BuyNowControl", urlPatterns = { "/buyNow" })
+public class BuyNowControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	private ProductDAO productDAO = new ProductDAO();
 	private CartDAO cartDAO = new CartDAO();
 
@@ -65,28 +61,17 @@ public class AddCartControl extends HttpServlet {
 				request.setAttribute("checkQuantity", false);
 				request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
 				return;
-			} 
-
+			}
 		} else {
 			if (quantity >= amount) {
 				cartDAO.insertCart(accountID, productVariantID, amount);
-			}else {
+			} else {
 				request.setAttribute("checkQuantity", false);
 				request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
 				return;
 			}
 		}
-		
-		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
-		double totalPrice = cartDAO.getTotalPriceCartByAccountID(accountID);
-		
-		
-		
-		request.setAttribute("showCart", true);
-		request.setAttribute("cart", listCart);
-		request.setAttribute("totalPrice", totalPrice);
-
-		request.getRequestDispatcher("/detail?pid=" + productID).forward(request, response);
+		response.sendRedirect("managerCart");
 
 	}
 

@@ -38,9 +38,9 @@ public class TotalMoneyCartControl extends HttpServlet {
         
         	
         PrintWriter out = response.getWriter();
-        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalPriceCart+" $</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
+        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Subtotal</strong><strong>"+totalPriceCart+" $</strong></li>\r\n"
+        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Delivery/Shipping</strong><strong>Free</strong></li>\r\n"
+        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Total</strong>\r\n"
         				+ "                                            <h5 style=\"color: red;\" class=\"font-weight-bold\">"+totalPriceCart+" $</h5>\r\n"
         				+ "                                        </li>");
         	

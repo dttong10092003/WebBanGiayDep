@@ -1,17 +1,17 @@
 package entity;
 
-public class InvoiceDetails {
+public class InvoiceDetail {
 	private int id;
 	private ProductVariant productVariantID;
 	private int amount;
 	private double totalPrice;
 	private Invoice invoiceID;
 	
-	public InvoiceDetails() {
+	public InvoiceDetail() {
 
 	}
 	
-	public InvoiceDetails(int id, ProductVariant productVariantID, int amount, double totalPrice, Invoice invoiceID) {
+	public InvoiceDetail(int id, ProductVariant productVariantID, int amount, double totalPrice, Invoice invoiceID) {
 		super();
 		this.id = id;
 		this.productVariantID = productVariantID;
@@ -62,7 +62,7 @@ public class InvoiceDetails {
 
 	@Override
 	public String toString() {
-		return "InvoiceDetails [id=" + id + ", productVariantID=" + productVariantID + ", amount=" + amount
+		return "InvoiceDetail [id=" + id + ", productVariantID=" + productVariantID + ", amount=" + amount
 				+ ", totalPrice=" + totalPrice + ", invoiceID=" + invoiceID + "]";
 	}
 	

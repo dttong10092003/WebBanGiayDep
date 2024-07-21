@@ -42,42 +42,7 @@ public class ManagerCartControl extends HttpServlet {
         List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
         request.setAttribute("listCart", listCart);
         request.getRequestDispatcher("Cart.jsp").forward(request, response);
-//        DAO dao = new DAO();
-//        List<Cart> list = dao.getCartByAccountID(accountID);
-//        List<Product> list2 = dao.getAllProduct();
-      
-//        request.setAttribute("listCart", list);
-//        request.setAttribute("listProduct", list2);
-//        request.getRequestDispatcher("Cart.jsp").forward(request, response);
-//        double totalMoney=0;
-//        for(Cart o : list) {
-//        	for(Product p : list2) {
-//        		if(o.getProductID()==p.getId()) {
-//        			totalMoney=totalMoney+(p.getPrice()*o.getAmount());
-//        		}
-//        	}
-//        }
-//        
-//        double totalMoneyVAT=totalMoney+totalMoney*0.1;
-//       
-//        
-//       
-//        
-//       
-//        PrintWriter out = response.getWriter();
-//        		out.println(" <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng tiền hàng</strong><strong>"+totalMoney+"</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Phí vận chuyển</strong><strong>Free ship</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">VAT</strong><strong>10 %</strong></li>\r\n"
-//        				+ "                                        <li class=\"d-flex justify-content-between py-3 border-bottom\"><strong class=\"text-muted\">Tổng thanh toán</strong>\r\n"
-//        				+ "                                            <h5 class=\"font-weight-bold\">"+totalMoneyVAT+"</h5>\r\n"
-//        				+ "                                        </li>");
-//        	
-//       
-//       
-//        		
-//        	
-//         
-//    }
+
     }
 
     

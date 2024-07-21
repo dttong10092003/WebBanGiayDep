@@ -288,19 +288,19 @@
 					<div class=" col-12 col-md-12 col-lg-6">
 						<div class="card-body">
 							<h4 class="card-title show_txt"
-								style="text-align: center; font-size: 18pt; color: #b57b00;">Về
-								chúng tôi</h4>
+								style="text-align: center; font-size: 18pt; color: #b57b00;">About us</h4>
 							<h2 class="card-title show_txt"
 								style="text-align: center; font-size: 24pt;">Torch Shoes</h2>
-							<p style="text-align: center;">Uy tín lâu năm chuyên cung cấp
-								giày dép thời trang cho nam, nữ, hàng Replica 1:1 - Like Auth
-								với chất lượng đảm bảo và giá tốt nhất TPHCM.</p>
-							<p>Bạn đang cần tìm một đôi giày thể thao sneaker đẹp hoặc
-								dép hợp thời trang và đang hot Trends đến từ các thương hiệu lớn
-								nhưng lại không đủ hầu bao để sắm được hàng chính hãng? Hãy đến
-								với Torch Shoes – nơi bạn thỏa lòng mong ước mà chỉ phải chi ra
-								1 phần nhỏ so với dòng chính hãng ngoài store mà vẫn sắm cho
-								mình được một đôi chất lượng từ rep 1:1 đến siêu cấp like auth.</p>
+							<p style="text-align: center;">Long-standing reputation
+								specializing in providing fashion shoes for men and women,
+								Replica 1:1 - Like Auth with guaranteed quality and the best
+								price in Ho Chi Minh City.</p>
+							<p>Are you looking for a pair of beautiful sneakers or trendy
+								and hot Trends sandals from big brands but don't have enough
+								money to buy genuine products? Come to Torch Shoes - where you
+								can satisfy your wishes while only having to spend a small
+								fraction of the genuine line in the store and still buy yourself
+								a quality pair from rep 1:1 to super like auth.</p>
 						</div>
 					</div>
 					<div class=" col-12 col-md-12 col-lg-6">

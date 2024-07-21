@@ -3,6 +3,7 @@ package control;
 import java.io.IOException;
 import java.util.List;
 
+import dao.AccountDAO;
 import dao.CartDAO;
 import dao.InvoiceDAO;
 import dao.ProductDAO;
@@ -29,6 +30,7 @@ public class OrderControl extends HttpServlet {
 		CartDAO cartDAO = new CartDAO();
 		ProductDAO productDAO = new ProductDAO();
 		InvoiceDAO invoiceDAO = new InvoiceDAO();
+		AccountDAO accountDAO = new AccountDAO();
 
 		HttpSession session = request.getSession();
 		Account a = (Account) session.getAttribute("acc");
@@ -37,6 +39,7 @@ public class OrderControl extends HttpServlet {
 			return;
 		}
 		int accountID = a.getId();
+		String email = a.getEmail();
 		List<Cart> listCart = cartDAO.getCartByAccountID(accountID);
 		if (listCart.isEmpty()) {
 			request.setAttribute("mess", "Giỏ hàng trống!");
@@ -104,11 +107,33 @@ public class OrderControl extends HttpServlet {
 		System.out.println("invoiceID: " + invoiceID);
 		// Xóa giỏ hàng sau khi đặt hàng thành công
 		cartDAO.deleteCartByAccountID(accountID);
+
 		request.setAttribute("mess", "Đặt hàng thành công!");
 		request.getRequestDispatcher("managerCart").forward(request, response);
 
-	}
+		// Gửi email thông báo đặt hàng thành công
+		String subject = "Thông báo xác nhận đơn hàng #" + invoiceID;
+		StringBuilder sb = new StringBuilder();
+		sb.append("Cảm ơn bạn đã mua hàng tại Torch Shoes!\n\n");
+		sb.append("Thông tin khách hàng\n");
+		sb.append("Người nhận: " + fullName + "\n");
+		sb.append("Số điện thoại: " + phoneNumber + "\n");
+		sb.append("Địa chỉ: " + address + "\n\n");
 
+		sb.append("Thông tin đơn hàng\n");
+		for (Cart c : listCart) {
+			sb.append(c.getProductVariant().getProductID().getName() + "\nSize: " + c.getProductVariant().getSize()
+					+ " - Amount: " + c.getAmount() + " x " + c.getProductVariant().getProductID().getRetailPrice()
+					+ " $\n");
+		}
+		sb.append("\nTổng tiền: " + totalPrice + " $\n\n");
+		sb.append("Phương thức vận chuyển: Giao hàng tận nơi\n");
+		sb.append("Phương thức thanh toán: Thanh toán khi nhận hàng\n\n");
+
+		String content = sb.toString();
+		accountDAO.sendEmail(email, subject, content);
+	}
+	
 	private java.sql.Date getCurrentDate() {
 		java.util.Date today = new java.util.Date();
 		return new java.sql.Date(today.getTime());

@@ -241,9 +241,8 @@
 						<h5>${detail.name}</h5>
 
 						<p>
-							<span class="mr-1"><strong>$${String.format("%.02f",detail.retailPrice*0.9)
-									}</strong></span><span class="text-grey"><strong><s>$${detail.retailPrice
-										}</s></strong></span>
+							<span class="text-danger mr-1"><strong>${String.format("%.01f",detail.retailPrice)}
+									$</strong></span>
 						</p>
 
 
@@ -318,8 +317,8 @@
 								</table>
 							</div>
 							<div class="mt-1">
-								<button type="submit" class="btn btn-primary btn-md mr-1 mb-2">Buy
-									now</button>
+								<button onclick="buyNow('${detail.id}')" type="button"
+									class="btn btn-primary btn-md mr-1 mb-2">Buy now</button>
 								<button type="submit" class="btn btn-light btn-md mr-1 mb-2">
 									<i class="fas fa-shopping-cart pr-2"></i>Add to cart
 								</button>
@@ -354,7 +353,7 @@
 						role="tabpanel" aria-labelledby="description-tab">
 						<h5>Product Description</h5>
 
-						<h6>$${String.format("%.02f",detail.retailPrice*0.9) }</h6>
+						<h6>${String.format("%.01f",detail.retailPrice) } $</h6>
 						<p class="pt-1">${detail.description}</p>
 					</div>
 					<div class="tab-pane fade" id="info" role="tabpanel"
@@ -378,7 +377,7 @@
 					<div class="tab-pane fade" id="reviews" role="tabpanel"
 						aria-labelledby="reviews-tab">
 						<h5>
-							<span>${countAllReview }</span> review for <span>${detail.name }</span>
+							<span>${countAllReview }</span> Review for <span>${detail.name }</span>
 						</h5>
 
 						<h5 class="mt-4">Add a review</h5>
@@ -397,7 +396,8 @@
 							</div>
 						</div>
 
-						<c:forEach items="${listAllReview}" var="r">
+						<!-- 
+							<c:forEach items="${listAllReview}" var="r">
 
 							<div class="media mt-3 mb-4">
 								<img class="d-flex mr-3 z-depth-1"
@@ -420,6 +420,7 @@
 							<hr>
 
 						</c:forEach>
+						 -->
 
 
 					</div>
@@ -446,13 +447,12 @@
 						<div class="col-md-6 col-lg-3 mb-5">
 
 							<!-- Card -->
-							<div class="">
+							<div>
 
 								<div class="view zoom overlay z-depth-2 rounded">
 									<img class="img-fluid w-100" src="${o.image }" alt="Sample">
-									<h4 class="mb-0">
-										<span class="badge badge-primary badge-pill badge-news">Sale
-											10%</span>
+									<h5 class="mb-0">
+										<span class="badge badge-primary badge-pill badge-news">${o.categoryID.name } ${o.brandID.name }</span>
 									</h4>
 									<a href="detail?pid=${o.id}">
 										<div class="mask">
@@ -463,17 +463,8 @@
 								</div>
 
 								<div class="pt-4">
-
-									<h5>${o.retailPrice }</h5>
-									<p>
-										<span class="text-danger mr-1"><strong>${String.format("%.02f",o.retailPrice*0.9) }$</strong></span><span
-											class="text-grey"><strong><s>${o.retailPrice }$</s></strong></span>
-									</p>
-
-
-
+									<h5 class="text-danger mr-1">${o.retailPrice } $</h5>
 								</div>
-
 							</div>
 							<!-- Card -->
 
@@ -554,6 +545,18 @@
         	alert('Không đủ số lượng');
         	<%}%>
     });
+    
+    function buyNow(productId) {
+    	// Lấy giá trị size và ảnh đã chọn
+        const selectedSize = $('#sizeSelector a.selected').text();
+        const selectedImage = $('.colorway-images-wrapper img.selected').attr('src');
+        const quantity = document.querySelector('input[name="quantity"]').value;
+      
+
+        // Chuyển hướng tới trang mua ngay với dữ liệu
+        const buyNowUrl = "buyNow?pid=" + productId + "&quantity=" + quantity + "&selectedSize=" + selectedSize + "&selectedImage=" + selectedImage;
+        window.location.href = buyNowUrl;
+    }
 
     
     

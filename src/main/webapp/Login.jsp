@@ -69,11 +69,47 @@
 <body class="skin-light">
 	<jsp:include page="Menu.jsp"></jsp:include>
 	<div id="logreg-forms">
+		<c:if test="${error eq 'Username already exists'}">
+			<script>
+	       		$(document).ready(function() {
+	            $('#logreg-forms .form-signin').hide();
+	            $('#logreg-forms .form-signup').show();
+	       		});
+    		</script>
+		</c:if>
+	
+		<c:if test="${error eq 'Passwords do not match'}">
+			<script>
+	       		$(document).ready(function() {
+	            $('#logreg-forms .form-signin').hide();
+	            $('#logreg-forms .form-signup').show();
+	       		});
+    		</script>
+		</c:if>
+		
+		<c:if test="${error eq 'Email must end with @gmail.com or @email.com'}">
+			<script>
+	       		$(document).ready(function() {
+	            $('#logreg-forms .form-signin').hide();
+	            $('#logreg-forms .form-signup').show();
+	       		});
+    		</script>
+		</c:if>
+		
+		<c:if test="${error eq 'Cannot be empty'}">
+			<script>
+	       		$(document).ready(function() {
+	            $('#logreg-forms .form-signin').hide();
+	            $('#logreg-forms .form-signup').show();
+	       		});
+    		</script>
+		</c:if>
+	
 		<c:if test="${error!=null }">
-			 <div id="errorAlert" class="alert alert-danger" role="alert">${error}</div>
+			<div id="errorAlert" class="alert alert-danger" role="alert">${error}</div>
 		</c:if>
 		<c:if test="${mess!=null }">
-			<div class="alert alert-success" role="alert">${mess}</div>
+			<div id="messAlert" class="alert alert-success" role="alert">${mess}</div>
 		</c:if>
 		<form class="form-signin" action="login" method="post">
 			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
@@ -88,12 +124,10 @@
 			<div class="form-group form-check">
 				<input name="remember" value="1" type="checkbox"
 					class="form-check-input" id="exampleCheck1"> <label
-					class="form-check-label" for="exampleCheck1">Remember me</label>
-				<a class="forgotPass" href="forgotPassword">Forgot Password</a>	
+					class="form-check-label" for="exampleCheck1">Remember me</label> <a
+					class="forgotPass" href="forgotPassword">Forgot Password</a>
 			</div>
-			<div>
-								
-			</div>
+			<div></div>
 
 			<button class="btn btn-success btn-block" type="submit">
 				<i class="fas fa-sign-in-alt"></i> Sign in
@@ -108,21 +142,17 @@
 		<form action="signup" method="post" class="form-signup">
 			<h1 class="h3 mb-3 font-weight-normal" style="text-align: center">
 				Sign up</h1>
-			<label for="user">Username</label>
-			<input name="user" type="text" id="user-name" class="form-control"
-				placeholder="User name" required="" autofocus=""> 
-			<label for="pass">Password</label>
-			<input
-				name="pass" type="password" id="user-pass" class="form-control"
-				placeholder="Password" required autofocus="">
-			<label for="repass">Repeat Password</label>
-			<input
+			<label for="user">Username</label> <input name="user" type="text"
+				id="user-name" class="form-control" placeholder="User name"
+				required="" autofocus="" value="${signupUsername}"> <label
+				for="pass">Password</label> <input name="pass" type="password"
+				id="user-pass" class="form-control" placeholder="Password" required
+				autofocus=""> <label for="repass">Repeat Password</label> <input
 				name="repass" type="password" id="user-repeatpass"
 				class="form-control" placeholder="Repeat Password" required
-				autofocus=""> 
-			<label for="email">Email</label>
-			<input name="email" type="email" id="email"
-				class="form-control" placeholder="Email" required="" autofocus="">
+				autofocus=""> <label for="email">Email</label> <input
+				name="email" type="email" id="email" class="form-control"
+				placeholder="Email" required="" autofocus="" value="${signupEmail}">
 			<button class="btn btn-primary btn-block" type="submit">
 				<i class="fas fa-user-plus"></i> Sign Up
 			</button>
@@ -175,6 +205,13 @@
         var errorAlert = document.getElementById('errorAlert');
         if (errorAlert) {
             errorAlert.style.display = 'none';
+        }
+    }, 3000);
+    
+    setTimeout(function() {
+        var messAlert = document.getElementById('messAlert');
+        if (messAlert) {
+        	messAlert.style.display = 'none';
         }
     }, 3000);
 	</script>

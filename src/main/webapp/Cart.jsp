@@ -134,22 +134,22 @@ form#shippingForm .form-control {
 										</c:if>
 										<tr>
 											<th scope="col" class="border-0 bg-light">
-												<div class="p-2 px-3 text-uppercase">Sản Phẩm</div>
+												<div class="p-2 px-3 text-uppercase">Product</div>
 											</th>
 											<th scope="col" class="border-0 bg-light">
-												<div class="py-2 text-uppercase">Đơn Giá</div>
+												<div class="py-2 text-uppercase">Price</div>
 											</th>
 
 
 
 											<th scope="col" class="border-0 bg-light">
-												<div class="py-2 text-uppercase">Số Lượng</div>
+												<div class="py-2 text-uppercase">Quantity</div>
 											</th>
 											<th scope="col" class="border-0 bg-light">
-												<div class="py-2 text-uppercase">Thành tiền</div>
+												<div class="py-2 text-uppercase">Total</div>
 											</th>
 											<th scope="col" class="border-0 bg-light">
-												<div class="py-2 text-uppercase">Xóa</div>
+												<div class="py-2 text-uppercase"> </div>
 											</th>
 										</tr>
 									</thead>
@@ -212,8 +212,7 @@ form#shippingForm .form-control {
 
 						<div class="col-lg-6">
 							<div
-								class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thông
-								tin vận chuyển</div>
+								class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Shipping Information</div>
 							<div class="p-4">
 								<form id="shippingForm" method="POST" action="order">
 									<div class="form-row">
@@ -270,23 +269,21 @@ form#shippingForm .form-control {
 
 						<div class="col-lg-6">
 							<div
-								class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thành
-								tiền</div>
+								class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order Summary</div>
 
 							<div class="p-4">
 								<ul class="list-unstyled mb-4" id="contentTotalMoney">
 									<li class="d-flex justify-content-between py-3 border-bottom"><strong
-										class="text-muted">Tổng tiền hàng</strong><strong>0 $</strong></li>
+										class="text-muted">Subtotal</strong><strong>0 $</strong></li>
 									<li class="d-flex justify-content-between py-3 border-bottom"><strong
-										class="text-muted">Phí vận chuyển</strong><strong>Free
-											ship</strong></li>
+										class="text-muted">Delivery/Shipping</strong><strong>Free</strong></li>
 									<li class="d-flex justify-content-between py-3 border-bottom"><strong
-										class="text-muted">Tổng thanh toán</strong>
+										class="text-muted">Total</strong>
 										<h5 style="color: red;" class="font-weight-bold">0 $</h5></li>
 								</ul>
 								<a href="#"
 									class="btn btn-dark rounded-pill py-2 btn-block text-white"
-									onclick="submitOrder()">Thanh Toán</a>
+									onclick="submitOrder()">CHECKOUT</a>
 							</div>
 						</div>
 					</div>
