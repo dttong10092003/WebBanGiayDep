@@ -82,7 +82,7 @@
 			<ul class="navbar-nav m-auto">
 				<div class="center">
 					<c:if test="${(sessionScope.acc != null) && sessionScope.acc.isAdmin == true}">
-						<li class="nav-item"><a class="nav-link" href="manager">Manager</a></li>
+						<li class="nav-item"><a class="nav-link" href="admin">Manager</a></li>
 					</c:if>
 					<li class="nav-item"><a class="nav-link" href="home">Home</a></li>
 					<li class="nav-item"><a class="nav-link" href="shop">Shop</a></li>

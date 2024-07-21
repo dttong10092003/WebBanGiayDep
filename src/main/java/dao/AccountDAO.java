@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -153,6 +155,35 @@ public class AccountDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public boolean getIsAdmin(int id) {
+		String sql = "Select isAdmin from Account where uID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return rs.getBoolean("isAdmin");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public List<Account> getAllAccount() {
+		String sql = "Select * from Account";
+		List<Account> list = new ArrayList<>();
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				list.add(new Account(rs.getInt("uID"), rs.getString("username"), rs.getString("password"),
+						rs.getString("email"), rs.getBoolean("isAdmin")));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

@@ -472,6 +472,40 @@ public class ProductDAO {
 
 		return list;
 	}
+	
+	public List<Product> get5ProductByIndex(int index) {
+		List<Product> list = new ArrayList<Product>();
+		String query = "select * from Product \r\n" + "order by [id] desc\r\n" + "offset ? rows\r\n"
+				+ "fetch next 5 rows only";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, (index - 1) * 5);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
+				product.setDescription(rs.getString("description"));
+
+				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
+
+				product.setBrandID(brandDAO.getBrandByID(rs.getInt("brandID")));
+
+				product.setSupplierID(supplierDAO.getSupplierByID(rs.getInt("supplierID")));
+
+				product.setGender(rs.getInt("gender"));
+				list.add(product);
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 
 	public int getCountAllProduct() {
 		String query = "select count(*) as total from Product";
@@ -725,6 +759,20 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public int totalSoldQuantity() {
+		int totalSoldQuantity = 0;
+		String sql = "SELECT SUM(soldQuantity) FROM ProductVariant";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				totalSoldQuantity = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return totalSoldQuantity;
 	}
 
 }
