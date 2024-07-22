@@ -60,6 +60,11 @@
 	href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css">
 <link rel="stylesheet" type="text/css"
 	href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css">
+<!-- Your custom styles (optional) -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
 <style>
 img {
 	width: 200px;
@@ -110,6 +115,13 @@ body {
 	overflow-y: auto;
 	/* Scrollable contents if viewport is shorter than content. */
 }
+
+[type=radio]:checked, [type=radio]:not(:checked), [type=checkbox]:checked,
+	[type=checkbox]:not(:checked) {
+	position: static !important;
+	pointer-events: auto !important;
+	opacity: 1 !important;
+}
 </style>
 </head>
 <body>
@@ -134,8 +146,9 @@ body {
 								<strong>Quản lý sản phẩm</strong>
 							</h5>
 						</div>
-						<div class="col-sm-9 text-right">						
-							<form action="uploadProductData" method="post"
+						<div class="col-sm-9 text-right">
+							<!-- 
+								<form action="uploadProductData" method="post"
 								enctype="multipart/form-data">
 								<div class="form-group">
 									<label for="file">Choose CSV or Excel file:</label> <input
@@ -144,7 +157,9 @@ body {
 								</div>
 								<button type="submit" class="btn btn-primary">Upload</button>
 							</form>
-
+						 -->
+							<a href="#addProductModal" class="btn btn-success"
+								data-toggle="modal"><i class="material-icons">ADD</i></a>
 							<form action="xuatExcelProductControl" method="get">
 								<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
 									file Excel</button>
@@ -154,10 +169,10 @@ body {
 
 
 					<c:if test="${error!=null }">
-						<div class="alert alert-danger" role="alert">${error}</div>
+						<div id="errorAlert" class="alert alert-danger" role="alert">${error}</div>
 					</c:if>
 					<c:if test="${mess!=null }">
-						<div class="alert alert-success" role="alert">${mess}</div>
+						<div id="messAlert" class="alert alert-success" role="alert">${mess}</div>
 					</c:if>
 
 					<div class="card-body">
@@ -184,11 +199,11 @@ body {
 											<td><a href="loadProduct?pid=${o.id}"><button
 														type="button" class="btn btn-warning">
 														<i class="material-icons" data-toggle="tooltip"
-															title="Edit">&#xE254;</i>
+															title="Edit">Edit</i>
 													</button></a> <a href="delete?pid=${o.id}"><button type="button"
 														class="btn btn-danger">
 														<i class="material-icons" data-toggle="tooltip"
-															title="Delete">&#xE872;</i>
+															title="Delete">Delete</i>
 													</button></a></td>
 										</tr>
 									</c:forEach>
@@ -196,12 +211,14 @@ body {
 							</table>
 
 							<div class="clearfix">
-								<ul class="pagination justify-content-center float-md-right mb-0">
+								<ul
+									class="pagination justify-content-center float-md-right mb-0">
 									<c:if test="${tag != 1}">
-										<li class="page-item"><a href="manager?index=${tag-1 }" class="page-link"><i class="fas fa-chevron-left"></i></a></li>
+										<li class="page-item"><a href="manager?index=${tag-1 }"
+											class="page-link"><i class="fas fa-chevron-left"></i></a></li>
 									</c:if>
 									<c:forEach begin="1" end="${endPage }" var="i">
-										<li class="${tag==i?"page-item active":"" }"><a
+										<li class="${tag==i?"page-itemactive":"" }"><a
 											href="manager?index=${i }" class="page-link">${i }</a></li>
 									</c:forEach>
 									<c:if test="${tag != endPage}">
@@ -241,41 +258,47 @@ body {
 								class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Price</label> <input name="price" type="text"
+							<label>Price</label> <input name="price" type="number"
 								class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Rental Price</label> <input name="rentalprice" type="text"
-								class="form-control">
+							<label>Retail Price</label> <input name="retailPrice"
+								type="number" class="form-control">
 						</div>
 						<div class="form-group">
-							<label>Gender</label>
+							<label for="gender">Gender</label>
 							<div>
-								<input type="radio" name="gender" value="Man"> Man <input
-									type="radio" name="gender" value="Woman"> Woman <input
-									type="radio" name="gender" value="Unisex"> Unisex
+								<input id="men" type="radio" name="gender" value="1"> <label
+									for="men">Men</label> <input id="women" type="radio"
+									name="gender" value="0"> <label for="women">Women</label>
+								<input id="unisex" type="radio" name="gender" value="-1">
+								<label for="unisex">Unisex</label>
 							</div>
 						</div>
 						<div class="form-group">
-							<label>Brand</label> <select name="brand" class="form-select"
+							<label>Description</label>
+							<textarea name="description" class="form-control"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Brand</label> <select name="brandID" class="form-select"
 								required>
-								<c:forEach items="${listBrands}" var="brand">
+								<c:forEach items="${listBrand}" var="brand">
 									<option value="${brand.id}">${brand.name}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="form-group">
-							<label>Category</label> <select name="category"
+							<label>Category</label> <select name="categoryID"
 								class="form-select" required>
-								<c:forEach items="${listCategories}" var="category">
+								<c:forEach items="${listCategory}" var="category">
 									<option value="${category.id}">${category.name}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="form-group">
-							<label>Supplier</label> <select name="supplier"
+							<label>Supplier</label> <select name="supplierID"
 								class="form-select" required>
-								<c:forEach items="${listSuppliers}" var="supplier">
+								<c:forEach items="${listSupplier}" var="supplier">
 									<option value="${supplier.id}">${supplier.name}</option>
 								</c:forEach>
 							</select>
@@ -283,26 +306,22 @@ body {
 						<div class="form-group">
 							<label>Colors</label>
 							<div>
-								<c:forEach items="${listColors}" var="color">
-									<input type="checkbox" name="colors" value="${color}"> ${color}
-                            	</c:forEach>
+								<!-- <input type="checkbox" name="colors" value="white">
+								White <input type="checkbox" name="colors" value="black">
+								Black <input type="checkbox" name="colors" value="yellow">
+								Yellow <input type="checkbox" name="colors" value="red">
+								Red <input type="checkbox" name="colors" value="blue">
+								Blue -->
+								<c:forEach items="${listColor}" var="color">
+									<input type="checkbox" name="colors" value="${color}">
+                                    ${color}
+                                </c:forEach>
 							</div>
 						</div>
 						<div id="variantsContainer">
 							<h5>Product Variants</h5>
-							<div class="variant form-group">
-								<label>Size</label> <input name="size" type="text"
-									class="form-control"> <label>Quantity</label> <input
-									name="quantity" type="text" class="form-control"> <label>Image
-									URL 1</label> <input name="image1" type="text" class="form-control">
-								<label>Image URL 2</label> <input name="image2" type="text"
-									class="form-control"> <label>Image URL 3</label> <input
-									name="image3" type="text" class="form-control"> <label>Image
-									URL 4</label> <input name="image4" type="text" class="form-control">
-							</div>
+							<!-- Các biến thể sẽ được thêm vào đây -->
 						</div>
-						<button type="button" id="addVariant" class="btn btn-secondary">Add
-							Variant</button>
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-dismiss="modal"
@@ -315,7 +334,67 @@ body {
 	</div>
 
 
-	<script src="js/manager.js" type="text/javascript"></script>
+
+	<script>
+		setTimeout(function() {
+			var errorAlert = document.getElementById('errorAlert');
+			if (errorAlert) {
+				errorAlert.style.display = 'none';
+			}
+		}, 3000);
+
+		setTimeout(function() {
+			var messAlert = document.getElementById('messAlert');
+			if (messAlert) {
+				messAlert.style.display = 'none';
+			}
+		}, 3000);
+		$(document)
+				.ready(
+						function() {
+							$("input[type='checkbox'][name='colors']")
+									.change(
+											function() {
+												let color = $(this).val();
+												console.log(color);
+												if ($(this).is(":checked")) {
+													let variantForm = '<div class="variant form-group" data-color="' + color + '">'
+															+ '<h4 style="color: black;">'
+															+ color
+															+ '</h4>'
+															+ '<label>Size</label>'
+															+ '<input name="size_' + color + '" type="text" class="form-control">'
+															+ '<label>Quantity</label>'
+															+ '<input name="quantity_' + color + '" type="number" class="form-control">'
+															+ '<label>Image URL 1</label>'
+															+ '<input name="image1_' + color + '" type="text" class="form-control">'
+															+ '<label>Image URL 2</label>'
+															+ '<input name="image2_' + color + '" type="text" class="form-control">'
+															+ '<label>Image URL 3</label>'
+															+ '<input name="image3_' + color + '" type="text" class="form-control">'
+															+ '<label>Image URL 4</label>'
+															+ '<input name="image4_' + color + '" type="text" class="form-control">'
+															+ '</div>';
+													$("#variantsContainer")
+															.append(variantForm);
+													console
+															.log(
+																	"Added variant form for color: ",
+																	color);
+												} else {
+													$(
+															'.variant[data-color="'
+																	+ color
+																	+ '"]')
+															.remove();
+													console
+															.log(
+																	"Removed variant form for color: ",
+																	color);
+												}
+											});
+						});
+	</script>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

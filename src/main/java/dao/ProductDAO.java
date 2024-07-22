@@ -359,7 +359,7 @@ public class ProductDAO {
 			ps.setString(1, productID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ProductVariant productVariant = new ProductVariant();		
+				ProductVariant productVariant = new ProductVariant();
 				productVariant.setProductID(getProductByID(rs.getString("productID")));
 				productVariant.setColor(rs.getString("color"));
 				productVariant.setQuantity(rs.getInt("totalQuantity"));
@@ -472,7 +472,7 @@ public class ProductDAO {
 
 		return list;
 	}
-	
+
 	public List<Product> get5ProductByIndex(int index) {
 		List<Product> list = new ArrayList<Product>();
 		String query = "select * from Product \r\n" + "order by [id] desc\r\n" + "offset ? rows\r\n"
@@ -692,7 +692,6 @@ public class ProductDAO {
 			params.add("%" + txtS + "%");
 		}
 
-		
 		sql += (" ORDER BY p.id DESC OFFSET ? ROWS FETCH NEXT 9 ROWS ONLY");
 		params.add((index - 1) * 9);
 		System.out.println("query: " + sql);
@@ -730,24 +729,24 @@ public class ProductDAO {
 		}
 		return products;
 	}
-	
+
 	public int getQuantity(int productVatiantID) {
 		int quantity = 0;
 		String sql = "Select quantity from ProductVariant where id = ?";
-		try(Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);){
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
 			ps.setInt(1, productVatiantID);
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				quantity = rs.getInt("quantity");
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return quantity;
 	}
-	
+
 	public boolean updateQuantityAndSoldQuantity(int productVariantID, int quantity) {
 		String sql = "UPDATE ProductVariant SET quantity = quantity - ?, soldQuantity = soldQuantity + ? WHERE id = ?";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
@@ -760,7 +759,7 @@ public class ProductDAO {
 		}
 		return false;
 	}
-	
+
 	public int totalSoldQuantity() {
 		int totalSoldQuantity = 0;
 		String sql = "SELECT SUM(soldQuantity) FROM ProductVariant";
@@ -775,4 +774,71 @@ public class ProductDAO {
 		return totalSoldQuantity;
 	}
 
+	public Product getProductLast() {
+		Product product = new Product();
+		String sql = "SELECT TOP 1 * FROM Product ORDER BY id DESC";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
+				product.setDescription(rs.getString("description"));
+
+				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
+
+				product.setBrandID(brandDAO.getBrandByID(rs.getInt("brandID")));
+
+				product.setSupplierID(supplierDAO.getSupplierByID(rs.getInt("supplierID")));
+
+				product.setGender(rs.getInt("gender"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return product;
+
+	}
+	
+	public boolean addProduct(String id, String name, String image, double price, double retailPrice, String description, int categoryID, int brandID, int supplierID, int gender) {
+		String sql = "INSERT INTO Product (id, name, image, price, retailPrice, description, categoryID, brandID, supplierID, gender) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setString(1, id);
+			ps.setString(2, name);
+			ps.setString(3, image);
+			ps.setDouble(4, price);
+			ps.setDouble(5, retailPrice);
+			ps.setString(6, description);
+			ps.setInt(7, categoryID);
+			ps.setInt(8, brandID);
+			ps.setInt(9, supplierID);
+			ps.setInt(10, gender);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean addProductVariant(ProductVariant productVariant) {
+		String sql = "INSERT INTO ProductVariant (productID, size, color, quantity, soldQuantity, image1, image2, image3, image4) VALUES(?,?,?,?,?,?,?,?,?)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setString(1, productVariant.getProductID().getId());
+			ps.setInt(2, productVariant.getSize());
+			ps.setString(3, productVariant.getColor());
+			ps.setInt(4, productVariant.getQuantity());
+			ps.setInt(5, 0);
+			ps.setString(6, productVariant.getImage1());
+			ps.setString(7, productVariant.getImage2());
+			ps.setString(8, productVariant.getImage3());
+			ps.setString(9, productVariant.getImage4());
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

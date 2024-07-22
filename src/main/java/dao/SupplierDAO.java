@@ -3,6 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import connect.DBConnect;
 import entity.Supplier;
@@ -28,4 +30,25 @@ public class SupplierDAO {
 		}
 		return s;
 	}
+	
+	public List<Supplier> getAllSupplier(){
+		String query = "SELECT * FROM Supplier";
+        List<Supplier> list = new ArrayList<>();
+        try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Supplier s = new Supplier();
+                s.setId(rs.getInt("id"));
+                s.setName(rs.getString("name"));
+                s.setAddress(rs.getString("address"));
+                s.setPhoneNumber(rs.getString("phoneNumber"));
+                s.setEmail(rs.getString("email"));
+                list.add(s);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+	
 }
