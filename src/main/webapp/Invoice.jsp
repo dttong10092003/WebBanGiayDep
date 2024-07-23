@@ -147,8 +147,10 @@ body {
 								<form action="xuatExcelControl" method="get">
 									<input oninput="searchByDate(this)" type="date" id="dateHoaDon"
 										name="dateHoaDon" class="form-control mb-0" style="width: 30%">
-									<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
+									<!-- 
+										<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
 										file Excel</button>
+									 -->
 								</form>
 							</h5>
 						</div>
@@ -234,10 +236,10 @@ body {
 			var txtSearchDate = param.value;
 			$
 					.ajax({
-						url : "/WebsiteBanGiay/searchAjaxHoaDon",
+						url : "/WebBanGiayDep/searchInvoice",
 						type : "get", //send it through get method
 						data : {
-							ngayXuat : txtSearchDate
+							date : txtSearchDate
 						},
 						success : function(responseData) {
 							document.getElementById("content").innerHTML = responseData;
@@ -245,20 +247,20 @@ body {
 
 					});
 		}
-		
+
 		setTimeout(function() {
-	        var errorAlert = document.getElementById('errorAlert');
-	        if (errorAlert) {
-	            errorAlert.style.display = 'none';
-	        }
-	    }, 3000);
-	    
-	    setTimeout(function() {
-	        var messAlert = document.getElementById('messAlert');
-	        if (messAlert) {
-	        	messAlert.style.display = 'none';
-	        }
-	    }, 3000);
+			var errorAlert = document.getElementById('errorAlert');
+			if (errorAlert) {
+				errorAlert.style.display = 'none';
+			}
+		}, 3000);
+
+		setTimeout(function() {
+			var messAlert = document.getElementById('messAlert');
+			if (messAlert) {
+				messAlert.style.display = 'none';
+			}
+		}, 3000);
 	</script>
 </body>
 </html>

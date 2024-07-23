@@ -21,14 +21,20 @@
         <a href="manager" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-shoe-prints fa-fw me-3"></i><span>Product Management</span>
         </a>
-        <a href="top10" class="list-group-item list-group-item-action py-2 ripple">
+        <a href="top10Product" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-shoe-prints fa-fw me-3"></i><span>Top 10 Products</span>
         </a>
-        <a href="top5khachhang" class="list-group-item list-group-item-action py-2 ripple">
+        <a href="top10Customer" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-user-circle fa-fw me-3"></i><span>Top 10 Customers</span>
         </a>
          <a href="managerSupplier" class="list-group-item list-group-item-action py-2 ripple">
           <i class="fas fa-parachute-box fa-fw me-3"></i><span>Supplier Management</span>
+        </a>
+        <a href="managerBrand" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-parachute-box fa-fw me-3"></i><span>Brand Management</span>
+        </a>
+        <a href="managerCategory" class="list-group-item list-group-item-action py-2 ripple">
+          <i class="fas fa-parachute-box fa-fw me-3"></i><span>Category Management</span>
         </a>
       </div>
     </div>

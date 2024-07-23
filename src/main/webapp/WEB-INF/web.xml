@@ -70,4 +70,46 @@
     <servlet-name>AddProductControl</servlet-name>
     <url-pattern>/addProduct</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LoadProductControl</display-name>
+    <servlet-name>LoadProductControl</servlet-name>
+    <servlet-class>control.LoadProductControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadProductControl</servlet-name>
+    <url-pattern>/loadProduct</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditProductControl</display-name>
+    <servlet-name>EditProductControl</servlet-name>
+    <servlet-class>control.EditProductControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditProductControl</servlet-name>
+    <url-pattern>/edit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Top10ProductControl</display-name>
+    <servlet-name>Top10ProductControl</servlet-name>
+    <servlet-class>control.Top10ProductControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Top10ProductControl</servlet-name>
+    <url-pattern>/top10Product</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddSupplierControl</display-name>
+    <servlet-name>AddSupplierControl</servlet-name>
+    <servlet-class>control.AddSupplierControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddSupplierControl</servlet-name>
+    <url-pattern>/addSupplier</url-pattern>
+  </servlet-mapping>
+
+ 
 </web-app>

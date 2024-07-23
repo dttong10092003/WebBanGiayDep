@@ -3,9 +3,10 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import connect.DBConnect;
 import entity.Product;
@@ -802,8 +803,9 @@ public class ProductDAO {
 		return product;
 
 	}
-	
-	public boolean addProduct(String id, String name, String image, double price, double retailPrice, String description, int categoryID, int brandID, int supplierID, int gender) {
+
+	public boolean addProduct(String id, String name, String image, double price, double retailPrice,
+			String description, int categoryID, int brandID, int supplierID, int gender) {
 		String sql = "INSERT INTO Product (id, name, image, price, retailPrice, description, categoryID, brandID, supplierID, gender) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
 			ps.setString(1, id);
@@ -822,7 +824,28 @@ public class ProductDAO {
 		}
 		return false;
 	}
-	
+
+	public boolean updateProduct(String id, String name, String image, double price, double retailPrice,
+			String description, int categoryID, int brandID, int supplierID, int gender) {
+		String sql = "UPDATE Product SET name = ?, image = ?, price = ?, retailPrice = ?, description = ?, categoryID = ?, brandID = ?, supplierID = ?, gender = ? WHERE id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setString(1, name);
+			ps.setString(2, image);
+			ps.setDouble(3, price);
+			ps.setDouble(4, retailPrice);
+			ps.setString(5, description);
+			ps.setInt(6, categoryID);
+			ps.setInt(7, brandID);
+			ps.setInt(8, supplierID);
+			ps.setInt(9, gender);
+			ps.setString(10, id);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public boolean addProductVariant(ProductVariant productVariant) {
 		String sql = "INSERT INTO ProductVariant (productID, size, color, quantity, soldQuantity, image1, image2, image3, image4) VALUES(?,?,?,?,?,?,?,?,?)";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
@@ -840,5 +863,58 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public boolean updateProductVariant(int quantity, String image1, String image2, String image3, String image4,
+			int id) {
+		String sql = "UPDATE ProductVariant SET quantity = ?, image1 = ?, image2 = ?, image3 = ?, image4 = ? WHERE id = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql);) {
+			ps.setInt(1, quantity);
+			ps.setString(2, image1);
+			ps.setString(3, image2);
+			ps.setString(4, image3);
+			ps.setString(5, image4);
+			ps.setInt(6, id);
+			return ps.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public Map<Product, Integer> getTop10ProductSold() {
+
+		Map<Product, Integer> top10Products = new LinkedHashMap<Product, Integer>();
+		String query = "SELECT TOP 10 p.id, p.name, p.image, p.price, p.retailPrice, p.description, p.categoryID, p.brandID, p.supplierID, p.gender, "
+				+ "       SUM(pv.soldQuantity) AS totalSoldQuantity " + "FROM ProductVariant pv "
+				+ "JOIN Product p ON pv.productId = p.id "
+				+ "GROUP BY p.id, p.name, p.image, p.price, p.retailPrice, p.description, p.categoryID, p.brandID, p.supplierID, p.gender "
+				+ "ORDER BY totalSoldQuantity DESC;";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+            	Product product = new Product();
+				product.setId(rs.getString("id"));
+				product.setName(rs.getString("name"));
+				product.setImage(rs.getString("image"));
+				product.setPrice(rs.getDouble("price"));
+				product.setRetailPrice(rs.getDouble("retailPrice"));
+				product.setDescription(rs.getString("description"));
+
+				product.setCategoryID(categoryDAO.getCategoryByID(rs.getInt("categoryID")));
+
+				product.setBrandID(brandDAO.getBrandByID(rs.getInt("brandID")));
+
+				product.setSupplierID(supplierDAO.getSupplierByID(rs.getInt("supplierID")));
+
+				product.setGender(rs.getInt("gender"));
+				
+				top10Products.put(product, rs.getInt("totalSoldQuantity"));
+            }
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+		return top10Products;
 	}
 }

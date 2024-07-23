@@ -160,10 +160,12 @@ body {
 						 -->
 							<a href="#addProductModal" class="btn btn-success"
 								data-toggle="modal"><i class="material-icons">ADD</i></a>
-							<form action="xuatExcelProductControl" method="get">
+							<!-- 
+								<form action="xuatExcelProductControl" method="get">
 								<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
 									file Excel</button>
 							</form>
+							 -->
 						</div>
 					</div>
 
@@ -200,11 +202,13 @@ body {
 														type="button" class="btn btn-warning">
 														<i class="material-icons" data-toggle="tooltip"
 															title="Edit">Edit</i>
-													</button></a> <a href="delete?pid=${o.id}"><button type="button"
+													</button></a> <!-- 
+														<a href="delete?pid=${o.id}"><button type="button"
 														class="btn btn-danger">
 														<i class="material-icons" data-toggle="tooltip"
 															title="Delete">Delete</i>
 													</button></a></td>
+													 -->
 										</tr>
 									</c:forEach>
 								</tbody>

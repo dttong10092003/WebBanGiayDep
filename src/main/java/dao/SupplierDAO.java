@@ -51,4 +51,18 @@ public class SupplierDAO {
         return list;
     }
 	
+	public boolean insertSupplier(Supplier s) {
+		String query = "INSERT INTO Supplier(name, address, phoneNumber, email) VALUES(?,?,?,?)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, s.getName());
+			ps.setString(2, s.getAddress());
+			ps.setString(3, s.getPhoneNumber());
+			ps.setString(4, s.getEmail());
+			return ps.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

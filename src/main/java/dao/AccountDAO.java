@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -156,7 +158,7 @@ public class AccountDAO {
 		}
 		return false;
 	}
-	
+
 	public boolean getIsAdmin(int id) {
 		String sql = "Select isAdmin from Account where uID = ?";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -170,7 +172,7 @@ public class AccountDAO {
 		}
 		return false;
 	}
-	
+
 	public List<Account> getAllAccount() {
 		String sql = "Select * from Account";
 		List<Account> list = new ArrayList<>();
@@ -184,6 +186,26 @@ public class AccountDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public Map<Account, Double> getTop10Customer() {
+		Map<Account, Double> list = new LinkedHashMap<Account, Double>();
+		String sql = "SELECT TOP 10 \r\n" + "    a.uID,\r\n" + "    a.username,\r\n" + "    a.password,\r\n"
+				+ "    a.email,\r\n" + "    a.isAdmin,\r\n" + "    SUM(i.totalPrice) AS totalSpent\r\n" + "FROM \r\n"
+				+ "    Account a\r\n" + "JOIN \r\n" + "    Invoice i ON a.uID = i.accountID\r\n" + "GROUP BY \r\n"
+				+ "    a.uID, a.username, a.password, a.email, a.isAdmin\r\n" + "ORDER BY \r\n"
+				+ "    totalSpent DESC;";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				list.put(new Account(rs.getInt("uID"), rs.getString("username"), rs.getString("password"),
+						rs.getString("email"), rs.getBoolean("isAdmin")), rs.getDouble("totalSpent"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 
 }

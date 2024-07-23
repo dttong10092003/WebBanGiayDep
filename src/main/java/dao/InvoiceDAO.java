@@ -64,11 +64,9 @@ public class InvoiceDAO {
 		}
 		return false;
 	}
-	
+
 	public double getTotalMoneyDay(int day) {
-		String query = "select 	SUM(totalPrice)\r\n"
-				+ "from Invoice\r\n"
-				+ "where DATEPART(dw,date) = ? Group by date";
+		String query = "select 	SUM(totalPrice)\r\n" + "from Invoice\r\n" + "where DATEPART(dw,date) = ? Group by date";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 			ps.setInt(1, day);
 			try (ResultSet rs = ps.executeQuery()) {
@@ -81,11 +79,9 @@ public class InvoiceDAO {
 		}
 		return 0;
 	}
-	
+
 	public double getTotalMoneyMonth(int month) {
-		String query = "select SUM(totalPrice) from Invoice\r\n"
-				+ "where MONTH(date)= ?\r\n"
-				+ "Group by MONTH(date)";
+		String query = "select SUM(totalPrice) from Invoice\r\n" + "where MONTH(date)= ?\r\n" + "Group by MONTH(date)";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
 			ps.setInt(1, month);
 			try (ResultSet rs = ps.executeQuery()) {
@@ -98,7 +94,7 @@ public class InvoiceDAO {
 		}
 		return 0;
 	}
-	
+
 	public double sumAllInvoice() {
 		String query = "select SUM(totalPrice) from Invoice";
 		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
@@ -112,7 +108,7 @@ public class InvoiceDAO {
 		}
 		return 0;
 	}
-	
+
 	public List<Invoice> gettAllInvoice() {
 		AccountDAO accountDAO = new AccountDAO();
 		String query = "select * from Invoice order by id desc";
@@ -135,5 +131,31 @@ public class InvoiceDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	public List<Invoice> searchByDate(String date) {
+		List<Invoice> list = new ArrayList<>();
+		AccountDAO accountDAO = new AccountDAO();
+		String query = "select * from Invoice where date = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, date);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					Invoice invoice = new Invoice();
+					invoice.setId(rs.getInt("id"));
+					invoice.setAccountID(accountDAO.getAccountByID(rs.getInt("accountID")));
+					invoice.setDate(rs.getDate("date"));
+					invoice.setCustomerName(rs.getString("customerName"));
+					invoice.setPhoneNumber(rs.getString("phoneNumber"));
+					invoice.setAddress(rs.getString("address"));
+					invoice.setTotalPrice(rs.getDouble("totalPrice"));
+					list.add(invoice);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+
 	}
 }

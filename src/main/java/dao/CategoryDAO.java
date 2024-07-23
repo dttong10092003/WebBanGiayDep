@@ -60,4 +60,16 @@ public class CategoryDAO {
 		}
 		return cateID;
 	}
+	
+	public boolean insertCategory(String name) {
+		String query = "INSERT INTO Category(cName) VALUES (?)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, name);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

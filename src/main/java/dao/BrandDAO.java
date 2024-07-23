@@ -59,4 +59,15 @@ public class BrandDAO {
 		}
 		return brandID;
 	}
+	
+	public boolean insertBrand(String name) {
+		String query = "INSERT INTO Brand(bName) VALUES(?)";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setString(1, name);
+			return ps.executeUpdate() == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

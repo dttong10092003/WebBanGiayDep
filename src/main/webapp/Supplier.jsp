@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Quản Lý Tài Khoản</title>
+<title>Statistic</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -48,10 +48,9 @@
 <link rel="stylesheet"
 	href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
 <!-- Your custom styles (optional) -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/manager.css" rel="stylesheet" type="text/css" />
+
 
 <style>
 body {
@@ -129,28 +128,27 @@ body {
 
 
 
-			<!--Section: Quan Ly tai Khoan-->
 			<section class="mb-4">
 				<div class="card">
 					<div class="card-header py-3 row">
 						<div class="col-sm-3">
 							<h5 class="mb-0 text-left" id="">
-								<strong>Account Management</strong>
+								<strong>Quản lý nhà cung cấp</strong>
 							</h5>
 						</div>
 
 						<div class="col-sm-9 text-right">
-							<a href="#addAccountModal" class="btn btn-success"
-								data-toggle="modal"><i class="material-icons">Add
-									Account</i></a>
+							<a href="#addS" class="btn btn-success"
+								data-toggle="modal"><i class="material-icons">add</i></a>
 
 							<!-- 
-								<form action="xuatExcelAccountControl" method="get">
+								<form action="xuatExcelSupplierControl" method="get">
 								<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
 									file Excel</button>
 							</form>
 							 -->
 						</div>
+
 					</div>
 
 					<c:if test="${error!=null }">
@@ -166,29 +164,26 @@ body {
 								<thead>
 									<tr>
 										<th scope="col">ID</th>
-										<th scope="col">Username</th>
-										<th scope="col">Admin</th>
+										<th scope="col">Tên nhà cung cấp</th>
+										<th scope="col">Số điện thoại</th>
 										<th scope="col">Email</th>
+										<th scope="col">Địa chỉ</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${listA}" var="o">
-										<tr>
+									<c:forEach items="${listAllSupplier}" var="o">
 
+										<tr>
 											<td>${o.id}</td>
-											<td>${o.username}</td>
-											<td>${o.isAdmin}</td>
+											<td>${o.name}</td>
+											<td>${o.phoneNumber}</td>
 											<td>${o.email}</td>
-											<!-- 
-												<td><a href="deleteAccount?id=${o.id}"><button
-														type="button" class="btn btn-danger">
-														<i class="material-icons" data-toggle="tooltip"
-															title="Delete">&#xE872;</i>
-													</button></a></td>
-											 -->
-											<!--  Không được xóa tài khoản dù không sử dụng vẫn phải để  -->
+											<td>${o.address}</td>
+
 										</tr>
 									</c:forEach>
+
+
 								</tbody>
 							</table>
 						</div>
@@ -202,27 +197,30 @@ body {
 	</main>
 
 	<!-- Edit Modal HTML -->
-	<div id="addAccountModal" class="modal fade">
+	<div id="addS" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="addAccount" method="post">
+				<form action="addSupplier" method="post">
 					<div class="modal-header">
-						<h4 class="modal-title">Add Account</h4>
+						<h4 class="modal-title">Thêm nhà cung cấp</h4>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">&times;</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Username</label> <input name="user" type="text"
-								class="form-control" required>
-						</div>
-
-						<div class="form-group">
-							<label>Password</label> <input name="pass" type="password"
-								class="form-control" required>
+							<label>Tên nhà cung cấp</label> <input name="nameSupplier"
+								type="text" class="form-control" required>
 						</div>
 						<div class="form-group">
-							<label>Email</label> <input name="email" type="email"
+							<label>Số điện thoại</label> <input name="phoneSupplier"
+								type="text" class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Email</label> <input name="emailSupplier" type="text"
+								class="form-control" required>
+						</div>
+						<div class="form-group">
+							<label>Địa chỉ</label> <input name="addressSupplier" type="text"
 								class="form-control" required>
 						</div>
 
@@ -236,8 +234,8 @@ body {
 			</div>
 		</div>
 	</div>
-	<!-- 	<script src="js/manager.js" type="text/javascript"></script> -->
 
+	<script src="js/manager.js" type="text/javascript"></script>
 	<script>
 		setTimeout(function() {
 			var errorAlert = document.getElementById('errorAlert');
@@ -253,7 +251,6 @@ body {
 			}
 		}, 3000);
 	</script>
-
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--Main layout-->
