@@ -158,4 +158,30 @@ public class InvoiceDAO {
 		return list;
 
 	}
+
+	public List<Invoice> getInvoiceByAccountID(int accountID) {
+		List<Invoice> list = new ArrayList<>();
+		AccountDAO accountDAO = new AccountDAO();
+		String query = "select * from Invoice where accountID = ?";
+		try (Connection conn = new DBConnect().getConnection(); PreparedStatement ps = conn.prepareStatement(query);) {
+			ps.setInt(1, accountID);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					Invoice invoice = new Invoice();
+					invoice.setId(rs.getInt("id"));
+					invoice.setAccountID(accountDAO.getAccountByID(rs.getInt("accountID")));
+					invoice.setDate(rs.getDate("date"));
+					invoice.setCustomerName(rs.getString("customerName"));
+					invoice.setPhoneNumber(rs.getString("phoneNumber"));
+					invoice.setAddress(rs.getString("address"));
+					invoice.setTotalPrice(rs.getDouble("totalPrice"));
+					list.add(invoice);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
 }

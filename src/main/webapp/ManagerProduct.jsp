@@ -67,8 +67,8 @@
 
 <style>
 img {
-	width: 200px;
-	height: 120px;
+	width: 150px;
+	height: 150px;
 }
 
 body {
@@ -222,7 +222,7 @@ body {
 											class="page-link"><i class="fas fa-chevron-left"></i></a></li>
 									</c:if>
 									<c:forEach begin="1" end="${endPage }" var="i">
-										<li class="${tag==i?"page-itemactive":"" }"><a
+										<li class="${tag==i?" page-item active":"" }"><a
 											href="manager?index=${i }" class="page-link">${i }</a></li>
 									</c:forEach>
 									<c:if test="${tag != endPage}">

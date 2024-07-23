@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Statistic</title>
+<title>Purchasing History</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,13 +49,6 @@
 	href="https://mdbootstrap.com/previews/ecommerce-demo/css/mdb.ecommerce.min.css">
 <!-- Your custom styles (optional) -->
 <link href="css/style.css" rel="stylesheet" type="text/css" />
-<link href="css/manager.css" rel="stylesheet" type="text/css" />
-<style>
-img {
-	width: 150px;
-	height: 150px;
-}
-</style>
 <style>
 body {
 	margin: 0;
@@ -115,11 +108,10 @@ body {
 }
 </style>
 </head>
-<body>
-
+<body class="skin-light">
 	<!--Main Navigation-->
 	<header>
-		<jsp:include page="LeftAdmin.jsp"></jsp:include>
+		<jsp:include page="Menu.jsp"></jsp:include>
 
 
 	</header>
@@ -128,78 +120,66 @@ body {
 	<!--Main layout-->
 	<main>
 		<div class="container pt-4">
-
-
-
-
-
+			<!--Section: Sales Performance KPIs-->
 			<section class="mb-4">
+
+
 				<div class="card">
-					<div class="card-header py-3">
-						<h5 class="mb-0 text-center">
-							<strong>Top 10 sản phẩm bán chạy nhất</strong>
-						</h5>
-					</div>
-
-					<!-- 
-						<div class="row">
-						<div class="col-sm-12 text-right">
-							<form action="xuatExcelTop10ProductControl" method="get">
-								<button type="submit" class="mb-0 text-center btn btn-primary">Xuất
-									file Excel</button>
-							</form>
+					<div class="card-header py-3 row">
+						<div class="col-sm-6">
+							<h5 class="mb-0 text-left" id="">
+								<strong>Invoice</strong>
+							</h5>
 						</div>
+
 					</div>
-				 -->
-
-					<c:if test="${mess!=null }">
-						<div class="alert alert-success" role="alert">${mess}</div>
-					</c:if>
-
 					<div class="card-body">
 						<div class="table-responsive">
 							<table class="table table-hover text-nowrap">
 								<thead>
 									<tr>
-										<th scope="col">ID</th>
-										<th scope="col">Name</th>
-										<th scope="col">Image</th>
-										<th scope="col">Price</th>
-										<th scope="col">SoldQuantity</th>
+										<th scope="col"></th>
+										<th scope="col">InvoiceID</th>
+										<th scope="col">Customer Name</th>
+										<th scope="col">PhoneNumber</th>
+										<th scope="col">Address</th>
+										<th scope="col">Total Price($)</th>
+										<th scope="col">Date</th>
 									</tr>
 								</thead>
-								<tbody>
 
-									<c:forEach items="${listTop10Product}" var="item">
+								<tbody id="content">
+									<c:forEach items="${listAllInvoice}" var="i">
 										<tr>
-											<td>${item.key.id}</td>
-											<td>${item.key.name}</td>
-											<td><img src="${item.key.image}" alt="Product Image"></td>
-											<td>${item.key.price}$</td>
-											<td>${item.value }</td>
+											<th scope="row"></th>
+											<td>${i.id }</td>
+											<td>${i.customerName }</td>
+											<td>${i.phoneNumber }</td>
+											<td>${i.address }</td>
+											<td>${String.format("%.01f",i.totalPrice) }</td>
+											<td>${i.date }</td>
 										</tr>
 									</c:forEach>
 								</tbody>
 							</table>
-
-
-
 						</div>
 					</div>
+
+
+
+
 				</div>
 			</section>
+			<!--Section: Sales Performance KPIs-->
+
+
 
 		</div>
-
-
 	</main>
-
-
-
-	<script src="js/manager.js" type="text/javascript"></script>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	<!--Main layout-->
 	<!-- SCRIPTS -->
 	<!-- JQuery -->
@@ -233,5 +213,6 @@ body {
 	<script type="text/javascript" src="js/mdb.min.js"></script>
 	<!-- Custom scripts -->
 	<script type="text/javascript" src="js/script.js"></script>
+
 </body>
 </html>

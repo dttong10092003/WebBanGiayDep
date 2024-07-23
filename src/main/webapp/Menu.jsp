@@ -113,8 +113,10 @@
 						</a>
 							<div class="dropdown-menu dropdown-menu-right"
 								aria-labelledby="userDropdown">
+								<a class="dropdown-item" href="purchasingHistory">Purchasing History</a>
 								<a class="dropdown-item" href="EditAccount.jsp">Edit Account</a>
 								<a class="dropdown-item" href="logout">Logout</a>
+								
 							</div></li>
 					</c:if>
 				</div>

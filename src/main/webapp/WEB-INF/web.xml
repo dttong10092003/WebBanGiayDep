@@ -110,6 +110,5 @@
     <servlet-name>AddSupplierControl</servlet-name>
     <url-pattern>/addSupplier</url-pattern>
   </servlet-mapping>
-
- 
+  
 </web-app>
