@@ -128,12 +128,15 @@ body {
 					<div class="card-header py-3 row">
 						<div class="col-sm-6">
 							<h5 class="mb-0 text-left" id="">
-								<strong>Invoice</strong>
+								Purchasing History
 							</h5>
 						</div>
 
 					</div>
 					<div class="card-body">
+						<h5 class="mb-0 text-left" id="">
+							<strong>Purchasing Invoice</strong>
+						</h5>
 						<div class="table-responsive">
 							<table class="table table-hover text-nowrap">
 								<thead>
