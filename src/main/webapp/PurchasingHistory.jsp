@@ -135,7 +135,7 @@ body {
 					</div>
 					<div class="card-body">
 						<h5 class="mb-0 text-left" id="">
-							<strong>Purchasing Invoice</strong>
+							<strong>Purchasing History</strong>
 						</h5>
 						<div class="table-responsive">
 							<table class="table table-hover text-nowrap">
